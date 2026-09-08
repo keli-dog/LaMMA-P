@@ -1,0 +1,53 @@
+To generate the problem file for picking up a tomato based on the given domain and objects, we need to follow these steps:
+
+1. Identify the objects and their initial states.
+2. Define the goal.
+
+### Step 1: Identify Objects and Initial State
+
+**Objects Involved:**
+- Robot: robot1
+- Object: Tomato
+- Object: Knife (for slicing)
+- Location: CounterTop
+
+**Initial States:**
+- The robot is at the CounterTop.
+- The tomato is located at the CounterTop.
+- The robot is not in action.
+
+### Step 2: Define Goals
+
+**Goals:**
+- The robot should be holding the tomato.
+
+### Problem File
+
+```pddl
+(define (problem pick_tomato_problem)
+  (:domain robot1)
+  (:objects
+    robot1 - robot
+    tomato - object
+    countertop - object
+  )
+  (:init
+    (at robot1 countertop)
+    (at-location tomato countertop)
+    (inaction robot1)
+  )
+  (:goal
+    (and
+      (holding robot1 tomato)
+    )
+  )
+)
+```
+
+### Explanation
+
+- **Objects**: We define the robot, tomato, and countertop.
+- **Initial State**: The robot is at the countertop, the tomato is located at the countertop, and the robot is not in action.
+- **Goal**: The goal is for the robot to be holding the tomato.
+
+This problem file specifies that the robot should pick up the tomato from the countertop. The domain file already includes the necessary actions and predicates to achieve this goal.

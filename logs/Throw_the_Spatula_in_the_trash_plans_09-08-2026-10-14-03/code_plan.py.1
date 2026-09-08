@@ -1,0 +1,58 @@
+To generate a problem file for picking up a spatula based on the provided domain and objects list, we need to define the initial state of the world and specify our goal.
+
+### Step 1: Identify Objects and Initial State
+
+- **Robots**: robot2 (the assigned robot)
+- **Objects Involved**:
+    - Spatula
+    - CounterTop (assuming spatula is located on counter top)
+
+#### Initial States:
+
+- `robot2` is not inaction.
+- The spatula is at the location of the countertop.
+
+### Step 2: Define Goals
+
+The goal is to have robot2 holding the spatula.
+
+### Problem File Generation
+
+```pddl
+(define (problem pick_up_spatula_problem)
+  (:domain robot2)
+  (:objects 
+    robot2 - robot
+    spatula - object
+    countertop - object
+  )
+  (:init 
+    (at robot2 countertop) ; Robot is at the location of the spatula.
+    (at-location spatula countertop) ; Spatula is located on the countertop.
+    (inaction robot2)
+  )
+  (:goal 
+    (and 
+      (holding robot2 spatula)
+    )
+  )
+)
+```
+
+### Explanation:
+
+- **Domain**: `robot2` - This domain includes all necessary actions and predicates for our task.
+- **Objects**:
+  - `robot2`: The assigned robot to perform the action.
+  - `spatula`: The object that needs to be picked up.
+  - `countertop`: Location where spatula is placed initially.
+
+- **Initial State**: 
+  - `(at robot2 countertop)`: Robot2 is at the location of the spatula (assumed to be on the countertop).
+  - `(at-location spatula countertop)`: The spatula is located on the countertop.
+  - `(inaction robot2)`: Robot2 is not in action, meaning it's ready to perform an action.
+
+- **Goal**: 
+  - `(holding robot2 spatula)`: The goal is for robot2 to hold the spatula after picking it up from the countertop.
+
+### Problem file generation is done.

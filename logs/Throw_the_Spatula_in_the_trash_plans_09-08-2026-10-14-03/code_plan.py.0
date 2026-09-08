@@ -1,0 +1,93 @@
+To generate a problem file for moving Robot 2 to the spatula based on the provided objects list and domain definition:
+
+### Step-by-Step Process
+
+1. **Identify Objects and Initial State:**
+   - Robots: robot2
+   - Object: Spatula (location needs to be defined)
+   
+2. **Initial States:**
+   - Robot 2 is not in action.
+   - The spatula's location must be specified.
+
+3. **Goals:**
+   - Move the robot to the spatula.
+
+### Problem File
+
+```pddl
+(define (problem go_to_spatula_problem)
+  (:domain robot2)
+  (:objects 
+    robot2 - robot
+    spatula - object
+    countertop - object ; Assuming spatula is on countertop for this example.
+  )
+  
+  (:init 
+    (at robot2 countertop) ; Robot starts at the countertop where the spatula might be located.
+    (inaction robot2)
+    (at-location spatula countertop) ; Spatula's location
+  )
+
+  (:goal 
+    (and 
+      (at robot2 spatula)
+    )
+  )
+)
+
+```
+
+### Explanation
+
+- **Domain:** `robot2` is used as the domain.
+- **Objects Involved:**
+  - Robot: `robot2`
+  - Object: `spatula`, assumed to be on a `countertop`.
+  
+- **Initial States:**
+  - The robot (`robot2`) starts at the countertop and is not in action.
+  - The spatula's location is defined as being on the countertop.
+
+- **Goal:** 
+  - Move `robot2` to the spatula, which means reaching its current location (countertop).
+
+### Domain File Content
+
+The domain file content remains largely unchanged from your provided example. It includes actions such as moving objects and performing various tasks with them. The specific action of interest here is `GoToObject`, which moves a robot to an object.
+
+```pddl
+(define (domain robot2)
+  (:requirements :strips :typing :negative-preconditions) 
+  (:types robot object)
+  (:predicates
+    (at ?robot - robot ?object - object)
+    (inaction ?robot - robot) 
+    (holding ?robot - robot ?object - object)
+    (at-location  ?object - object ?location - object)
+    ; Other predicates...
+  )
+  
+  (:action GoToObject
+    :parameters (?robot - robot ?object - object)
+    :precondition (not (inaction ?robot))
+    :effect (and 
+              (at ?robot ?object)
+              (forall (?another_object - object)
+                (when (at ?robot ?another_object)
+                  (not (at ?robot ?another_object))
+                )
+              )
+              (not (inaction ?robot))
+            )
+  )
+
+  ; Other actions...
+)
+
+```
+
+### Summary
+
+The problem file is generated to move `Robot2` to the spatula, assuming it's located on a countertop. The domain file includes necessary predicates and actions for this task.

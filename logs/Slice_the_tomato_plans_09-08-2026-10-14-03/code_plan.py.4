@@ -1,0 +1,57 @@
+To generate a PDDL problem file for slicing a tomato using the provided domain definition and objects list, we need to define initial states and goals based on the task description.
+
+### Step 1: Identify Objects and Initial State
+
+From the given objects list:
+- Tomato (object)
+- Knife (object)
+- CounterTop (location)
+
+Initial States:
+- The robot is at a location.
+- The tomato is located on the counter top.
+- The knife is also located on the counter top.
+
+### Step 2: Define Goals
+The goal of this task is to slice the tomato.
+
+### Problem File
+
+```pddl
+(define (problem slice_tomato_problem)
+  (:domain robot1)
+  (:objects 
+    robot1 - robot
+    tomato - object
+    knife - object
+    countertop - object
+  )
+  
+  (:init 
+    ; Robot's initial state and location.
+    (at robot1 countertop) 
+
+    ; Initial locations of objects.
+    (at-location tomato countertop)
+    (at-location knife countertop)
+
+    ; The robot is not inaction initially.
+    (not (inaction robot1))
+  )
+  
+  (:goal 
+    ; Goal: Slice the tomato
+    (sliced tomato)
+  )
+)
+```
+
+### Explanation:
+- **Objects**: We define `robot1`, `tomato`, `knife`, and `countertop` as objects in our problem.
+- **Initial State** (`:init`):
+  - The robot is at the countertop.
+  - Both the tomato and knife are located on the countertop.
+  - The robot is not inactive, meaning it can perform actions.
+- **Goal**: We specify that we want to achieve a state where the tomato has been sliced.
+
+This problem file defines all necessary elements for PDDL planning to slice a tomato using the provided domain definition.

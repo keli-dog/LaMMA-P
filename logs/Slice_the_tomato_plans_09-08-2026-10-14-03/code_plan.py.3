@@ -1,0 +1,66 @@
+To generate a problem file for slicing a potato using PDDL based on the provided domain and objects list, we need to define initial states and goals that align with our task.
+
+### Step 1: Identify Objects and Initial State
+
+From the given object list:
+- **Robot**: robot1 (assumed)
+- **Objects Involved**:
+    - `potato` located at `CounterTop`
+    - `knife` located at `CounterTop`
+
+Initial states will include:
+- The location of the potato and knife.
+- Robot's initial state as not inaction.
+
+### Step 2: Define Goals
+
+The goal is to slice the potato, which means we need to have a sliced potato by the end of our plan.
+
+### Problem File Generation:
+
+```pddl
+(define (problem slice_potato_problem)
+  (:domain robot1)
+  
+  (:objects 
+    robot1 - robot
+    potato - object
+    knife - object
+    countertop - object
+  )
+  
+  (:init 
+    ; Robot's initial state and location.
+    (at robot1 countertop) 
+    (inaction robot1)
+
+    ; Initial locations of objects.
+    (at-location potato countertop)
+    (at-location knife countertop)
+  )
+
+  (:goal 
+    ; Goal is to have the potato sliced.
+    (sliced potato)
+  )
+)
+```
+
+### Explanation:
+
+- **Domain**: `robot1` - This refers back to our domain definition which includes all possible actions and predicates.
+  
+- **Objects**:
+    - `robot1`: The robot that will perform the task.
+    - `potato`, `knife`: Objects involved in the slicing action.
+    - `countertop`: Location where both objects are initially placed.
+
+- **Initial States**: 
+    - `(at robot1 countertop)`: Robot is at the countertop, which is a necessary precondition for picking up and using objects located there.
+    - `(inaction robot1)`: The robot starts in an inactive state (ready to perform actions).
+    - `(at-location potato countertop)` & `(at-location knife countertop)`: Both the potato and knife are initially on the countertop.
+
+- **Goal**: 
+    - `(sliced potato)`: The goal is for the potato to be sliced by the end of our plan.
+
+This problem file can now be used with a PDDL planner to generate a sequence of actions that will lead from the initial state to achieving the goal.

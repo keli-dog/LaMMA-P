@@ -1,0 +1,64 @@
+To generate a problem file for slicing a tomato using the provided objects and domain definition, we need to define initial states and goals based on the task description.
+
+### Step 1: Identify Objects and Initial State
+
+**Objects Involved:**
+- Robots: robot1
+- Object: Tomato (to be sliced)
+- Object: Knife (for slicing)
+
+**Initial States:**
+
+- The tomato is located at a counter top.
+- The knife is also located at the same counter top.
+- Robot 1 starts in an inactive state and needs to move towards the objects.
+
+### Step 2: Define Goals
+
+The goal of this task is to slice the tomato using the knife. 
+
+### Problem File Generation:
+
+```pddl
+(define (problem slice_tomato_problem)
+  (:domain robot1)
+  
+  (:objects 
+    robot1 - robot
+    tomato - object
+    knife - object
+    countertop - object
+  )
+  
+  (:init 
+    ; Robot's initial state and location.
+    (at robot1 countertop) 
+    (inaction robot1)
+
+    ; Initial locations of objects.
+    (at-location tomato countertop)
+    (at-location knife countertop)
+  )
+
+  (:goal 
+    ; The goal is to slice the tomato.
+    (sliced tomato)
+  )
+)
+```
+
+### Explanation:
+
+- **Objects**: We define `robot1`, `tomato`, and `knife` as objects in our problem. Additionally, we include a location object called `countertop`.
+  
+- **Initial States**:
+  - The robot is initially at the countertop (`at robot1 countertop`) and inactive (`inaction robot1`).
+  - Both the tomato and knife are located on the countertop.
+
+- **Goal**: The goal of this problem is to have the tomato sliced, which will be achieved by performing a sequence of actions that include moving towards the objects, picking up the knife, and slicing the tomato.
+
+### Important Notes:
+- Ensure all necessary preconditions for each action (like `GoToObject`, `PickupObject`, etc.) are met before executing them.
+- The robot must first go to where the tomato is located (`countertop`), pick up the knife, then slice the tomato. 
+
+This problem file can now be used with a PDDL planner to generate a sequence of actions that will achieve the goal of slicing the tomato.

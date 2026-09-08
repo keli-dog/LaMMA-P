@@ -1,0 +1,124 @@
+To generate a problem file for cleaning lettuce based on the provided objects list and domain definition, we need to define initial states and goals that align with our task.
+
+### Step 1: Identify Objects and Initial State
+
+**Objects Involved:**
+- Robot: robot1
+- Object: Lettuce
+- Location: CounterTop (initial location of lettuce)
+- SinkBasin (location for cleaning)
+
+**Initial States:**
+
+```pddl
+(at robot1 CounterTop)
+(at-location Lettuce CounterTop)
+(inaction robot1)
+```
+
+### Step 2: Define Goals
+
+The goal is to clean the lettuce and place it back on the countertop.
+
+**Goals:**
+- Cleaned lettuce.
+- At-location of cleaned lettuce should be at CounterTop.
+
+```pddl
+(cleaned Lettuce)
+(at-location Lettuce CounterTop)
+```
+
+### Problem File Generation:
+
+Based on these steps, here is the problem file in PDDL format:
+
+```pddl
+(define (problem clean_lettuce_problem)
+  (:domain robot1)
+  (:objects 
+    robot1 - robot
+    Lettuce - object
+    SinkBasin - object
+    CounterTop - object
+  )
+  (:init 
+    (at robot1 CounterTop) ; Robot is initially at the countertop.
+    (at-location Lettuce CounterTop) ; The lettuce is on the countertop.
+    (inaction robot1)
+  )
+  (:goal 
+    (and 
+      (cleaned Lettuce) ; Goal: Clean the lettuce
+      (at-location Lettuce CounterTop) ; Place cleaned lettuce back at the countertop
+    )
+  )
+)
+
+```
+
+### Subtask Examination from Action Perspective:
+
+#### SubTask 1: Fetch the Lettuce
+
+**Initial Precondition analyze due to previous subtask:**
+- Robot not holding lettuce.
+- Robot not at lettuce location.
+
+```pddl
+GoToObject: Robot goes to where the lettuce is located.
+Parameters: ?robot, ?lettuce
+Preconditions: (not (inaction ?robot))
+Effects: (at ?robot ?lettuce), (not (inaction ?robot))
+
+PickupObject: Robot picks up the lettuce.
+Parameters: ?robot, ?lettuce, ?location
+Preconditions: (at-location Lettuce CounterTop), (at robot1 CounterTop), (not (inaction robot1))
+Effects: (holding robot1 Lettuce), (not (inaction robot1))
+
+Assigned Robot: Robot 1  
+Objects Involved: Lettuce, CounterTop
+```
+
+#### SubTask 2: Clean the Lettuce at the Sink
+
+**Initial Precondition analyze due to previous subtask:**
+- Robot not holding lettuce.
+- Robot not at sink location.
+
+```pddl
+GoToObject: Robot goes to the sink with lettuce.
+Parameters: ?robot, ?sinkBasin
+Preconditions: (not (inaction robot1))
+Effects: (at robot1 SinkBasin), (not (inaction robot1))
+
+CleanObject: Robot cleans the lettuce at the sink.
+Parameters: ?robot, ?lettuce
+Preconditions: (holding robot1 Lettuce), (at robot1 SinkBasin), (not (inaction robot1))
+Effects: (cleaned Lettuce), (not (inaction robot1))
+
+Assigned Robot: Robot 1  
+Objects Involved: Lettuce, SinkBasin
+```
+
+#### SubTask 3: Place the Cleaned Lettuce on Countertop
+
+**Initial Precondition analyze due to previous subtask:**
+- Robot not at countertop location.
+
+```pddl
+GoToObject: Robot goes to the countertop.
+Parameters: ?robot, ?counterTop
+Preconditions: (not (inaction robot1))
+Effects: (at robot1 CounterTop), (not (inaction robot1))
+
+PutObject: Robot places the lettuce on the countertop.
+Parameters: ?robot, ?lettuce, ?counterTop
+Preconditions: (holding robot1 Lettuce), (at robot1 CounterTop), (not (inaction robot1))
+Effects: (at-location Lettuce CounterTop), (not (holding robot1 Lettuce)), (not (inaction robot1))
+
+Assigned Robot: Robot 1  
+Objects Involved: Lettuce, CounterTop
+```
+
+### Problem file generation is done.

@@ -1,0 +1,55 @@
+To generate the problem file for placing the lettuce on the countertop, we need to follow these steps:
+
+1. Identify the objects and their initial states based on the provided list and task description.
+2. Define the goals.
+
+### Step 1: Identify Objects and Initial State
+
+**Objects Involved:**
+- Robots: robot2
+- Object: lettuce
+- Object: countertop
+
+**Initial States:**
+- The lettuce is at some location (let's assume it's in a drawer for this example).
+- The robot is at the countertop.
+- The robot is not inaction.
+
+### Step 2: Define Goals
+
+**Goals:**
+- Place the lettuce on the countertop.
+
+### Problem File
+
+```pddl
+(define (problem place_lettuce_problem)
+  (:domain robot2)
+  (:objects
+    robot2 - robot
+    lettuce - object
+    countertop - object
+    drawer - object
+  )
+  (:init
+    (at robot2 countertop)
+    (at-location lettuce drawer)
+    (inaction robot2)
+  )
+  (:goal
+    (and
+      (at-location lettuce countertop)
+    )
+  )
+)
+```
+
+### Explanation
+
+- **Objects**: We define the objects involved in the task, including the robot, lettuce, countertop, and drawer.
+- **Initial States**: The initial state specifies that the robot is at the countertop and the lettuce is in the drawer. The robot is not inaction.
+- **Goals**: The goal is to place the lettuce on the countertop.
+
+This problem file can be used with the provided domain file to plan how the robot should act to achieve the goal of placing the lettuce on the countertop.
+
+#Problem file generation is done

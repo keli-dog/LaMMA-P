@@ -1,0 +1,111 @@
+INFO     planner time limit: None
+INFO     planner memory limit: None
+
+INFO     Running translator.
+INFO     translator stdin: None
+INFO     translator time limit: None
+INFO     translator memory limit: None
+INFO     translator command line string: /home/ubuntu/miniconda3/envs/lammap/bin/python3 /media/ubuntu/Student/gengzeyu/LaMMA-P/downward/builds/release/bin/translate/translate.py /media/ubuntu/Student/gengzeyu/LaMMA-P/resources/robot1.pddl /media/ubuntu/Student/gengzeyu/LaMMA-P/resources/validated_subtask/1_1_go_to_garbage_can_problem.pddl --sas-file output.sas
+Parsing...
+Parsing: [0.010s CPU, 0.001s wall-clock]
+Normalizing task... [0.000s CPU, 0.000s wall-clock]
+Instantiating...
+Generating Datalog program... [0.000s CPU, 0.000s wall-clock]
+Normalizing Datalog program...
+Normalizing Datalog program: [0.000s CPU, 0.001s wall-clock]
+Preparing model... [0.000s CPU, 0.000s wall-clock]
+Generated 38 rules.
+Computing model... [0.000s CPU, 0.000s wall-clock]
+67 relevant atoms
+45 auxiliary atoms
+112 final queue length
+145 total queue pushes
+Completing instantiation... [0.000s CPU, 0.000s wall-clock]
+Instantiating: [0.000s CPU, 0.002s wall-clock]
+Computing fact groups...
+Finding invariants...
+31 initial candidates
+Finding invariants: [0.000s CPU, 0.001s wall-clock]
+Checking invariant weight... [0.000s CPU, 0.000s wall-clock]
+Instantiating groups... [0.000s CPU, 0.000s wall-clock]
+Collecting mutex groups... [0.000s CPU, 0.000s wall-clock]
+Choosing groups...
+27 uncovered facts
+Choosing groups: [0.000s CPU, 0.000s wall-clock]
+Building translation key... [0.000s CPU, 0.000s wall-clock]
+Computing fact groups: [0.000s CPU, 0.001s wall-clock]
+Building STRIPS to SAS dictionary... [0.000s CPU, 0.000s wall-clock]
+Building dictionary for full mutex groups... [0.000s CPU, 0.000s wall-clock]
+Building mutex information...
+Building mutex information: [0.000s CPU, 0.000s wall-clock]
+Translating task...
+Processing axioms...
+Simplifying axioms... [0.000s CPU, 0.000s wall-clock]
+Translator axioms removed by simplifying: 0
+Processing axioms: [0.000s CPU, 0.000s wall-clock]
+Translating task: [0.000s CPU, 0.001s wall-clock]
+9 effect conditions simplified
+0 implied preconditions added
+Detecting unreachable propositions...
+30 operators removed
+0 axioms removed
+4 propositions removed
+Detecting unreachable propositions: [0.000s CPU, 0.000s wall-clock]
+Reordering and filtering variables...
+1 of 25 variables necessary.
+0 of 0 mutex groups necessary.
+0 of 0 operators necessary.
+0 of 0 axiom rules necessary.
+Reordering and filtering variables: [0.000s CPU, 0.000s wall-clock]
+Translator variables: 1
+Translator derived variables: 0
+Translator facts: 2
+Translator goal facts: 1
+Translator mutex groups: 0
+Translator total mutex groups size: 0
+Translator operators: 0
+Translator axioms: 0
+Translator task size: 4
+Translator peak memory: 33968 KB
+Writing output... [0.000s CPU, 0.000s wall-clock]
+Done! [0.010s CPU, 0.005s wall-clock]
+translate exit code: 0
+
+INFO     Running search (release).
+INFO     search stdin: output.sas
+INFO     search time limit: None
+INFO     search memory limit: None
+INFO     search command line string: /media/ubuntu/Student/gengzeyu/LaMMA-P/downward/builds/release/bin/downward --search 'astar(lmcut())' --internal-plan-file sas_plan < output.sas
+[t=0.000060s, 10812 KB] reading input...
+[t=0.000143s, 10812 KB] done reading input!
+[t=0.000779s, 11068 KB] Initializing landmark cut heuristic...
+[t=0.000822s, 11068 KB] Building successor generator...done!
+[t=0.000844s, 11068 KB] peak memory difference for successor generator creation: 0 KB
+[t=0.000850s, 11068 KB] time for successor generation creation: 0.000002s
+[t=0.000857s, 11068 KB] Variables: 1
+[t=0.000863s, 11068 KB] FactPairs: 2
+[t=0.000869s, 11068 KB] Bytes per state: 4
+[t=0.000881s, 11068 KB] Conducting best first search with reopening closed nodes, (real) bound = 2147483647
+[t=0.000896s, 11068 KB] Initial state is a dead end.
+[t=0.000904s, 11068 KB] Initial heuristic value for lmcut: infinity
+[t=0.000910s, 11068 KB] pruning method: none
+[t=0.000917s, 11068 KB] Completely explored state space -- no solution!
+[t=0.000923s, 11068 KB] Actual search time: 0.000011s
+[t=0.000929s, 11068 KB] Expanded 0 state(s).
+[t=0.000929s, 11068 KB] Reopened 0 state(s).
+[t=0.000929s, 11068 KB] Evaluated 1 state(s).
+[t=0.000929s, 11068 KB] Evaluations: 1
+[t=0.000929s, 11068 KB] Generated 0 state(s).
+[t=0.000929s, 11068 KB] Dead ends: 0 state(s).
+[t=0.000929s, 11068 KB] Number of registered states: 1
+[t=0.000929s, 11068 KB] Int hash set load factor: 1/1 = 1.000000
+[t=0.000929s, 11068 KB] Int hash set resizes: 0
+[t=0.000929s, 11068 KB] Search time: 0.000048s
+[t=0.000929s, 11068 KB] Total time: 0.000929s
+Search stopped without finding a solution.
+Peak memory: 11068 KB
+Remove intermediate file output.sas
+search exit code: 12
+
+Driver aborting after search
+INFO     Planner time: 0.03s

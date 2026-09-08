@@ -1,0 +1,56 @@
+To generate the problem file for throwing the spatula in the trash, we need to follow these steps:
+
+1. Identify the objects and their initial states based on the provided list and task description.
+2. Define the initial states and goals.
+
+### Step 1: Identify Objects and Initial State
+
+**Objects Involved:**
+- Robots: robot1
+- Objects: spatula, garbageCan
+- Initial location of spatula and garbageCan
+
+**Initial States:**
+- The spatula is at the counterTop.
+- The robot is at the counterTop.
+- The robot is holding the spatula.
+- The garbageCan is at the counterTop.
+
+### Step 2: Define Goals
+
+**Goals:**
+- The spatula should be thrown in the trash (garbageCan).
+
+### Problem File
+
+```pddl
+(define (problem throw_spatula_problem)
+  (:domain robot1)
+  (:objects
+    robot1 - robot
+    spatula - object
+    garbageCan - object
+    counterTop - object
+  )
+  (:init
+    (at robot1 counterTop)
+    (at-location spatula counterTop)
+    (at-location garbageCan counterTop)
+    (holding robot1 spatula)
+    (inaction robot1)
+  )
+  (:goal
+    (and
+      (not (holding robot1 spatula))
+      (at-location spatula garbageCan)
+    )
+  )
+)
+```
+
+### Explanation:
+- **Objects**: We define the objects involved in the task: `robot1`, `spatula`, `garbageCan`, and `counterTop`.
+- **Initial States**: The robot is at the counterTop, holding the spatula, and the spatula and garbageCan are also at the counterTop.
+- **Goal**: The goal is to have the robot no longer holding the spatula and for the spatula to be located in the garbageCan.
+
+This completes the problem file generation for throwing the spatula in the trash.

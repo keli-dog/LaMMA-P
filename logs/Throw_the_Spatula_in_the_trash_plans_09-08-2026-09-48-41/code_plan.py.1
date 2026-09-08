@@ -1,0 +1,155 @@
+#Subtask examination from action perspective:
+# SubTask 1: Slice the Potato
+
+# Initial Precondition analyze due to previous subtask:
+#1. Robot not at the potato
+#2. Robot not holding the potato
+
+GoToObject (Robot, Knife)
+Parameters: ?robot , ?Knife  ,
+Preconditions: (not (inaction Robot))
+Effects: (at Robot CuttingBoard), (not (inaction Robot))
+
+PickupObject (Robot, Knife, KnifeLocation)
+Parameters: ?robot , ?Knife , ?KnifeLocation 
+Preconditions: (at-location Knife KnifeLocation), (at Robot KnifeLocation), (not (inaction Robot))
+Effects: (holding Robot Knife), (not (inaction Robot))
+
+GoToObject: Robot goes to the potato.
+Parameters: ?robot, ?potato
+Preconditions: (not (inaction ?robot))
+Effects: (at ?robot ?potato), (not (inaction ?robot))
+
+SliceObject: Robot slices the potato.
+Parameters: ?robot, ?potato
+Preconditions: (holding Robot Knife), (not (inaction ?robot))
+Effects: (sliced ?potato), (not (inaction ?robot))
+
+Assigned Robots: Robot 1
+Objects Involved: Potato, knife
+
+#Domain file content,
+(define (domain robot1)
+  (:requirements :strips :typing :negative-preconditions) 
+  (:types robot object)
+  (:predicates
+    (at ?robot - robot ?object - object)
+    (inaction ?robot - robot) 
+    (holding ?robot - robot ?object - object)
+    (at-location  ?object - object ?location - object)
+    (switch-on ?robot - robot ?object - object)
+    (switch-off ?robot - robot ?object - object)
+    (object-open ?robot - robot ?object - object)
+    (object-close ?robot - robot ?object - object)
+    (break ?robot - robot ?object - object)
+    (sliced ?object - object)
+    (cleaned ?robot - robot ?object - object)
+  )
+  
+  (:action GoToObject
+    :parameters (?robot - robot ?object - object)
+    :precondition (not (inaction ?robot))
+
+    :effect (and 
+              (at ?robot ?object)
+              (forall (?another_object - object)
+                (when (at ?robot ?another_object)
+                  (not (at ?robot ?another_object))
+                )
+              )
+              (not (inaction ?robot))
+            )
+
+
+  (:action PickupObject
+    :parameters (?robot - robot !?object !?location !?mass !?name !?mass2 !?name2 !?mass3 !?name3 !?mass4 !?name4 !?mass5 !?name5 !?mass6 !?name6 !?mass7 !?name7 !?mass8 !?name8 !?mass9 !?name9 !?mass10 !?name10 !?mass11 !?name11 !?mass12 !?name12 !?mass13 !?name13 !?mass14 !?name14 !) 
+    :precondition 
+
+      ((= mass Potato mass2)) 
+      ((= mass Knife mass3)) 
+      ((= mass CounterTop mass4)) 
+      ((= mass Cabinet mass5)) 
+      ((= mass CoffeeMachine mass6)) 
+      ((= mass CounterTop mass7)) 
+      ((= mass CounterTop mass8)) 
+      ((= mass CounterTop mass9)) 
+      ((= mass CounterTop mass10)) 
+      ((= mass Cup mass11)) 
+      ((= mass DishSponge mass12)) 
+      ((= mass Drawer mass13)) 
+      ((= mass Drawer mass14)) 
+
+      
+        and 
+
+        and 
+
+        and 
+
+        and 
+
+        and 
+
+        and 
+
+        and 
+
+        and 
+
+        and 
+
+        and 
+
+        and 
+
+        and 
+
+        and 
+
+        and 
+
+        and 
+
+        and 
+
+        and 
+        
+          at-location Potato counterTop
+      
+          at-location Knife counterTop
+      
+          inaction robot
+      
+          inaction robot
+      
+          inaction robot
+      
+          inaction robot
+      
+          inaction robot
+      
+          inaction robot
+      
+          inaction robot
+      
+          inaction robot
+      
+          inaction robot
+      
+          inaction robot
+      
+          inaction robot
+      
+          inaction robot
+      
+          inaction robot
+      
+          inaction robot
+      
+          inaction router
+      
+          inaction router
+      
+          inacton router
+      
+          inacton router

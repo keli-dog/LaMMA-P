@@ -623,6 +623,7 @@ class LLMHandler:
                 if not api_key:
                     raise ValueError("API key file is empty")
                 openai.api_key = api_key
+                self.client = openai.OpenAI(api_key=api_key, base_url="https://api.siliconflow.cn/v1")
                 print("Successfully loaded API key from", api_key_file + '.txt')
             except FileNotFoundError:
                 # Try without .txt extension
@@ -631,6 +632,7 @@ class LLMHandler:
                     if not api_key:
                         raise ValueError("API key file is empty")
                     openai.api_key = api_key
+                    self.client = openai.OpenAI(api_key=api_key, base_url="https://api.siliconflow.cn/v1")
                     print("Successfully loaded API key from", api_key_file)
                 except FileNotFoundError:
                     raise LLMError(f"API key file not found: {api_key_file} or {api_key_file}.txt")
@@ -666,26 +668,18 @@ class LLMHandler:
         
         for attempt in range(MAX_RETRIES):
             try:
-                if "gpt" not in gpt_version:
-                    response = openai.completions.create(
-                        model=gpt_version, 
-                        prompt=prompt, 
-                        max_tokens=max_tokens, 
-                        temperature=temperature, 
-                        stop=stop, 
-                        logprobs=logprobs, 
-                        frequency_penalty=frequency_penalty
-                    )
-                    return response, response.choices[0].text.strip()
+                if isinstance(prompt, str):
+                    messages = [{"role": "user", "content": prompt}]
                 else:
-                    response = openai.chat.completions.create(
-                        model=gpt_version, 
-                        messages=prompt, 
-                        max_tokens=max_tokens, 
-                        temperature=temperature, 
-                        frequency_penalty=frequency_penalty
-                    )
-                    return response, response.choices[0].message.content.strip()
+                    messages = prompt
+                response = self.client.chat.completions.create(
+                    model=gpt_version,
+                    messages=messages,
+                    max_tokens=max_tokens,
+                    temperature=temperature,
+                    frequency_penalty=frequency_penalty
+                )
+                return response, response.choices[0].message.content.strip()
                     
             except openai.RateLimitError:
                 if attempt < MAX_RETRIES - 1:
@@ -1971,7 +1965,7 @@ def parse_arguments() -> argparse.Namespace:
         "--gpt-version",
         type=str,
         default="gpt-4o",
-        choices=['gpt-3.5-turbo', 'gpt-4o', 'gpt-3.5-turbo-16k']
+        
     )
     parser.add_argument(
         "--prompt-decompse-set",
