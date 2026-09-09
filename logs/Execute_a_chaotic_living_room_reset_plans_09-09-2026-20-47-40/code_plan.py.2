@@ -1,0 +1,22 @@
+Here's the problem file for closing Drawer 1:
+
+```pddl
+(define (problem close_drawer_problem)
+  (:domain robot1)
+  (:objects
+    robot1 - robot
+    Drawer1 - object
+  )
+  (:init
+    (not (inaction robot1))
+    (at robot1 Drawer1)
+  )
+  (:goal
+    (and
+      (object-close robot1 Drawer1)
+    )
+  )
+)
+```
+
+Problem file generation is done.

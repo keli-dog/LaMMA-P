@@ -1,0 +1,20 @@
+(define (problem put_plate_in_microwave)
+  (:domain robot1)
+  (:objects
+    robot1 - robot
+    Plate - object
+    Microwave - object
+    counterTop - object
+  )
+  (:init
+    (at robot1 counterTop)
+    (at-location Plate counterTop)
+    (at-location Microwave counterTop)
+    (not (inaction robot1))
+  )
+  (:goal
+    (and
+      (at-location Plate Microwave)
+    )
+  )
+)

@@ -1,0 +1,19 @@
+(define (problem move_lettuce_problem)
+  (:domain robot2)
+  (:objects
+    robot2 - robot
+    Lettuce - object
+    CounterTop - object
+    DiningTable - object
+  )
+  (:init
+    (at robot2 CounterTop)
+    (at-location Lettuce CounterTop)
+    (not (inaction robot2))
+  )
+  (:goal
+    (and
+      (at-location Lettuce DiningTable)
+    )
+  )
+)

@@ -1,0 +1,26 @@
+Here's the problem file for putting a mug in the coffee machine:
+
+```pddl
+(define (problem put_mug_in_coffee_machine)
+  (:domain robot2)
+  (:objects
+    robot2 - robot
+    Mug - object
+    CoffeeMachine - object
+    CounterTop - object
+  )
+  (:init
+    (at robot2 CounterTop)
+    (at-location Mug CounterTop)
+    (at-location CoffeeMachine CounterTop)
+    (not (inaction robot2))
+  )
+  (:goal
+    (and
+      (at-location Mug CoffeeMachine)
+    )
+  )
+)
+```
+
+Problem file generation is done.

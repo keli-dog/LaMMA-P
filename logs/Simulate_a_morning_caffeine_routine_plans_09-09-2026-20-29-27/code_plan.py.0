@@ -1,0 +1,53 @@
+# Problem File Extraction:
+
+(define (problem makecoffee_problem_robot2)
+  (:domain robot2)
+  (:objects
+    robot2 - robot
+    coffeeMachine - object
+    mug - object
+    counterTop - object
+    initialLocation - object
+  )
+  (:init
+    (at robot2 initialLocation)
+    (at-location coffeeMachine counterTop)
+    (at-location mug counterTop)
+    (inaction robot2)
+    (not (holding robot2 mug))
+    (switch-off robot2 coffeeMachine)
+  )
+  (:goal
+    (and
+      (switch-on robot2 coffeeMachine)
+      (holding robot2 mug)
+    )
+  )
+)
+
+(define (problem makecoffee_problem_robot3)
+  (:domain robot3)
+  (:objects
+    robot3 - robot
+    coffeeMachine - object
+    mug - object
+    counterTop - object
+    initialLocation - object
+  )
+  (:init
+    (at robot3 initialLocation)
+    (at-location mug coffeeMachine)
+    (inaction robot3)
+    (holding robot3 mug)
+    (switch-on robot3 coffeeMachine)
+  )
+  (:goal
+    (and
+      (switch-off robot3 coffeeMachine)
+      (not (holding robot3 mug))
+    )
+  )
+)
+
+# Problem file Extraction is done
+# IMPORTANT stop extracting after seeing Problem file extraction is done.

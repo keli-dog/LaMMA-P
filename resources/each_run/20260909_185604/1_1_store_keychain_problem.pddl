@@ -1,0 +1,22 @@
+(define (problem store_keychain_problem)
+  (:domain robot2)
+  (:objects
+    robot2 - robot
+    KeyChain - object
+    Drawer - object
+    SideTable - object
+  )
+  (:init
+    (at robot2 SideTable)
+    (at-location KeyChain SideTable)
+    (at-location Drawer SideTable)
+    (not (inaction robot2))
+    (object-open robot2 Drawer)
+  )
+  (:goal
+    (and
+      (at-location KeyChain Drawer)
+      (object-close robot2 Drawer)
+    )
+  )
+)

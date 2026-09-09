@@ -1,0 +1,30 @@
+Here's the problem file for the task of putting the sliced potato in the fridge:
+
+```pddl
+(define (problem put_potato_in_fridge)
+  (:domain robot1)
+  (:objects
+    robot1 - robot
+    potato - object
+    knife - object
+    fridge - object
+    counterTop - object
+  )
+  (:init
+    (not (inaction robot1))
+    (at robot1 counterTop)
+    (at-location potato counterTop)
+    (at-location knife counterTop)
+    (holding robot1 knife)
+    (sliced potato)
+  )
+  (:goal
+    (and
+      (at-location potato fridge)
+      (object-close robot1 fridge)
+    )
+  )
+)
+```
+
+Problem file generation is done.

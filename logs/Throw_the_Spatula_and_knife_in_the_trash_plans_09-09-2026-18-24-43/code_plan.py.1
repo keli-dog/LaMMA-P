@@ -1,0 +1,25 @@
+Here's the problem file for the "Throw Knife in Trash" subtask:
+
+```pddl
+(define (problem throw_knife_problem)
+  (:domain robot2)
+  (:objects
+    robot2 - robot
+    knife - object
+    garbageCan - object
+    counterTop - object
+  )
+  (:init
+    (at robot2 counterTop)
+    (at-location knife counterTop)
+    (not (inaction robot2))
+  )
+  (:goal
+    (and
+      (at-location knife garbageCan)
+    )
+  )
+)
+```
+
+Problem file generation is done.

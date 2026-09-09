@@ -1,0 +1,24 @@
+(define (problem prepare_salad_problem)
+  (:domain robot1)
+  (:objects
+    robot1 - robot
+    lettuce - object
+    tomato - object
+    bowl - object
+    counterTop - object
+    diningTable - object
+  )
+  (:init
+    (at robot1 counterTop)
+    (at-location lettuce counterTop)
+    (at-location tomato counterTop)
+    (at-location bowl diningTable)
+    (not (inaction robot1))
+  )
+  (:goal
+    (and
+      (at-location lettuce bowl)
+      (at-location tomato bowl)
+    )
+  )
+)

@@ -1,0 +1,21 @@
+(define (problem newspaper_recycling_problem)
+  (:domain robot1)
+  (:objects
+    robot1 - robot
+    newspaper - object
+    recycling_bin - object
+    sideTable - object
+  )
+  (:init
+    (at robot1 sideTable)
+    (at-location newspaper sideTable)
+    (at-location recycling_bin sideTable)
+    (not (inaction robot1))
+  )
+  (:goal
+    (and
+      (at-location newspaper recycling_bin)
+      (not (holding robot1 newspaper))
+    )
+  )
+)

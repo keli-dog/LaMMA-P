@@ -1,0 +1,68 @@
+# Problem File Extraction for Organize Personal Inventory Task
+
+(define (problem organize_heavy_items)
+  (:domain robot1)
+  (:objects
+    robot1 - robot
+    laptop - object
+    book - object
+    vase - object
+    dresser - object
+    floor - object
+    initiallocation - object
+  )
+  (:init
+    (at robot1 initiallocation)
+    (at-location laptop floor)
+    (at-location book floor)
+    (at-location vase floor)
+    (inaction robot1)
+    (not (holding robot1 laptop))
+    (not (holding robot1 book))
+    (not (holding robot1 vase))
+  )
+  (:goal
+    (and
+      (at-location laptop dresser)
+      (at-location book dresser)
+      (at-location vase dresser)
+    )
+  )
+)
+
+(define (problem organize_light_items)
+  (:domain robot2)
+  (:objects
+    robot2 - robot
+    watch - object
+    keychain - object
+    creditcard - object
+    pen - object
+    drawer - object
+    floor - object
+    initiallocation - object
+  )
+  (:init
+    (at robot2 initiallocation)
+    (at-location watch floor)
+    (at-location keychain floor)
+    (at-location creditcard floor)
+    (at-location pen floor)
+    (inaction robot2)
+    (not (holding robot2 watch))
+    (not (holding robot2 keychain))
+    (not (holding robot2 creditcard))
+    (not (holding robot2 pen))
+  )
+  (:goal
+    (and
+      (at-location watch drawer)
+      (at-location keychain drawer)
+      (at-location creditcard drawer)
+      (at-location pen drawer)
+    )
+  )
+)
+
+# Problem file Extraction is done
+# IMPORTANT stop extracting after seeing Problem file extraction is done.

@@ -1,0 +1,18 @@
+(define (problem close_blinds_problem)
+  (:domain robot1)
+  (:objects
+    robot1 - robot
+    Blinds - object
+    Window - object
+  )
+  (:init
+    (at robot1 Window)
+    (object-open robot1 Blinds)
+    (not (inaction robot1))
+  )
+  (:goal
+    (and
+      (object-close robot1 Blinds)
+    )
+  )
+)

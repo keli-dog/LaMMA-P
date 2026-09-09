@@ -1,0 +1,26 @@
+Here's the problem file for slicing the tomato based on the given domain and objects:
+
+```pddl
+(define (problem slice_tomato_problem)
+  (:domain robot2)
+  (:objects
+    robot2 - robot
+    knife - object
+    tomato - object
+    counterTop - object
+  )
+  (:init
+    (not (inaction robot2))
+    (at robot2 counterTop)
+    (at-location knife counterTop)
+    (at-location tomato counterTop)
+  )
+  (:goal
+    (and
+      (sliced tomato)
+    )
+  )
+)
+```
+
+Problem file generation is done.

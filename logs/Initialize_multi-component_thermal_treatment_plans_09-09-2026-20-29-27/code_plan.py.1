@@ -1,0 +1,49 @@
+# Problem File Extraction for Chilling Wine
+
+(define (problem getwinebottle_problem)
+  (:domain robot1)
+  (:objects
+    robot1 - robot
+    WineBottle - object
+    Fridge - object
+    CounterTop - object
+    initiallocation - object
+  )
+  (:init
+    (at robot1 initiallocation)
+    (at-location WineBottle CounterTop)
+    (inaction robot1)
+    (not (holding robot1 WineBottle))
+  )
+  (:goal
+    (and
+      (holding robot1 WineBottle)
+      (at robot1 Fridge)
+    )
+  )
+)
+
+(define (problem chillwine_problem)
+  (:domain robot2)
+  (:objects
+    robot2 - robot
+    WineBottle - object
+    Fridge - object
+    initiallocation - object
+  )
+  (:init
+    (at robot2 initiallocation)
+    (holding robot2 WineBottle)
+    (at robot2 Fridge)
+    (inaction robot2)
+  )
+  (:goal
+    (and
+      (at-location WineBottle Fridge)
+      (object-close robot2 Fridge)
+    )
+  )
+)
+
+# Problem file Extraction is done
+# IMPORTANT stop extracting after seeing Problem file extraction is done.

@@ -1,0 +1,82 @@
+# Problem File Extraction for Organize Carbohydrate Objects Task
+
+(define (problem organize_carbs_robot1)
+  (:domain robot1)
+  (:objects
+    robot1 - robot
+    bread - object
+    potato - object
+    apple - object
+    lettuce - object
+    tomato - object
+    cabinet - object
+    fridge - object
+    counterTop - object
+    initialLocation - object
+  )
+  (:init
+    (at robot1 initialLocation)
+    (at-location bread counterTop)
+    (at-location potato counterTop)
+    (at-location apple counterTop)
+    (at-location lettuce counterTop)
+    (at-location tomato counterTop)
+    (inaction robot1)
+    (not (holding robot1 bread))
+    (not (holding robot1 potato))
+    (not (holding robot1 apple))
+    (not (holding robot1 lettuce))
+    (not (holding robot1 tomato))
+  )
+  (:goal
+    (and
+      (at-location bread cabinet)
+      (at-location potato cabinet)
+      (at-location apple fridge)
+      (at-location lettuce fridge)
+      (at-location tomato fridge)
+    )
+  )
+)
+
+(define (problem organize_carbs_robot2)
+  (:domain robot2)
+  (:objects
+    robot2 - robot
+    bread - object
+    potato - object
+    apple - object
+    lettuce - object
+    tomato - object
+    cabinet - object
+    fridge - object
+    counterTop - object
+    initialLocation - object
+  )
+  (:init
+    (at robot2 initialLocation)
+    (at-location bread counterTop)
+    (at-location potato counterTop)
+    (at-location apple counterTop)
+    (at-location lettuce counterTop)
+    (at-location tomato counterTop)
+    (inaction robot2)
+    (not (holding robot2 bread))
+    (not (holding robot2 potato))
+    (not (holding robot2 apple))
+    (not (holding robot2 lettuce))
+    (not (holding robot2 tomato))
+  )
+  (:goal
+    (and
+      (at-location bread cabinet)
+      (at-location potato cabinet)
+      (at-location apple fridge)
+      (at-location lettuce fridge)
+      (at-location tomato fridge)
+    )
+  )
+)
+
+# Problem file Extraction is done
+# IMPORTANT stop extracting after seeing Problem file extraction is done.

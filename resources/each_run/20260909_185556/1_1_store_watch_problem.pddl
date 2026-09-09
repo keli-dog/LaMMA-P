@@ -1,0 +1,21 @@
+(define (problem store_watch_problem)
+  (:domain robot1)
+  (:objects
+    robot1 - robot
+    watch - object
+    drawer - object
+    sideTable - object
+  )
+  (:init
+    (at robot1 sideTable)
+    (at-location watch sideTable)
+    (at-location drawer sideTable)
+    (not (inaction robot1))
+    (object-close robot1 drawer)
+  )
+  (:goal
+    (and
+      (at-location watch drawer)
+    )
+  )
+)

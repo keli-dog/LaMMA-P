@@ -1,0 +1,25 @@
+(define (problem put_potato_on_plate)
+  (:domain robot1)
+  (:objects
+    robot1 - robot
+    potato - object
+    plate - object
+    knife - object
+    counterTop - object
+    diningTable - object
+  )
+  (:init
+    (not (inaction robot1))
+    (at robot1 counterTop)
+    (at-location potato counterTop)
+    (at-location knife counterTop)
+    (at-location plate diningTable)
+    (sliced potato)
+    (cleaned robot1 plate)
+  )
+  (:goal
+    (and
+      (at-location potato plate)
+    )
+  )
+)

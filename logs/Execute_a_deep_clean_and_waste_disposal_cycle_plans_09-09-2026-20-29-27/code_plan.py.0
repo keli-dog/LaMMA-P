@@ -1,0 +1,73 @@
+# Problem File Extraction for Collect and Dispose of Waste Task
+
+(define (problem collect_waste_robot1)
+  (:domain robot1)
+  (:objects
+    robot1 - robot
+    GarbageBag - object
+    GarbageCan - object
+    counterTop - object
+    initialLocation - object
+  )
+  (:init
+    (at robot1 initialLocation)
+    (at-location GarbageBag counterTop)
+    (inaction robot1)
+    (not (holding robot1 GarbageBag))
+  )
+  (:goal
+    (and
+      (at-location GarbageBag GarbageCan)
+      (not (holding robot1 GarbageBag))
+    )
+  )
+)
+
+(define (problem collect_waste_robot2)
+  (:domain robot2)
+  (:objects
+    robot2 - robot
+    GarbageBag - object
+    GarbageCan - object
+    counterTop - object
+    initialLocation - object
+  )
+  (:init
+    (at robot2 initialLocation)
+    (at-location GarbageBag counterTop)
+    (inaction robot2)
+    (not (holding robot2 GarbageBag))
+  )
+  (:goal
+    (and
+      (at-location GarbageBag GarbageCan)
+      (not (holding robot2 GarbageBag))
+    )
+  )
+)
+
+(define (problem collect_waste_robot3)
+  (:domain robot3)
+  (:objects
+    robot3 - robot
+    GarbageBag - object
+    GarbageCan - object
+    counterTop - object
+    initialLocation - object
+  )
+  (:init
+    (at robot3 initialLocation)
+    (at-location GarbageBag counterTop)
+    (inaction robot3)
+    (not (holding robot3 GarbageBag))
+  )
+  (:goal
+    (and
+      (at-location GarbageBag GarbageCan)
+      (not (holding robot3 GarbageBag))
+    )
+  )
+)
+
+# Problem file Extraction is done
+# IMPORTANT stop extracting after seeing Problem file extraction is done.

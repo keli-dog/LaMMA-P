@@ -1,0 +1,47 @@
+# Problem File Extraction for SubTask 3: Put Newspaper in Garbage Can
+
+(define (problem pickup_newspaper_problem)
+  (:domain robot3)
+  (:objects
+    robot3 - robot
+    newspaper - object
+    desk - object
+    initialLocation - object
+  )
+  (:init
+    (at robot3 initialLocation)
+    (at-location newspaper desk)
+    (inaction robot3)
+    (not (holding robot3 newspaper))
+  )
+  (:goal
+    (and
+      (holding robot3 newspaper)
+      (at robot3 desk)
+    )
+  )
+)
+
+(define (problem dispose_newspaper_problem)
+  (:domain robot2)
+  (:objects
+    robot2 - robot
+    newspaper - object
+    garbageCan - object
+    desk - object
+  )
+  (:init
+    (holding robot2 newspaper)
+    (at robot2 desk)
+    (inaction robot2)
+  )
+  (:goal
+    (and
+      (at-location newspaper garbageCan)
+      (not (holding robot2 newspaper))
+    )
+  )
+)
+
+# Problem file Extraction is done
+# IMPORTANT stop extracting after seeing Problem file extraction is done.

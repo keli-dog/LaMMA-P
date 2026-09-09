@@ -1,0 +1,19 @@
+(define (problem clean_plate_problem)
+  (:domain robot2)
+  (:objects
+    robot2 - robot
+    Plate - object
+    Sink - object
+    counterTop - object
+  )
+  (:init
+    (at robot2 counterTop)
+    (at-location Plate counterTop)
+    (not (inaction robot2))
+  )
+  (:goal
+    (and
+      (cleaned robot2 Plate)
+    )
+  )
+)

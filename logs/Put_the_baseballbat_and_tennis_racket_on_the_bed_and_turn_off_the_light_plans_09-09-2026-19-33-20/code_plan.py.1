@@ -1,0 +1,25 @@
+Here's the problem file for the task of putting the tennis racket on the bed:
+
+```pddl
+(define (problem put_tennis_racket_problem)
+  (:domain robot2)
+  (:objects
+    robot2 - robot
+    TennisRacket - object
+    Bed - object
+    Desk - object
+  )
+  (:init
+    (at robot2 Desk)
+    (at-location TennisRacket Desk)
+    (not (inaction robot2))
+  )
+  (:goal
+    (and
+      (at-location TennisRacket Bed)
+    )
+  )
+)
+```
+
+Problem file generation is done.

@@ -1,0 +1,19 @@
+(define (problem switch_coffee_machine_problem)
+  (:domain robot3)
+  (:objects
+    robot3 - robot
+    CoffeeMachine - object
+    Mug - object
+    CounterTop - object
+  )
+  (:init
+    (at robot3 CounterTop)
+    (at-location Mug CoffeeMachine)
+    (not (inaction robot3))
+  )
+  (:goal
+    (and
+      (switch-on robot3 CoffeeMachine)
+    )
+  )
+)

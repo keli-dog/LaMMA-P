@@ -1,0 +1,26 @@
+Here's the problem file for preparing the payload (potato) based on the given domain and task:
+
+```pddl
+(define (problem prepare_potato_problem)
+  (:domain robot1)
+  (:objects
+    robot1 - robot
+    potato - object
+    plate - object
+    counterTop - object
+  )
+  (:init
+    (not (inaction robot1))
+    (at robot1 counterTop)
+    (at-location potato counterTop)
+    (at-location plate counterTop)
+  )
+  (:goal
+    (and
+      (at-location potato plate)
+    )
+  )
+)
+```
+
+Problem file generation is done.

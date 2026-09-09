@@ -1,0 +1,18 @@
+(define (problem break_cellphone_problem)
+  (:domain robot1)
+  (:objects
+    robot1 - robot
+    CellPhone - object
+    Desk - object
+  )
+  (:init
+    (at robot1 Desk)
+    (at-location CellPhone Desk)
+    (not (inaction robot1))
+  )
+  (:goal
+    (and
+      (break robot1 CellPhone)
+    )
+  )
+)

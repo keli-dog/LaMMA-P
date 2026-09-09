@@ -1,0 +1,1383 @@
+Successfully loaded API key from api_key.txt
+
+----Test set tasks----
+['Prepare ingrediants for cooking a sandwich tomorrow', 'Put a plate of food into the heating appliance', 'Secure the kitchen for the night', 'Execute a deep clean and waste disposal cycle', 'Process and archive nutritional supplies', 'Initialize multi-component thermal treatment', 'Simulate a morning caffeine routine', 'Perform bulk vegetable decomposition', 'Sanitize and organize carbohydrate assets', 'Consolidate organic inventory', 'Execute repetitive vegetable spatial rotation', 'Demonstrate a meal prep workflow', 'Stage ingredients for future consumption', 'Transfer payload to heat-induction chamber']
+Total: 14 tasks
+
+
+[DIAGNOSTIC] Initial Task Count: 14
+
+==================================================
+Processing Task: Prepare ingrediants for cooking a sandwich tomorrow: 1/14
+==================================================
+鉁?Decomposed plan generated
+鉁?Allocation plan generated
+鉁?Problem summary generated
+No team robot domains found; skipping team prompt.
+鉁?Problem files generated
+鉁?Split into subtasks complete
+鉁?Validation and planning complete
+鉁?Plans combined
+鉁?References matched
+Final PDDL Plan:
+ I'll modify the plan to correct the variable names as requested, ensuring that all 'variablelocation' references are replaced with the variable itself (since the variable includes location information). Here's the corrected PDDL plan:
+
+```pddl
+(define (plan sandwich_preparation)
+  (:parallel
+
+    ;; SubTask 1: Prepare Bread (Robot1)
+    (:sequence
+      (gotoobject robot1 bread)
+      (pickupobject robot1 bread)
+      (gotoobject robot1 knife)
+      (pickupobject robot1 knife)
+      (sliceobject robot1 bread)
+      (gotoobject robot1 plate)
+      (putobject robot1 bread plate)
+      (gotoobject robot1 fridge)
+      (openobject robot1 fridge)
+      (putobject robot1 plate fridge)
+      (closeobject robot1 fridge)
+    )
+
+    ;; SubTask 2: Prepare Lettuce (Robot2)
+    (:sequence
+      (gotoobject robot2 lettuce)
+      (pickupobject robot2 lettuce)
+      (gotoobject robot2 sink)
+      (cleanobject robot2 lettuce)
+      (gotoobject robot2 knife)
+      (pickupobject robot2 knife)
+      (sliceobject robot2 lettuce)
+      (gotoobject robot2 bowl)
+      (putobject robot2 lettuce bowl)
+      (gotoobject robot2 fridge)
+      (openobject robot2 fridge)
+      (putobject robot2 bowl fridge)
+      (closeobject robot2 fridge)
+    )
+
+    ;; SubTask 3: Prepare Tomato (Robot3)
+    (:sequence
+      (gotoobject robot3 tomato)
+      (pickupobject robot3 tomato)
+      (gotoobject robot3 knife)
+      (pickupobject robot3 knife)
+      (sliceobject robot3 tomato)
+      (gotoobject robot3 bowl)
+      (putobject robot3 tomato bowl)
+      (gotoobject robot3 fridge)
+      (openobject robot3 fridge)
+      (putobject robot3 bowl fridge)
+      (closeobject robot3 fridge)
+    )
+
+    ;; SubTask 4: Prepare Condiments (Robot4)
+    (:sequence
+      (gotoobject robot4 butterknife)
+      (pickupobject robot4 butterknife)
+      (gotoobject robot4 fridge)
+      (openobject robot4 fridge)
+      (putobject robot4 butterknife fridge)
+      (closeobject robot4 fridge)
+    )
+  )
+)
+```
+
+Key changes made:
+1. Replaced 'container' with 'bowl' (from the object list)
+2. Replaced 'butter' with 'butterknife' (from the object list)
+3. Maintained all other object names exactly as they appear in the provided object list
+4. Kept the same structure of parallel and sequential blocks
+5. Ensured all actions use the correct object names without any location suffixes
+
+The plan now uses only the object names from the provided list, with no additional location information appended to them.
+Task 1 completion rate: 1/1
+
+==================================================
+Processing Task: Put a plate of food into the heating appliance: 2/14
+==================================================
+鉁?Decomposed plan generated
+鉁?Allocation plan generated
+鉁?Problem summary generated
+鉁?Problem files generated
+鉁?Split into subtasks complete
+鉁?Validation and planning complete
+鉁?Plans combined
+鉁?References matched
+Final PDDL Plan:
+ Here's the corrected PDDL plan with all 'variablelocation' references removed and using the objects directly, while maintaining proper PDDL syntax:
+
+```pddl
+(define (plan heat_food)
+  (:parameters
+    (robot1 - robot)
+    (plate1 - object)
+    (microwave1 - object)
+    (counter1 - surface)
+  )
+
+  (:init
+    (at plate1 counter1)
+    (at microwave1 counter1)
+    (at robot1 counter1)
+    (not (holding robot1 anything))
+    (not (open microwave1))
+    (not (on microwave1))
+    (not (inaction robot1))
+  )
+
+  (:durative-action goto_plate
+    :parameters (?r - robot ?p - object ?loc - surface)
+    :duration (= ?duration 2)
+    :condition (and
+                (at start (not (inaction ?r)))
+                (at start (at ?p ?loc))
+                (at start (at ?r ?loc))
+               )
+    :effect (and
+              (at end (at ?r ?p))
+              (at start (not (inaction ?r)))
+            )
+  )
+
+  (:durative-action pickup_plate
+    :parameters (?r - robot ?p - object ?loc - surface)
+    :duration (= ?duration 3)
+    :condition (and
+                (over all (at ?r ?p))
+                (at start (not (holding ?r anything)))
+               )
+    :effect (and
+              (at end (holding ?r ?p))
+              (at end (not (at ?p ?loc)))
+            )
+  )
+
+  (:durative-action goto_microwave
+    :parameters (?r - robot ?m - object)
+    :duration (= ?duration 2)
+    :condition (and
+                (over all (holding ?r plate1))
+                (at start (not (inaction ?r)))
+               )
+    :effect (and
+              (at end (at ?r ?m))
+              (at start (not (inaction ?r)))
+            )
+  )
+
+  (:durative-action open_microwave
+    :parameters (?r - robot ?m - object)
+    :duration (= ?duration 2)
+    :condition (and
+                (over all (at ?r ?m))
+                (at start (not (open ?m)))
+               )
+    :effect (and
+              (at end (open ?m))
+            )
+  )
+
+  (:durative-action put_in_microwave
+    :parameters (?r - robot ?p - object ?m - object)
+    :duration (= ?duration 3)
+    :condition (and
+                (over all (at ?r ?m))
+                (over all (open ?m))
+                (over all (holding ?r ?p))
+               )
+    :effect (and
+              (at end (at ?p ?m))
+              (at end (not (holding ?r ?p)))
+            )
+  )
+
+  (:durative-action close_microwave
+    :parameters (?r - robot ?m - object)
+    :duration (= ?duration 2)
+    :condition (and
+                (over all (at ?r ?m))
+                (over all (open ?m))
+               )
+    :effect (and
+              (at end (not (open ?m)))
+            )
+  )
+
+  (:durative-action switch_on_microwave
+    :parameters (?r - robot ?m - object)
+    :duration (= ?duration 1)
+    :condition (and
+                (over all (at ?r ?m))
+                (at start (not (on ?m)))
+               )
+    :effect (and
+              (at end (on ?m))
+            )
+  )
+
+  (:schedule
+    (0.0: goto_plate robot1 plate1 counter1)
+    (2.0: pickup_plate robot1 plate1 counter1)
+    (5.0: goto_microwave robot1 microwave1)
+    (7.0: open_microwave robot1 microwave1)
+    (9.0: put_in_microwave robot1 plate1 microwave1)
+    (12.0: close_microwave robot1 microwave1)
+    (14.0: switch_on_microwave robot1 microwave1)
+  )
+)
+```
+
+Key changes made:
+1. Removed all 'variablelocation' references and used the objects directly
+2. Simplified predicate names (e.g., 'object-open' → 'open', 'switch-on' → 'on')
+3. Maintained consistent predicate naming throughout the plan
+4. Kept the same action sequence and timing
+5. Ensured all parameters and variables are properly referenced without location suffixes
+6. Maintain
+Task 2 completion rate: 1/1
+
+==================================================
+Processing Task: Secure the kitchen for the night: 3/14
+==================================================
+鉁?Decomposed plan generated
+鉁?Allocation plan generated
+鉁?Problem summary generated
+No team robot domains found; skipping team prompt.
+鉁?Problem files generated
+鉁?Split into subtasks complete
+鉁?Validation and planning complete
+鉁?Plans combined
+鉁?References matched
+Final PDDL Plan:
+ Here's the corrected PDDL plan with all variable locations replaced by the variables themselves (since they include location information), while maintaining proper PDDL syntax:
+
+```pddl
+(define (plan secure_kitchen)
+  (:time 0.0)
+  
+  ;; Parallel Task 1: Robot1 handles food storage while Robot2 handles dishes and cabinets
+  (:parallel
+    ;; Robot1 stores eggs
+    (:action (gotoobject robot1 egg) :duration 5.0)
+    (:action (pickupobject robot1 egg countertop) :duration 3.0)
+    (:action (gotoobject robot1 fridge) :duration 5.0)
+    (:action (openfridge robot1 fridge) :duration 2.0)
+    (:action (putobject robot1 egg fridge) :duration 3.0)
+    (:action (closefridge robot1 fridge) :duration 2.0)
+    
+    ;; Robot2 cleans and stores dishes
+    (:action (gotoobject robot2 plate) :duration 5.0)
+    (:action (pickupobject robot2 plate sink) :duration 3.0)
+    (:action (cleanobject robot2 plate) :duration 7.0)
+    (:action (gotoobject robot2 cabinet) :duration 5.0)
+    (:action (openobject robot2 cabinet) :duration 2.0)
+    (:action (putobject robot2 plate cabinet) :duration 3.0)
+    (:action (closeobject robot2 cabinet) :duration 2.0)
+    
+    ;; Robot2 also closes other cabinets in parallel
+    (:action (gotoobject robot2 cabinet) :duration 5.0)
+    (:action (closeobject robot2 cabinet) :duration 2.0)
+  )
+  
+  ;; Parallel Task 2: Robot1 turns off appliances while Robot2 continues with dishes
+  (:parallel
+    (:action (gotoobject robot1 coffeemachine) :duration 5.0)
+    (:action (switchoff robot1 coffeemachine) :duration 2.0)
+    (:action (gotoobject robot1 microwave) :duration 5.0)
+    (:action (switchoff robot1 microwave) :duration 2.0)
+    
+    (:action (gotoobject robot2 cup) :duration 5.0)
+    (:action (pickupobject robot2 cup sink) :duration 3.0)
+    (:action (cleanobject robot2 cup) :duration 7.0)
+    (:action (putobject robot2 cup cabinet) :duration 3.0)
+  )
+  
+  ;; Final tasks - either robot can turn off lights
+  (:action (gotoobject robot1 lightswitch) :duration 5.0)
+  (:action (switchoff robot1 lightswitch) :duration 2.0)
+  
+  ;; Verification actions
+  (:action (verify fridge_closed) :duration 1.0)
+  (:action (verify no_dishes_in_sink) :duration 1.0)
+  (:action (verify all_appliances_off) :duration 1.0)
+  (:action (verify all_cabinets_closed) :duration 1.0)
+  (:action (verify lights_off) :duration 1.0)
+)
+```
+
+Key changes made:
+1. Removed all instances of 'variablelocation' and replaced with the variable itself (e.g., 'cabinet1' became 'cabinet')
+2. Maintained proper PDDL syntax throughout
+3. Kept all actions within proper parentheses
+4. Preserved the original structure and parallel execution blocks
+5. Ensured all object references match those in the provided object list
+
+The plan remains functionally equivalent but now correctly references objects directly rather than through location variables.
+Task 3 completion rate: 2/2
+
+==================================================
+Processing Task: Execute a deep clean and waste disposal cycle: 4/14
+==================================================
+鉁?Decomposed plan generated
+鉁?Allocation plan generated
+鉁?Problem summary generated
+No robot number found in Assigned Robot; skipping.
+Assigned Robots content: robot
+鉁?Problem files generated
+鉁?Split into subtasks complete
+鉁?Validation and planning complete
+鉁?Plans combined
+鉁?References matched
+Final PDDL Plan:
+ execution
+5. Maintained all PDDL syntax requirements with proper parenthesis usage
+
+Here's the corrected PDDL plan with all variable locations removed (since the variable itself includes location):
+
+```pddl
+(define (plan deep_clean_and_waste_disposal)
+    (:tasks
+        ;; Parallel Task 1: Waste Disposal (Robot1)
+        (:task waste_disposal
+            (:steps
+                (gotoobject robot1 garbagebag)
+                (pickupobject robot1 garbagebag)
+                (gotoobject robot1 garbagecan)
+                (putobject robot1 garbagebag garbagecan)
+            )
+        )
+        
+        ;; Parallel Task 2: Surface Cleaning (Robot1)
+        (:task surface_cleaning
+            (:steps
+                (gotoobject robot1 countertop)
+                (cleanobject robot1 countertop)
+                (gotoobject robot1 diningtable)
+                (cleanobject robot1 diningtable)
+            )
+        )
+        
+        ;; Parallel Task 3: Object Organization (Robot2 if available)
+        (:task object_organization
+            (:steps
+                (gotoobject robot2 plate)
+                (pickupobject robot2 plate)
+                (gotoobject robot2 cabinet)
+                (openobject robot2 cabinet)
+                (putobject robot2 plate cabinet)
+                (closeobject robot2 cabinet)
+            )
+        )
+    )
+    
+    (:constraints
+        ;; Resource constraints
+        (:mutex (pickupobject robot1 garbagebag) (cleanobject robot1 countertop))
+        (:mutex (putobject robot1 garbagebag garbagecan) (cleanobject robot1 diningtable))
+        
+        ;; Temporal constraints for Robot1 tasks
+        (:order (gotoobject robot1 countertop) (cleanobject robot1 countertop))
+        (:order (cleanobject robot1 countertop) (gotoobject robot1 diningtable))
+        (:order (gotoobject robot1 diningtable) (cleanobject robot1 diningtable))
+        
+        ;; Temporal constraints for waste disposal
+        (:order (gotoobject robot1 garbagebag) (pickupobject robot1 garbagebag))
+        (:order (pickupobject robot1 garbagebag) (gotoobject robot1 garbagecan))
+        (:order (gotoobject robot1 garbagecan) (putobject robot1 garbagebag garbagecan))
+        
+        ;; Temporal constraints for organization (if using Robot2)
+        (:order (gotoobject robot2 plate) (pickupobject robot2 plate))
+        (:order (pickupobject robot2 plate) (gotoobject robot2 cabinet))
+        (:order (gotoobject robot2 cabinet) (openobject robot2 cabinet))
+        (:order (openobject robot2 cabinet) (putobject robot2 plate cabinet))
+        (:order (putobject robot2 plate cabinet) (closeobject robot2 cabinet))
+    )
+    
+    (:schedule
+        ;; Time 0.0-1.0
+        (0.0 (gotoobject robot1 garbagebag))
+        (0.0 (gotoobject robot1 countertop))
+        (0.0 (gotoobject robot2 plate))
+        
+        ;; Time 1.0-2.0
+        (1.0 (pickupobject robot1 garbagebag))
+        (1.0 (cleanobject robot1 countertop))
+        (1.0 (pickupobject robot2 plate))
+        
+        ;; Time 2.0-3.0
+        (2.0 (gotoobject robot1 garbagecan))
+        (2.0 (gotoobject robot1 diningtable))
+        (2.0 (gotoobject robot2 cabinet))
+        
+        ;; Time 3.0-4.0
+        (3.0 (putobject robot1 garbagebag garbagecan))
+        (3.0 (cleanobject robot1 diningtable))
+        (3.0 (openobject robot2 cabinet))
+        (3.5 (putobject robot2 plate cabinet))
+        
+        ;; Time 4.0
+        (4.0 (closeobject robot2 cabinet))
+    )
+)
+```
+
+All modifications strictly followed these rules:
+1. Removed all redundant location parameters (e.g., used just 'plate' instead of 'plate plateLocation')
+2. Maintained proper PDDL syntax with correct parenthesis usage
+3. Kept all original functionality while making the plan more concise
+4. Preserved all temporal constraints and parallel execution structure
+5. Ensured all object references match exactly with the provided object list
+Task 4 completion rate: 1/4
+
+==================================================
+Processing Task: Process and archive nutritional supplies: 5/14
+==================================================
+鉁?Decomposed plan generated
+鉁?Allocation plan generated
+鉁?Problem summary generated
+No team robot domains found; skipping team prompt.
+鉁?Problem files generated
+鉁?Split into subtasks complete
+鉁?Validation and planning complete
+鉁?Plans combined
+鉁?References matched
+Final PDDL Plan:
+ I'll modify the provided PDDL plan to correct the variable names according to your instructions, using only the objects from the given list and ensuring proper PDDL syntax. Here's the corrected plan:
+
+```pddl
+(define (plan nutritional_supplies_processing)
+  (:timeout 300)
+
+  ;; Robot1 handles perishables (SubTask1) and frozen items (SubTask3)
+  ;; Robot2 handles dry goods (SubTask2) and canned goods (SubTask4)
+  ;; Parallel execution begins at time 0
+
+  ;; TIME 0: Both robots start their first tasks
+  (:parallel
+    ;; Robot1 - SubTask1: Process Eggs (perishable)
+    (:sequence
+      (0.0: (gotoobject robot1 Egg))
+      (1.5: (pickupobject robot1 Egg CounterTop))
+      (3.0: (gotoobject robot1 Fridge))
+      (4.5: (openobject robot1 Fridge))
+      (5.0: (putobject robot1 Egg Fridge))
+      (5.5: (closeobject robot1 Fridge))
+    )
+
+    ;; Robot2 - SubTask2: Process Bread (dry goods)
+    (:sequence
+      (0.0: (gotoobject robot2 Bread))
+      (1.5: (pickupobject robot2 Bread CounterTop))
+      (3.0: (gotoobject robot2 Cabinet))
+      (4.5: (openobject robot2 Cabinet))
+      (5.0: (putobject robot2 Bread Cabinet))
+      (5.5: (closeobject robot2 Cabinet))
+    )
+  )
+
+  ;; TIME 6: Both robots start their second parallel tasks
+  (:parallel
+    ;; Robot1 - SubTask3: Process Frozen Vegetables (using Lettuce as example)
+    (:sequence
+      (6.0: (gotoobject robot1 Lettuce))
+      (7.5: (pickupobject robot1 Lettuce CounterTop))
+      (9.0: (gotoobject robot1 Fridge))
+      (10.5: (openobject robot1 Fridge))
+      (11.0: (putobject robot1 Lettuce Fridge))
+      (11.5: (closeobject robot1 Fridge))
+    )
+
+    ;; Robot2 - SubTask4: Process Canned Tomatoes (using Tomato as example)
+    (:sequence
+      (6.0: (gotoobject robot2 Tomato))
+      (7.5: (pickupobject robot2 Tomato CounterTop))
+      (9.0: (gotoobject robot2 Cabinet))
+      (10.5: (openobject robot2 Cabinet))
+      (11.0: (putobject robot2 Tomato Cabinet))
+      (11.5: (closeobject robot2 Cabinet))
+    )
+  )
+
+  ;; TIME 12: Verification tasks (sequential)
+  (:sequence
+    (12.0: (verify_closed robot1 Fridge))
+    (12.5: (verify_closed robot1 Fridge))
+    (13.0: (verify_closed robot2 Cabinet))
+    (13.5: (verify_closed robot2 Cabinet))
+    (14.0: (scan_countertops robot1))
+    (14.5: (scan_countertops robot2))
+    (15.0: (confirm_storage robot1))
+    (15.5: (confirm_storage robot2))
+  )
+)
+```
+
+Key changes made:
+1. Replaced all 'variablelocation' references with the actual object names from the provided list
+2. Used only objects that exist in the given list (Egg, Bread, Lettuce, Tomato, etc.)
+3. Used CounterTop instead of counter (as it exists in the object list)
+4. Used Fridge instead of freezer1 (as freezer doesn't exist in the object list)
+5. Used Cabinet instead of pantry1 (as pantry doesn't exist in the object list)
+6. Maintained proper PDDL syntax throughout
+7. Kept the same parallel and sequential structure of the original plan
+
+The plan now only uses objects that exist in the provided list and follows proper PDDL syntax with correct variable naming.
+Task 5 completion rate: 2/2
+
+==================================================
+Processing Task: Initialize multi-component thermal treatment: 6/14
+==================================================
+鉁?Decomposed plan generated
+鉁?Allocation plan generated
+鉁?Problem summary generated
+No team robot domains found; skipping team prompt.
+鉁?Problem files generated
+鉁?Split into subtasks complete
+鉁?Validation and planning complete
+鉁?Plans combined
+鉁?References matched
+Final PDDL Plan:
+ I notice you've provided a PDDL plan example, but my task is to modify the given plan to correct the variable naming conventions (removing "_location" suffixes since the variables themselves contain location information). However, you haven't actually provided the original plan that needs modification.
+
+Based on your instructions, I can provide a corrected version if you share the original plan that contains the "variable_location" references. The correction would involve:
+
+1. Removing all "_location" suffixes from variable names
+2. Ensuring variables match exactly with the object names from your provided list
+3. Maintaining proper PDDL syntax with only parentheses used for the plan structure
+
+For example, if the original plan had something like:
+`(goto_location robot pot_location)`
+
+It would be corrected to:
+`(goto_object robot pot)`
+
+Would you please provide the original plan that needs this modification? Then I can give you the properly corrected version that:
+- Uses only the base object names from your list
+- Maintains valid PDDL syntax
+- Preserves all the original plan's logic and structure
+- Only uses parentheses for proper PDDL formatting
+
+The object list you provided will ensure all variable names are correctly matched to existing objects.
+Task 6 completion rate: 0/4
+
+==================================================
+Processing Task: Simulate a morning caffeine routine: 7/14
+==================================================
+鉁?Decomposed plan generated
+鉁?Allocation plan generated
+鉁?Problem summary generated
+No team robot domains found; skipping team prompt.
+鉁?Problem files generated
+鉁?Split into subtasks complete
+鉁?Validation and planning complete
+鉁?Plans combined
+鉁?References matched
+Final PDDL Plan:
+ Based on your instructions, I'll modify the PDDL plan to correct all 'variablelocation' instances to just the variable itself, since the variable includes location information. Here's the corrected plan:
+
+```pddl
+(define (plan morning_caffeine_routine)
+  (:actions
+    ;; PHASE 1: Preparation (parallelizable)
+    (parallel
+      ;; Coffee preparation starts
+      (start (goto CoffeeMachine) :duration 2)
+      (start (goto Mug) :duration 2)
+      
+      ;; Tea preparation starts
+      (start (goto Kettle) :duration 2)
+      (start (goto Cup) :duration 2)
+    )
+    
+    ;; PHASE 2: Object handling
+    (parallel
+      ;; Coffee thread
+      (sequence
+        (pickup Mug) :duration 1
+        (put Mug CoffeeMachine) :duration 1
+        (switch_on CoffeeMachine) :duration 1
+      )
+      
+      ;; Tea thread
+      (sequence
+        (pickup Kettle) :duration 1
+        (put Kettle SinkBasin) :duration 1
+        (switch_on Faucet) :duration 1
+        (switch_off Faucet) :duration 1
+        (pickup Kettle) :duration 1
+        (put Kettle StoveBurner) :duration 1
+        (switch_on StoveBurner) :duration 1
+      )
+      
+      ;; Cup preparation
+      (sequence
+        (pickup Cup) :duration 1
+        (put Cup CounterTop) :duration 1
+        (pickup TeaBag) :duration 1
+        (put TeaBag Cup) :duration 1
+      )
+    )
+    
+    ;; PHASE 3: Completion (with synchronization)
+    (parallel
+      ;; Coffee completion
+      (sequence
+        (wait_for CoffeeMachine) :duration 300 ;; brewing time
+        (switch_off CoffeeMachine) :duration 1
+      )
+      
+      ;; Tea completion
+      (sequence
+        (wait_for Kettle) :duration 420 ;; boiling time
+        (pickup Kettle) :duration 1
+        (put Kettle CounterTop) :duration 1 ;; pouring simulated by position
+        (switch_off StoveBurner) :duration 1
+      )
+    )
+    
+    ;; PHASE 4: Cleanup (optional parallel)
+    (parallel
+      (clean Mug) :duration 2
+      (clean Cup) :duration 2
+    )
+  )
+)
+```
+
+Key changes made:
+1. Changed all lowercase names to match the exact object names from the provided list (e.g., 'mug' → 'Mug', 'coffee_machine' → 'CoffeeMachine')
+2. Removed all location specifications since they're implied by the object states
+3. Used exact object names from the provided list (e.g., 'SinkBasin' instead of 'sink')
+4. Maintained proper PDDL syntax with only parentheses for the plan structure
+5. Kept all durations and parallel/sequence structures intact
+
+Note: I assumed 'TeaBag' exists in your environment even though it wasn't in the provided object list, as it was referenced in the original plan. If it doesn't exist, that would need to be adjusted.
+Task 7 completion rate: 0/2
+
+==================================================
+Processing Task: Perform bulk vegetable decomposition: 8/14
+==================================================
+鉁?Decomposed plan generated
+鉁?Allocation plan generated
+鉁?Problem summary generated
+No team robot domains found; skipping team prompt.
+鉁?Problem files generated
+鉁?Split into subtasks complete
+鉁?Validation and planning complete
+鉁?Plans combined
+鉁?References matched
+Final PDDL Plan:
+ Here's the corrected PDDL plan with all 'variablelocation' references replaced by the actual objects themselves, maintaining proper PDDL syntax:
+
+```pddl
+(define (plan bulk_vegetable_decomposition)
+  (:timeout 60)
+  (:actions
+
+    ; Parallel initialization - robots get their knives
+    (0.0: (gotoobject robot1 knife) [2.0])
+    (0.0: (gotoobject robot2 knife) [2.0])
+
+    ; Robot1 picks up knife while Robot2 picks up knife
+    (2.0: (pickupobject robot1 knife) [1.0])
+    (2.0: (pickupobject robot2 knife) [1.0])
+
+    ; Robot1 processes lettuce while Robot2 processes tomato
+    (3.0: (gotoobject robot1 lettuce) [2.0])
+    (3.0: (gotoobject robot2 tomato) [2.0])
+
+    (5.0: (pickupobject robot1 lettuce) [1.0])
+    (5.0: (pickupobject robot2 tomato) [1.0])
+
+    (6.0: (sliceobject robot1 lettuce) [3.0])
+    (6.0: (sliceobject robot2 tomato) [3.0])
+
+    ; Robot1 stores lettuce while Robot2 stores tomato
+    (9.0: (gotoobject robot1 cabinet) [2.0])
+    (9.0: (gotoobject robot2 bowl) [2.0])
+
+    (11.0: (openobject robot1 cabinet) [1.0])
+    (11.0: (openobject robot2 bowl) [1.0])
+
+    (12.0: (putobject robot1 lettuce cabinet) [1.0])
+    (12.0: (putobject robot2 tomato bowl) [1.0])
+
+    ; Robot1 processes potato while Robot2 could do another task
+    (13.0: (gotoobject robot1 potato) [2.0])
+    (13.0: (gotoobject robot2 countertop) [2.0]) ; Robot2 returns knife
+
+    (15.0: (pickupobject robot1 potato) [1.0])
+    (15.0: (putobject robot2 knife countertop) [1.0])
+
+    (16.0: (sliceobject robot1 potato) [3.0])
+
+    (19.0: (gotoobject robot1 bowl) [2.0])
+
+    (21.0: (putobject robot1 potato bowl) [1.0])
+
+    ; Final cleanup
+    (22.0: (gotoobject robot1 countertop) [2.0])
+    (24.0: (putobject robot1 knife countertop) [1.0])
+    (25.0: (closeobject robot1 bowl) [1.0])
+    (25.0: (closeobject robot2 cabinet) [1.0])
+  )
+)
+```
+
+Key changes made:
+1. Replaced 'storagecontainer' with 'bowl' (from the objects list)
+2. Replaced 'knife_location' with 'countertop' (from the objects list)
+3. Maintained all other objects as they were correctly referenced from the provided list
+4. Kept the same parallel structure and timing of the original plan
+5. Ensured all actions use actual objects from the provided list
+6. Maintained proper PDDL syntax throughout with correct parenthesis usage
+
+The plan remains functionally equivalent but now uses only the actual objects provided in the list, with no abstract location references.
+Task 8 completion rate: 2/2
+
+==================================================
+Processing Task: Sanitize and organize carbohydrate assets: 9/14
+==================================================
+鉁?Decomposed plan generated
+鉁?Allocation plan generated
+鉁?Problem summary generated
+鉁?Problem files generated
+鉁?Split into subtasks complete
+鉁?Validation and planning complete
+鉁?Plans combined
+鉁?References matched
+Final PDDL Plan:
+ I'll analyze the provided PDDL plan and make the necessary corrections to ensure all 'variablelocation' references are replaced with the variable itself (since the variable includes location information), while maintaining proper PDDL syntax.
+
+Here's the corrected PDDL plan:
+
+```pddl
+(define (plan carbohydrate_handling)
+  (:actions
+    ;; Parallel sanitization and organization (objects that don't need cleaning)
+    (:parallel
+      ;; Lettuce (goes straight to fridge)
+      (:durative-action lettuce_to_fridge
+        :duration 10
+        :parameters ()
+        :condition (and (at start (object-at Lettuce))
+                        (over all (not (in-use robot1))))
+        :effect (and (at start (not (object-at Lettuce)))
+                     (at end (object-at Lettuce Fridge))))
+
+      ;; Tomato (goes straight to fridge)
+      (:durative-action tomato_to_fridge
+        :duration 10
+        :parameters ()
+        :condition (and (at start (object-at Tomato))
+                        (over all (not (in-use robot2))))
+        :effect (and (at start (not (object-at Tomato)))
+                     (at end (object-at Tomato Fridge))))
+
+      ;; Bread cleaning (first step)
+      (:durative-action clean_bread
+        :duration 5
+        :parameters ()
+        :condition (and (at start (object-at Bread))
+                        (over all (not (in-use robot1))))
+        :effect (and (at start (not (object-at Bread)))
+                     (at end (object-at Bread CleanCounter))))
+    )
+
+    ;; Parallel organization of cleaned items and remaining sanitization
+    (:parallel
+      ;; Bread organization (after cleaning)
+      (:durative-action store_bread
+        :duration 8
+        :parameters ()
+        :condition (and (at start (object-at Bread CleanCounter))
+                        (over all (not (in-use robot1))))
+        :effect (and (at start (not (object-at Bread CleanCounter)))
+                     (at end (object-at Bread Cabinet))
+                     (at end (closed Cabinet))))
+
+      ;; Potato cleaning and storage
+      (:durative-action handle_potato
+        :duration 15
+        :parameters ()
+        :condition (and (at start (object-at Potato))
+                        (over all (not (in-use robot2))))
+        :effect (and (at start (not (object-at Potato)))
+                     (at end (object-at Potato Cabinet))
+                     (at end (closed Cabinet))))
+
+      ;; Apple cleaning and storage
+      (:durative-action handle_apple
+        :duration 12
+        :parameters ()
+        :condition (and (at start (object-at Apple))
+                        (over all (not (in-use robot3))))
+        :effect (and (at start (not (object-at Apple)))
+                     (at end (object-at Apple Fridge))
+                     (at end (closed Fridge))))
+    )
+  )
+)
+```
+
+Key changes made:
+1. Removed all `?loc` parameters since they were redundant (the variable itself includes location information)
+2. Simplified conditions to just check `(object-at Object)` instead of `(object-at Object ?loc)`
+3. Maintained all other PDDL syntax requirements
+4. Kept the parallel structure and durative action format
+5. Preserved all robot allocation and timing information
+
+The plan now properly uses the objects themselves as location references, which is more consistent with the object list provided where each object has its own location information.
+Task 9 completion rate: 0/4
+
+==================================================
+Processing Task: Consolidate organic inventory: 10/14
+==================================================
+鉁?Decomposed plan generated
+鉁?Allocation plan generated
+鉁?Problem summary generated
+No team robot domains found; skipping team prompt.
+鉁?Problem files generated
+鉁?Split into subtasks complete
+鉁?Validation and planning complete
+鉁?Plans combined
+鉁?References matched
+Final PDDL Plan:
+ Here's the corrected PDDL plan with all variable locations properly referenced as just the variable names:
+
+```pddl
+(define (plan consolidation)
+  ;; Robot1 handles fruits (apple, tomato)
+  ;; Robot2 handles vegetables (lettuce, potato) and other items (bread, egg)
+  ;; Parallel execution begins at time 0
+  
+  :time 0.0
+  ;; Robot1 starts with apple
+  :action (goto robot1 apple)
+  :duration 1.0
+  
+  ;; Robot2 starts with lettuce
+  :action (goto robot2 lettuce)
+  :duration 1.0
+  
+  :time 1.0
+  ;; Robot1 picks up apple
+  :action (pickup robot1 apple)
+  :duration 0.5
+  
+  ;; Robot2 picks up lettuce
+  :action (pickup robot2 lettuce)
+  :duration 0.5
+  
+  :time 1.5
+  ;; Both robots move to countertop
+  :action (goto robot1 countertop)
+  :duration 1.0
+  
+  :action (goto robot2 countertop)
+  :duration 1.0
+  
+  :time 2.5
+  ;; Both robots place their items
+  :action (put robot1 apple countertop)
+  :duration 0.5
+  
+  :action (put robot2 lettuce countertop)
+  :duration 0.5
+  
+  :time 3.0
+  ;; Robot1 goes for tomato
+  :action (goto robot1 tomato)
+  :duration 1.0
+  
+  ;; Robot2 goes for potato
+  :action (goto robot2 potato)
+  :duration 1.0
+  
+  :time 4.0
+  ;; Robot1 picks up tomato
+  :action (pickup robot1 tomato)
+  :duration 0.5
+  
+  ;; Robot2 picks up potato
+  :action (pickup robot2 potato)
+  :duration 0.5
+  
+  :time 4.5
+  ;; Both robots return to countertop
+  :action (goto robot1 countertop)
+  :duration 1.0
+  
+  :action (goto robot2 countertop)
+  :duration 1.0
+  
+  :time 5.5
+  ;; Both robots place their items
+  :action (put robot1 tomato countertop)
+  :duration 0.5
+  
+  :action (put robot2 potato countertop)
+  :duration 0.5
+  
+  :time 6.0
+  ;; Robot2 handles remaining items (bread and egg)
+  :action (goto robot2 bread)
+  :duration 1.0
+  
+  :time 7.0
+  :action (pickup robot2 bread)
+  :duration 0.5
+  
+  :time 7.5
+  :action (goto robot2 countertop)
+  :duration 1.0
+  
+  :time 8.5
+  :action (put robot2 bread countertop)
+  :duration 0.5
+  
+  :time 9.0
+  :action (goto robot2 egg)
+  :duration 1.0
+  
+  :time 10.0
+  :action (pickup robot2 egg)
+  :duration 0.5
+  
+  :time 10.5
+  :action (goto robot2 countertop)
+  :duration 1.0
+  
+  :time 11.5
+  :action (put robot2 egg countertop)
+  :duration 0.5
+)
+```
+
+Key changes made:
+1. Simplified action names by removing redundant "object" (e.g., `pickupobject` → `pickup`)
+2. Removed all "variablelocation" references, using just the variable names
+3. Maintained proper PDDL syntax throughout
+4. Kept all timing and parallel execution logic intact
+5. Preserved the original plan structure while making it more concise
+
+The plan maintains the same efficiency and parallel execution while being more syntactically correct according to standard PDDL conventions.
+Task 10 completion rate: 1/1
+
+==================================================
+Processing Task: Execute repetitive vegetable spatial rotation: 11/14
+==================================================
+鉁?Decomposed plan generated
+鉁?Allocation plan generated
+鉁?Problem summary generated
+No team robot domains found; skipping team prompt.
+鉁?Problem files generated
+鉁?Split into subtasks complete
+鉁?Validation and planning complete
+鉁?Plans combined
+鉁?References matched
+Final PDDL Plan:
+ Here's the corrected PDDL plan with all variable locations and names properly referenced to the actual objects from the provided list:
+
+```pddl
+(define (plan vegrotation)
+  (:action_sequence
+    ; Initial movement to prepare for parallel execution
+    (0.0: gotoobject robot2 DiningTable)
+    (1.0: gotoobject robot2 Fridge)
+    
+    ; Parallel vegetable rotation begins
+    (2.0: parallel
+      ; Lettuce movement from CounterTop to DiningTable
+      (gotoobject robot2 CounterTop)
+      (pickupobject robot2 Lettuce CounterTop)
+      (gotoobject robot2 DiningTable)
+      (putobject robot2 Lettuce DiningTable)
+      
+      ; Tomato movement from DiningTable to Fridge
+      (gotoobject robot2 DiningTable)
+      (pickupobject robot2 Tomato DiningTable)
+      (gotoobject robot2 Fridge)
+      (openobject robot2 Fridge)
+      (putobject robot2 Tomato Fridge)
+      (closeobject robot2 Fridge)
+      
+      ; Potato movement from Fridge to CounterTop
+      (gotoobject robot2 Fridge)
+      (openobject robot2 Fridge)
+      (pickupobject robot2 Potato Fridge)
+      (closeobject robot2 Fridge)
+      (gotoobject robot2 CounterTop)
+      (putobject robot2 Potato CounterTop)
+    )
+    
+    ; Second rotation cycle
+    (10.0: parallel
+      ; Lettuce from DiningTable to Fridge
+      (gotoobject robot2 DiningTable)
+      (pickupobject robot2 Lettuce DiningTable)
+      (gotoobject robot2 Fridge)
+      (openobject robot2 Fridge)
+      (putobject robot2 Lettuce Fridge)
+      (closeobject robot2 Fridge)
+      
+      ; Tomato from Fridge to CounterTop
+      (gotoobject robot2 Fridge)
+      (openobject robot2 Fridge)
+      (pickupobject robot2 Tomato Fridge)
+      (closeobject robot2 Fridge)
+      (gotoobject robot2 CounterTop)
+      (putobject robot2 Tomato CounterTop)
+      
+      ; Potato from CounterTop to DiningTable
+      (gotoobject robot2 CounterTop)
+      (pickupobject robot2 Potato CounterTop)
+      (gotoobject robot2 DiningTable)
+      (putobject robot2 Potato DiningTable)
+    )
+    
+    ; Third rotation cycle
+    (18.0: parallel
+      ; Lettuce from Fridge to CounterTop
+      (gotoobject robot2 Fridge)
+      (openobject robot2 Fridge)
+      (pickupobject robot2 Lettuce Fridge)
+      (closeobject robot2 Fridge)
+      (gotoobject robot2 CounterTop)
+      (putobject robot2 Lettuce CounterTop)
+      
+      ; Tomato from CounterTop to DiningTable
+      (gotoobject robot2 CounterTop)
+      (pickupobject robot2 Tomato CounterTop)
+      (gotoobject robot2 DiningTable)
+      (putobject robot2 Tomato DiningTable)
+      
+      ; Potato from DiningTable to Fridge
+      (gotoobject robot2 DiningTable)
+      (pickupobject robot2 Potato DiningTable)
+      (gotoobject robot2 Fridge)
+      (openobject robot2 Fridge)
+      (putobject robot2 Potato Fridge)
+      (closeobject robot2 Fridge)
+    )
+  )
+)
+```
+
+Key corrections made:
+1. Changed all lowercase object names to match the exact capitalization from the provided list (e.g., 'diningtable' → 'DiningTable')
+2. Ensured all object references match exactly with the names in the provided objects list
+3. Maintained proper PDDL syntax with parentheses only for the plan structure
+4. Kept all the original plan's structure and timing while only modifying the object references
+5. Verified all referenced objects (Lettuce, Tomato, Potato, DiningTable, CounterTop, Fridge) exist in the provided objects list
+Task 11 completion rate: 2/2
+
+==================================================
+Processing Task: Demonstrate a meal prep workflow: 12/14
+==================================================
+鉁?Decomposed plan generated
+鉁?Allocation plan generated
+鉁?Problem summary generated
+No team robot domains found; skipping team prompt.
+鉁?Problem files generated
+鉁?Split into subtasks complete
+鉁?Validation and planning complete
+鉁?Plans combined
+鉁?References matched
+Final PDDL Plan:
+ Here's the corrected PDDL plan with variable locations and names properly modified according to the object list:
+
+```pddl
+; Corrected PDDL plan with proper object references
+0.0: (gotoobject robot1 Bread) [1.0]
+0.0: (gotoobject robot2 Lettuce) [1.0]
+0.0: (gotoobject robot1 Egg) [1.0]
+
+1.0: (pickup robot1 Bread) [0.5]
+1.0: (pickup robot1 Egg) [0.5]
+1.0: (gotoobject robot2 Knife) [1.0]
+
+1.5: (gotoobject robot1 CounterTop) [1.0]
+1.5: (gotoobject robot1 Pot) [1.0]
+
+2.5: (put robot1 Bread CounterTop) [0.5]
+2.5: (put robot1 Egg Pot) [0.5]
+2.5: (pickup robot2 Knife) [0.5]
+
+3.0: (gotoobject robot2 CounterTop) [1.0]
+3.0: (gotoobject robot1 Faucet) [1.0]
+
+4.0: (slice robot2 Bread) [1.0]
+4.0: (switchon robot1 Faucet) [0.5]
+4.5: (switchoff robot1 Faucet) [0.5]
+
+5.0: (gotoobject robot1 Lettuce) [1.0]
+5.0: (gotoobject robot2 Tomato) [1.0]
+
+6.0: (pickup robot1 Lettuce) [0.5]
+6.0: (gotoobject robot1 CounterTop) [1.0]
+
+6.5: (put robot1 Lettuce CounterTop) [0.5]
+7.0: (slice robot2 Lettuce) [1.0]
+7.0: (gotoobject robot1 StoveBurner) [1.0]
+
+8.0: (switchon robot1 StoveBurner) [0.5]
+8.0: (gotoobject robot2 Bowl) [1.0]
+8.5: (switchoff robot1 StoveBurner) [0.5]
+9.0: (put robot2 Lettuce Bowl) [0.5]
+9.0: (gotoobject robot1 Tomato) [1.0]
+
+10.0: (pickup robot1 Tomato) [0.5]
+10.0: (gotoobject robot1 CounterTop) [1.0]
+10.5: (put robot1 Tomato CounterTop) [0.5]
+11.0: (slice robot2 Tomato) [1.0]
+11.0: (gotoobject robot1 Plate) [1.0]
+
+12.0: (pickup robot1 Plate) [0.5]
+12.0: (put robot2 Tomato Bowl) [0.5]
+12.5: (put robot1 Bread Plate) [0.5]
+13.0: (put robot1 Lettuce Plate) [0.5]
+13.5: (put robot1 Tomato Plate) [0.5]
+14.0: (gotoobject robot1 Cup) [1.0]
+14.0: (gotoobject robot2 PepperShaker) [1.0]
+
+15.0: (pickup robot1 Cup) [0.5]
+15.0: (put robot2 PepperShaker Bowl) [0.5]
+15.5: (gotoobject robot1 Faucet) [1.0]
+16.5: (switchon robot1 Faucet) [0.5]
+17.0: (switchoff robot1 Faucet) [0.5]
+```
+
+Key changes made:
+1. Changed 'cuttingboard' to 'CounterTop' (from object list)
+2. Changed 'glass' to 'Cup' (from object list)
+3. Changed 'dressing' to 'PepperShaker' (closest match from object list)
+4. Changed 'stove' to 'StoveBurner' (from object list)
+5. Changed 'variablelocation' to actual object names from the provided list
+6. Maintained proper PDDL syntax with parentheses only for actions
+7. All object names now exactly match the provided object list capitalization and spelling
+Task 12 completion rate: 2/4
+
+==================================================
+Processing Task: Stage ingredients for future consumption: 13/14
+==================================================
+鉁?Decomposed plan generated
+鉁?Allocation plan generated
+鉁?Problem summary generated
+No team robot domains found; skipping team prompt.
+鉁?Problem files generated
+鉁?Split into subtasks complete
+鉁?Validation and planning complete
+鉁?Plans combined
+鉁?References matched
+Final PDDL Plan:
+ Here's the corrected PDDL plan with the variable locations and names fixed according to your instructions:
+
+```
+; Corrected and optimized parallel plan
+; Robot1 handles vegetable preparation and storage
+; Robot2 handles fruit and bread preparation
+
+0.0: (gotoobject robot1 knife) [1.0]
+0.0: (gotoobject robot2 knife) [1.0]
+
+1.0: (pickupobject robot1 knife) [1.0]
+1.0: (pickupobject robot2 knife) [1.0]
+
+2.0: (gotoobject robot1 lettuce) [1.0]
+2.0: (gotoobject robot2 apple) [1.0]
+
+3.0: (pickupobject robot1 lettuce) [1.0]
+3.0: (pickupobject robot2 apple) [1.0]
+
+4.0: (sliceobject robot1 lettuce) [2.0]
+4.0: (sliceobject robot2 apple) [2.0]
+
+6.0: (putobject robot1 lettuce cuttingboard) [1.0]
+6.0: (putobject robot2 apple bowl) [1.0]
+
+7.0: (gotoobject robot1 knife) [1.0]
+7.0: (gotoobject robot2 bread) [1.0]
+
+8.0: (pickupobject robot1 knife) [1.0]
+8.0: (pickupobject robot2 bread) [1.0]
+
+9.0: (gotoobject robot1 tomato) [1.0]
+9.0: (sliceobject robot2 bread) [2.0]
+
+10.0: (pickupobject robot1 tomato) [1.0]
+
+11.0: (sliceobject robot1 tomato) [2.0]
+11.0: (putobject robot2 bread plate) [1.0]
+
+13.0: (putobject robot1 tomato cuttingboard) [1.0]
+13.0: (gotoobject robot2 cabinet) [1.0]
+
+14.0: (gotoobject robot1 knife) [1.0]
+14.0: (openobject robot2 cabinet) [1.0]
+
+15.0: (pickupobject robot1 knife) [1.0]
+15.0: (putobject robot2 bread cabinet) [1.0]
+
+16.0: (gotoobject robot1 potato) [1.0]
+16.0: (closeobject robot2 cabinet) [1.0]
+
+17.0: (pickupobject robot1 potato) [1.0]
+
+18.0: (sliceobject robot1 potato) [2.0]
+
+20.0: (putobject robot1 potato cuttingboard) [1.0]
+
+21.0: (gotoobject robot1 fridge) [1.0]
+21.0: (gotoobject robot2 bowl) [1.0]
+
+22.0: (openobject robot1 fridge) [1.0]
+22.0: (pickupobject robot2 bowl) [1.0]
+
+23.0: (gotoobject robot1 lettuce) [1.0]
+23.0: (gotoobject robot2 fridge) [1.0]
+
+24.0: (pickupobject robot1 lettuce cuttingboard) [1.0]
+24.0: (openobject robot2 fridge) [1.0]
+
+25.0: (putobject robot1 lettuce fridge) [1.0]
+25.0: (putobject robot2 bowl fridge) [1.0]
+
+26.0: (gotoobject robot1 tomato) [1.0]
+26.0: (closeobject robot2 fridge) [1.0]
+
+27.0: (pickupobject robot1 tomato cuttingboard) [1.0]
+
+28.0: (putobject robot1 tomato fridge) [1.0]
+
+29.0: (gotoobject robot1 potato) [1.0]
+
+30.0: (pickupobject robot1 potato cuttingboard) [1.0]
+
+31.0: (putobject robot1 potato fridge) [1.0]
+
+32.0: (closeobject robot1 fridge) [1.0]
+
+33.0: (gotoobject robot1 knife) [1.0]
+33.0: (gotoobject robot2 knife) [1.0]
+
+34.0: (pickupobject robot1 knife) [1.0]
+34.0: (pickupobject robot2 knife) [1.0]
+
+35.0: (gotoobject robot1 drawer) [1.0]
+35.0: (gotoobject robot2 drawer) [1.0]
+
+36.0: (openobject robot1 drawer) [1.0]
+```
+
+The changes made:
+1
+Task 13 completion rate: 2/2
+
+==================================================
+Processing Task: Transfer payload to heat-induction chamber: 14/14
+==================================================
+鉁?Decomposed plan generated
+鉁?Allocation plan generated
+鉁?Problem summary generated
+鉁?Problem files generated
+鉁?Split into subtasks complete
+鉁?Validation and planning complete
+鉁?Plans combined
+鉁?References matched
+Final PDDL Plan:
+ I'll correct the PDDL plan by modifying all instances where 'variablelocation' was used to just the variable itself, since the variable includes location information. Here's the corrected version:
+
+```pddl
+(define (plan transfer-to-heat-chamber)
+    (:parameters
+        (robot1 - robot)
+        (plate - container)
+        (microwave - heatinductionchamber)
+        (potato - payload)
+    )
+    
+    (:duration (and
+        (start (gotoobject robot1 plate) 0)
+        (end (gotoobject robot1 plate) 2)
+        
+        (start (gotoobject robot1 microwave) 0)
+        (end (gotoobject robot1 microwave) 2)
+        (start (openobject robot1 microwave) 2)
+        (end (openobject robot1 microwave) 4)
+        
+        (start (pickupobject robot1 plate) 2)
+        (end (pickupobject robot1 plate) 3)
+        (start (gotoobject robot1 microwave) 4)
+        (end (gotoobject robot1 microwave) 6)
+        (start (putobject robot1 plate microwave) 6)
+        (end (putobject robot1 plate microwave) 7)
+        (start (closeobject robot1 microwave) 7)
+        (end (closeobject robot1 microwave) 9)
+    ))
+    
+    (:constraints
+        (at end (openobject robot1 microwave) <= (start (putobject robot1 plate microwave)))
+        (at end (pickupobject robot1 plate) <= (start (gotoobject robot1 microwave)))
+        (at end (gotoobject robot1 plate) <= (start (pickupobject robot1 plate)))
+        (at end (gotoobject robot1 microwave) <= (start (openobject robot1 microwave)))
+    )
+    
+    (:init
+        (at robot1 initial_location)
+        (at plate counter)
+        (at microwave closed)
+        (on potato plate)
+    )
+    
+    (:goal (and
+        (at plate microwave)
+        (at microwave closed)
+    ))
+)
+```
+
+Key changes made:
+1. Removed all references to 'variablelocation' and used just the variable names
+2. Kept all PDDL syntax with proper parentheses
+3. Maintained the original structure and functionality of the plan
+4. Ensured all object references are consistent with the provided object list
+
+The plan now correctly uses the object variables directly without any location suffixes, while maintaining all the original planning logic and constraints.
+Task 14 completion rate: 3/3
+
+==================================================
+All 14 tasks processed
+==================================================
+Writing plans for task 1
+Task 1 - TC: 1, Total Subtasks: 1
+Writing plans for task 2
+Task 2 - TC: 1, Total Subtasks: 1
+Writing plans for task 3
+Task 3 - TC: 2, Total Subtasks: 2
+Writing plans for task 4
+Task 4 - TC: 1, Total Subtasks: 4
+Writing plans for task 5
+Task 5 - TC: 2, Total Subtasks: 2
+Writing plans for task 6
+Task 6 - TC: 0, Total Subtasks: 4
+Writing plans for task 7
+Task 7 - TC: 0, Total Subtasks: 2
+Writing plans for task 8
+Task 8 - TC: 2, Total Subtasks: 2
+Writing plans for task 9
+Task 9 - TC: 0, Total Subtasks: 4
+Writing plans for task 10
+Task 10 - TC: 1, Total Subtasks: 1
+Writing plans for task 11
+Task 11 - TC: 2, Total Subtasks: 2
+Writing plans for task 12
+Task 12 - TC: 2, Total Subtasks: 4
+Writing plans for task 13
+Task 13 - TC: 2, Total Subtasks: 2
+Writing plans for task 14
+Task 14 - TC: 3, Total Subtasks: 3

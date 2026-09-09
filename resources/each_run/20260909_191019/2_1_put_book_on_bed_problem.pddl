@@ -1,0 +1,19 @@
+(define (problem put_book_on_bed_problem)
+  (:domain robot2)
+  (:objects
+    robot2 - robot
+    Book - object
+    Bed - object
+    Desk - object
+  )
+  (:init
+    (at robot2 Desk)
+    (at-location Book Desk)
+    (not (inaction robot2))
+  )
+  (:goal
+    (and
+      (at-location Book Bed)
+    )
+  )
+)

@@ -1,0 +1,18 @@
+(define (problem turn_off_tv_problem)
+  (:domain robot1)
+  (:objects
+    robot1 - robot
+    Television - object
+    SideTable - object
+  )
+  (:init
+    (at robot1 SideTable)
+    (at-location Television SideTable)
+    (not (inaction robot1))
+  )
+  (:goal
+    (and
+      (switch-off robot1 Television)
+    )
+  )
+)

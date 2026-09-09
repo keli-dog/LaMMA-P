@@ -1,0 +1,31 @@
+(define (problem prepare_vegetables_problem)
+  (:domain robot1)
+  (:objects
+    robot1 - robot
+    knife - object
+    lettuce - object
+    tomato - object
+    potato - object
+    cuttingBoard - object
+    counterTop - object
+  )
+  (:init
+    (not (inaction robot1))
+    (at robot1 counterTop)
+    (at-location knife counterTop)
+    (at-location lettuce counterTop)
+    (at-location tomato counterTop)
+    (at-location potato counterTop)
+    (at-location cuttingBoard counterTop)
+  )
+  (:goal
+    (and
+      (sliced lettuce)
+      (sliced tomato)
+      (sliced potato)
+      (at-location lettuce cuttingBoard)
+      (at-location tomato cuttingBoard)
+      (at-location potato cuttingBoard)
+    )
+  )
+)

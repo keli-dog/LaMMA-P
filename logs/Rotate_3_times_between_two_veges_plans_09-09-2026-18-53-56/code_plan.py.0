@@ -1,0 +1,27 @@
+Here's the problem file for the "Rotate 3 Times Between Two Vegetables" task:
+
+```pddl
+(define (problem rotate_vegetables_problem)
+  (:domain robot2)
+  (:objects
+    robot2 - robot
+    lettuce - object
+    tomato - object
+    counterTop - object
+  )
+  (:init
+    (at robot2 counterTop)
+    (at-location lettuce counterTop)
+    (at-location tomato counterTop)
+    (not (inaction robot2))
+  )
+  (:goal
+    (and
+      (at robot2 lettuce)
+      (rotation-count 3)
+    )
+  )
+)
+```
+
+Problem file generation is done.

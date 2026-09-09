@@ -1,0 +1,20 @@
+(define (problem throw_spatula_problem)
+  (:domain robot2)
+  (:objects
+    robot2 - robot
+    Spatula - object
+    GarbageCan - object
+    CounterTop - object
+  )
+  (:init
+    (at robot2 CounterTop)
+    (at-location Spatula CounterTop)
+    (at-location GarbageCan CounterTop)
+    (not (inaction robot2))
+  )
+  (:goal
+    (and
+      (at-location Spatula GarbageCan)
+    )
+  )
+)

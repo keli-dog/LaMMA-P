@@ -1,0 +1,36 @@
+Successfully loaded API key from api_key.txt
+Error in main execution: Error parsing JSON in test file: Expecting ',' delimiter: line 1 column 214 (char 213)
+Full error: PDDLError: Error parsing JSON in test file: Expecting ',' delimiter: line 1 column 214 (char 213)
+Traceback (most recent call last):
+  File "/media/ubuntu/Student/gengzeyu/LaMMA-P/scripts/pddlrun_llmseparate.py", line 911, in load_dataset
+    d = ast.literal_eval(line_stripped)
+  File "/home/ubuntu/miniconda3/envs/lammap/lib/python3.9/ast.py", line 64, in literal_eval
+    node_or_string = parse(node_or_string, mode='eval')
+  File "/home/ubuntu/miniconda3/envs/lammap/lib/python3.9/ast.py", line 50, in parse
+    return compile(source, filename, mode, flags,
+  File "<unknown>", line 1
+    {"task": "Break all the high tech electronics", "robot list" : [23,15,26], "object_states" : [{"name": "CellPhone", "contains": [], "state": "BROKEN"},{"name": "Blinds", "contains": [], "state": "CLOSED"}, "trans":0, "max_trans":0}
+                                                                                                                                                                                                                         ^
+SyntaxError: invalid syntax
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/media/ubuntu/Student/gengzeyu/LaMMA-P/scripts/pddlrun_llmseparate.py", line 913, in load_dataset
+    d = json.loads(line_stripped)
+  File "/home/ubuntu/miniconda3/envs/lammap/lib/python3.9/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+  File "/home/ubuntu/miniconda3/envs/lammap/lib/python3.9/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/home/ubuntu/miniconda3/envs/lammap/lib/python3.9/json/decoder.py", line 353, in raw_decode
+    obj, end = self.scan_once(s, idx)
+json.decoder.JSONDecodeError: Expecting ',' delimiter: line 1 column 214 (char 213)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/media/ubuntu/Student/gengzeyu/LaMMA-P/scripts/pddlrun_llmseparate.py", line 2065, in main
+    task_manager.load_dataset(test_file)
+  File "/media/ubuntu/Student/gengzeyu/LaMMA-P/scripts/pddlrun_llmseparate.py", line 935, in load_dataset
+    raise PDDLError(f"Error parsing JSON in test file: {str(e)}")
+PDDLError: Error parsing JSON in test file: Expecting ',' delimiter: line 1 column 214 (char 213)

@@ -1,0 +1,19 @@
+(define (problem put_books_on_shelf)
+  (:domain robot4)
+  (:objects
+    robot4 - robot
+    Book - object
+    Shelf - object
+    CoffeeTable - object
+  )
+  (:init
+    (at robot4 CoffeeTable)
+    (at-location Book CoffeeTable)
+    (not (inaction robot4))
+  )
+  (:goal
+    (and
+      (at-location Book Shelf)
+    )
+  )
+)
