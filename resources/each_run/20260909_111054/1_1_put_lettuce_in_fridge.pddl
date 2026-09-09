@@ -1,0 +1,20 @@
+(define (problem put_lettuce_in_fridge)
+  (:domain robot1)
+  (:objects
+    robot1 - robot
+    lettuce - object
+    fridge - object
+    counterTop - object
+  )
+  (:init
+    (at robot1 counterTop)
+    (at-location lettuce counterTop)
+    (object-close robot1 fridge)
+    (not (inaction robot1))
+  )
+  (:goal
+    (and
+      (at-location lettuce fridge)
+    )
+  )
+)

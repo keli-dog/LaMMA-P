@@ -1,0 +1,22 @@
+(define (problem retrieve_toast_problem)
+  (:domain robot2)
+  (:objects
+    robot2 - robot
+    Toast - object
+    Toaster - object
+    Plate - object
+    CounterTop - object
+  )
+  (:init
+    (at robot2 CounterTop)
+    (at-location Toast Toaster)
+    (at-location Plate CounterTop)
+    (switch-off robot2 Toaster)
+    (not (inaction robot2))
+  )
+  (:goal
+    (and
+      (at-location Toast Plate)
+    )
+  )
+)
