@@ -1,4 +1,4 @@
-import copy
+﻿import copy
 import glob
 import json
 import os
@@ -245,7 +245,7 @@ class FileProcessor:
                 problem_summary = content.strip()
                 sequence_operations = "failed to extract2"
 
-        # 2) FIX: robust subtask extraction — only capture blocks that start with a SubTask header
+        # 2) FIX: robust subtask extraction 鈥?only capture blocks that start with a SubTask header
         # Supports "#SubTask 1:" / "# SubTask 2:" / "SubTask 3:" (case-insensitive)
         subtask_block_re = re.compile(
             r'(?im)^\s*#?\s*Sub\s*Task\s*\d+\s*:\s*.*?(?=^\s*#?\s*Sub\s*Task\s*\d+\s*:\s*|\Z)',
@@ -1063,14 +1063,14 @@ class TaskManager:
                 decomposed_plan = self._generate_decomposed_plan(task, domain_content, robots, objects_ai)
                 self.decomposed_plan.append(decomposed_plan)
                 
-                print("✓ Decomposed plan generated")
+                print("鉁?Decomposed plan generated")
                 #print("decomposed plan:\n", decomposed_plan)
                 #print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
 
                 # Generate and store allocation plan
                 allocated_plan = self._generate_allocation_plan(decomposed_plan, robots, objects_ai)
                 self.allocated_plan.append(allocated_plan)
-                print("✓ Allocation plan generated")
+                print("鉁?Allocation plan generated")
                 #print("Allocation Plan:\n", allocated_plan)
                 #print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
                 
@@ -1079,7 +1079,7 @@ class TaskManager:
                 
                 # Generate problem summary
                 problem_summary = self._generate_problem_summary(decomposed_plan, allocated_plan, robots)
-                print("✓ Problem summary generated")
+                print("鉁?Problem summary generated")
                 #print("Problem Summary:\n", problem_summary)
                 #print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
 
@@ -1089,32 +1089,32 @@ class TaskManager:
                 # Generate and store problem files
                 code_plan = self._generate_problem_files(problem_summary)
                 self.code_plan.append(code_plan) 
-                print("✓ Problem files generated")
+                print("鉁?Problem files generated")
                 # print("Code Plan:\n", code_plan)
                 # print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
 
                 # Split into subtasks
                 self.file_processor.split_pddl_tasks(code_plan, False)
-                print("✓ Split into subtasks complete")
+                print("鉁?Split into subtasks complete")
                 #input("Press Enter to continue")
                 #print("Waiting for files to be processed...")
                 #time.sleep(50)
                 
                 # Validate and plan
                 self._validate_and_plan()
-                print("✓ Validation and planning complete")
+                print("鉁?Validation and planning complete")
                 
                 # Combine and process plans
                 combined_plan = self._combine_all_plans(decomposed_plan)
                 self.combined_plan.append(combined_plan)
-                print("✓ Plans combined")
+                print("鉁?Plans combined")
                 #print("Combined Plan:\n", combined_plan)
                 #input("Press Enter to continue")
 
                 # Match references and store final PDDL plan
                 matched_plan = self._match_references_for_plan(combined_plan, objects_ai)
                 self.code_planpddl.append(matched_plan)
-                print("✓ References matched")
+                print("鉁?References matched")
                 print("Final PDDL Plan:\n", matched_plan)
 
                 # Calculate completion rate
@@ -1963,7 +1963,7 @@ def parse_arguments() -> argparse.Namespace:
     parser.add_argument("--bddl-file", type=str, help="Path to BDDL file")
     parser.add_argument(
         "--floor-plan", 
-        type=int, 
+        type=str,
         required=False,  # Changed from True
         help="Required unless --bddl-file is provided"
     )
@@ -2067,7 +2067,9 @@ def main():
             print(f"\n----Test set tasks----\n{test_tasks}\nTotal: {len(test_tasks)} tasks\n")
             
             # Get AI2thor objects 
-            objects_ai = f"\n\nobjects = {PDDLUtils.get_ai2_thor_objects(args.floor_plan)}"
+            import re
+            floor_plan_num = int(re.search(r'\d+', str(args.floor_plan)).group())
+            objects_ai = f"\n\nobjects = {PDDLUtils.get_ai2_thor_objects(floor_plan_num)}"
             
             # Process tasks with objects_ai
             task_manager.process_tasks(test_tasks, available_robots, objects_ai)
