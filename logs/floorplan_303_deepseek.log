@@ -1,22 +1,305 @@
-Traceback (most recent call last):
-  File "/media/ubuntu/Student/gengzeyu/LaMMA-P/scripts/pddlrun_llmseparate.py", line 908, in load_dataset
-    values = list(json.loads(line_fixed).values())
-  File "/home/ubuntu/miniconda3/envs/lammap/lib/python3.9/json/__init__.py", line 346, in loads
-    return _default_decoder.decode(s)
-  File "/home/ubuntu/miniconda3/envs/lammap/lib/python3.9/json/decoder.py", line 337, in decode
-    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
-  File "/home/ubuntu/miniconda3/envs/lammap/lib/python3.9/json/decoder.py", line 353, in raw_decode
-    obj, end = self.scan_once(s, idx)
-json.decoder.JSONDecodeError: Expecting ',' delimiter: line 1 column 219 (char 218)
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/media/ubuntu/Student/gengzeyu/LaMMA-P/scripts/pddlrun_llmseparate.py", line 2060, in main
-    task_manager.load_dataset(test_file)
-  File "/media/ubuntu/Student/gengzeyu/LaMMA-P/scripts/pddlrun_llmseparate.py", line 930, in load_dataset
-    raise PDDLError(f"Error parsing JSON in test file: {str(e)}")
-PDDLError: Error parsing JSON in test file: Expecting ',' delimiter: line 1 column 219 (char 218)
 Successfully loaded API key from api_key.txt
-Error in main execution: Error parsing JSON in test file: Expecting ',' delimiter: line 1 column 219 (char 218)
-Full error: PDDLError: Error parsing JSON in test file: Expecting ',' delimiter: line 1 column 219 (char 218)
+
+----Test set tasks----
+['Put the baseballbat and tennis racket on the bed', 'Put the book in the box and Turn on the mobile phone', 'Break the Cellphone and Close the blinds', 'Place the laptop on the bed']
+Total: 4 tasks
+
+
+[DIAGNOSTIC] Initial Task Count: 4
+
+==================================================
+Processing Task: Put the baseballbat and tennis racket on the bed: 1/4
+==================================================
+✓ Decomposed plan generated
+✓ Allocation plan generated
+✓ Problem summary generated
+✓ Problem files generated
+✓ Split into subtasks complete
+✓ Validation and planning complete
+✓ Plans combined
+✓ References matched
+Final PDDL Plan:
+ Here's the corrected PDDL plan with all 'variablelocation' references removed and variable names properly adjusted to use the objects themselves (since they include location information):
+
+```pddl
+; Parallel execution plan for putting baseball bat and tennis racket on bed
+; Time 0.0: Both robots start their tasks simultaneously
+0.0: (gotoobject robot1 BaseballBat) [1.0]
+0.0: (gotoobject robot2 TennisRacket) [1.0]
+
+; Time 1.0: Both robots arrive at their respective objects and pick them up
+1.0: (pickupobject robot1 BaseballBat) [1.0]
+1.0: (pickupobject robot2 TennisRacket) [1.0]
+
+; Time 2.0: Both robots start moving to the bed with their objects
+2.0: (gotoobject robot1 Bed) [1.0]
+2.0: (gotoobject robot2 Bed) [1.0]
+
+; Time 3.0: Both robots arrive at the bed and place their objects
+3.0: (putobject robot1 BaseballBat Bed) [1.0]
+3.0: (putobject robot2 TennisRacket Bed) [1.0]
+
+; Time 4.0: Both tasks completed
+```
+
+Changes made:
+1. Changed 'baseballbat' to 'BaseballBat' (matching the exact object name from the list)
+2. Changed 'tennisracket' to 'TennisRacket' (matching the exact object name from the list)
+3. Changed 'bed' to 'Bed' (matching the exact object name from the list)
+4. All object names now exactly match their capitalization and spelling from the provided objects list
+5. Maintained all other aspects of the original plan including timing and parallel execution structure
+Task 1 completion rate: 2/2
+
+==================================================
+Processing Task: Put the book in the box and Turn on the mobile phone: 2/4
+==================================================
+✓ Decomposed plan generated
+✓ Allocation plan generated
+✓ Problem summary generated
+✓ Problem files generated
+✓ Split into subtasks complete
+Error extracting domain name from /media/ubuntu/Student/gengzeyu/LaMMA-P/resources/generated_subtask/2_1_turn_on_phone_problem.pddl: File not found: /media/ubuntu/Student/gengzeyu/LaMMA-P/resources/generated_subtask/2_1_turn_on_phone_problem.pddl
+No domain specified in 2_1_turn_on_phone_problem.pddl
+✓ Validation and planning complete
+✓ Plans combined
+✓ References matched
+Final PDDL Plan:
+ I'll analyze the given PDDL plan and modify it according to the requirements, using the provided object list. The key changes will be:
+
+1. Replace all 'variablelocation' with the variable itself since the variable includes location
+2. Correct variable names to match the actual objects from the provided list
+3. Ensure proper PDDL syntax with only parentheses used for the plan structure
+
+Here's the corrected PDDL plan:
+
+```pddl
+(define (plan tasks)
+  (:method parallel-tasks
+    (:task put-book-in-box :parameters (?robot1 - robot ?Book - object ?Box - object))
+    (:task turn-on-phone :parameters (?robot2 - robot ?CellPhone - object))
+    
+    (:ordered
+      ;; Parallel execution starts here (time 0)
+      (:durative-action goto-book
+        :parameters (?robot1 - robot ?Book - object)
+        :duration (= ?duration 1)
+        :condition (and (not (inaction ?robot1)))
+        :effect (and (at ?robot1 ?Book) (not (inaction ?robot1))))
+      
+      (:durative-action goto-phone
+        :parameters (?robot2 - robot ?CellPhone - object)
+        :duration (= ?duration 1)
+        :condition (and (not (inaction ?robot2)))
+        :effect (and (at ?robot2 ?CellPhone) (not (inaction ?robot2))))
+      
+      ;; Time 1-2
+      (:durative-action pickup-book
+        :parameters (?robot1 - robot ?Book - object)
+        :duration (= ?duration 1)
+        :condition (and (at ?robot1 ?Book) (not (inaction ?robot1)))
+        :effect (and (holding ?robot1 ?Book) (not (inaction ?robot1))))
+      
+      ;; Time 1-2
+      (:durative-action switch-on-phone
+        :parameters (?robot2 - robot ?CellPhone - object)
+        :duration (= ?duration 1)
+        :condition (and (at ?robot2 ?CellPhone) (not (inaction ?robot2)))
+        :effect (and (switch-on ?CellPhone) (not (inaction ?robot2))))
+      
+      ;; Time 2-3
+      (:durative-action goto-box
+        :parameters (?robot1 - robot ?Box - object)
+        :duration (= ?duration 1)
+        :condition (and (holding ?robot1 ?Book) (not (inaction ?robot1)))
+        :effect (and (at ?robot1 ?Box) (not (inaction ?robot1))))
+      
+      ;; Time 3-4
+      (:durative-action put-in-box
+        :parameters (?robot1 - robot ?Book - object ?Box - object)
+        :duration (= ?duration 1)
+        :condition (and (holding ?robot1 ?Book) (at ?robot1 ?Box) (not (inaction ?robot1)))
+        :effect (and (at-location ?Book ?Box) (not (holding ?robot1 ?Book)) (not (inaction ?robot1))))
+    )
+  )
+)
+```
+
+Key modifications made:
+1. Changed `?book` to `?Book` and `?box` to `?Box` to match the object names from the list (Book and Box)
+2. Changed `?mobilephone` to `?CellPhone` to match the exact object name from the list
+3. Removed any location variables since the objects themselves represent their locations
+4. Maintained all PDDL syntax requirements with proper parentheses usage
+5. Kept the parallel execution structure and timing as in the original plan
+
+The plan now correctly references the objects from the provided list while maintaining all the original functionality and parallel execution structure.
+Task 2 completion rate: 3/3
+
+==================================================
+Processing Task: Break the Cellphone and Close the blinds: 3/4
+==================================================
+✓ Decomposed plan generated
+✓ Allocation plan generated
+✓ Problem summary generated
+✓ Problem files generated
+✓ Split into subtasks complete
+✓ Validation and planning complete
+✓ Plans combined
+✓ References matched
+Final PDDL Plan:
+ I'll modify the plan to correct the variable usage as requested, ensuring that all 'variablelocation' references are replaced with the variable itself and maintaining proper PDDL syntax. Here's the corrected plan:
+
+```pddl
+(define (plan tasks)
+  (:method parallel_tasks
+    :parameters ()
+    :subtasks (and
+      ;; Parallel Subtask 1: Break Cellphone (Robot2)
+      (:task t1 :parameters (?robot2 - robot ?cellphone - object)
+        :ordered-subtasks (and
+          (gotoobject ?robot2 ?cellphone)
+          (breakobject ?robot2 ?cellphone)))
+      
+      ;; Parallel Subtask 2: Close Blinds (Robot1)
+      (:task t2 :parameters (?robot1 - robot ?blinds - object)
+        :ordered-subtasks (and
+          (gotoobject ?robot1 ?blinds)
+          (closeobject ?robot1 ?blinds)))
+    )
+    :constraints (and
+      ;; Temporal constraints for parallel execution
+      (start-before-start t1 t2 0)
+      (start-before-start t2 t1 0)
+    )
+  )
+)
+
+(:durative-action gotoobject
+  :parameters (?robot - robot ?obj - object)
+  :duration (= ?duration 1)
+  :condition (and
+    (over all (not (inaction ?robot)))
+  )
+  :effect (and
+    (at start (not (at ?robot ?obj)))
+    (at end (at ?robot ?obj))
+  )
+)
+
+(:durative-action breakobject
+  :parameters (?robot - robot ?obj - object)
+  :duration (= ?duration 1)
+  :condition (and
+    (over all (not (inaction ?robot)))
+    (at start (at ?robot ?obj))
+  )
+  :effect (and
+    (at end (broken ?obj))
+  )
+)
+
+(:durative-action closeobject
+  :parameters (?robot - robot ?obj - object)
+  :duration (= ?duration 1)
+  :condition (and
+    (over all (not (inaction ?robot)))
+    (at start (at ?robot ?obj))
+    (at start (not (closed ?obj)))
+  )
+  :effect (and
+    (at end (closed ?obj))
+  )
+)
+```
+
+Key modifications made:
+1. Removed all instances of 'variablelocation' as they weren't present in the original plan
+2. Verified that all object references use the variable names directly (like ?cellphone, ?blinds) without any location suffixes
+3. Maintained proper PDDL syntax throughout with correct parameter usage
+4. Ensured all actions reference objects directly through their variables (?obj) rather than through any location-based variables
+
+The plan remains functionally identical to the original but now explicitly follows the requirement to use variable names directly without any location-based modifications.
+Task 3 completion rate: 0/0
+
+==================================================
+Processing Task: Place the laptop on the bed: 4/4
+==================================================
+✓ Decomposed plan generated
+✓ Allocation plan generated
+✓ Problem summary generated
+✓ Problem files generated
+✓ Split into subtasks complete
+✓ Validation and planning complete
+✓ Plans combined
+✓ References matched
+Final PDDL Plan:
+ Here's the corrected PDDL plan with all 'variablelocation' references replaced by the objects themselves (since they contain location information), and with proper variable naming:
+
+```pddl
+(define (plan place_laptop_on_bed)
+  (:parameters
+    (robot1 - robot)
+    (Laptop - object)
+    (Bed - object)
+    (Desk - object)
+  )
+  
+  (:durative-actions
+    (:durative-action goto_pickup_laptop
+      :parameters (?r - robot ?o - object ?loc - object)
+      :duration (= ?duration 5)
+      :condition (and
+                  (at start (not (inaction ?r)))
+                  (at start (at-location ?o ?loc))
+                 )
+      :effect (and
+               (at end (at ?r ?loc))
+               (at end (holding ?r ?o))
+               (at end (not (at-location ?o ?loc)))
+               (at end (not (inaction ?r)))
+              )
+    )
+    
+    (:durative-action goto_place_bed
+      :parameters (?r - robot ?o - object ?b - object)
+      :duration (= ?duration 7)
+      :condition (and
+                  (at start (holding ?r ?o))
+                  (at start (not (inaction ?r)))
+                 )
+      :effect (and
+               (at end (at ?r ?b))
+               (at end (at-location ?o ?b))
+               (at end (not (holding ?r ?o)))
+               (at end (not (inaction ?r)))
+              )
+    )
+  )
+  
+  (:schedule
+    (0: goto_pickup_laptop robot1 Laptop Desk)
+    (5: goto_place_bed robot1 Laptop Bed)
+  )
+)
+```
+
+Key changes made:
+1. Replaced all parameter names with actual object names from the provided list (Laptop, Bed, Desk)
+2. Maintained proper capitalization of object names as per the provided list
+3. Kept the variable parameters in the action definitions (?r, ?o, ?loc, ?b) but instantiated them with actual objects in the schedule
+4. Ensured all object references match exactly with the provided object list
+5. Maintained proper PDDL syntax throughout with no extraneous parentheses or formatting
+
+The plan now correctly uses the actual objects from the provided list rather than placeholder variables, while maintaining all the original functionality and structure.
+Task 4 completion rate: 2/2
+
+==================================================
+All 4 tasks processed
+==================================================
+Writing plans for task 1
+Task 1 - TC: 2, Total Subtasks: 2
+Writing plans for task 2
+Task 2 - TC: 3, Total Subtasks: 3
+Writing plans for task 3
+Task 3 - TC: 0, Total Subtasks: 0
+Writing plans for task 4
+Task 4 - TC: 2, Total Subtasks: 2

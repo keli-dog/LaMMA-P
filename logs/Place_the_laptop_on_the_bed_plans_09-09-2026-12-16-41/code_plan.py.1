@@ -1,0 +1,26 @@
+Here's the problem file for placing the laptop on the bed:
+
+```pddl
+(define (problem place_laptop_problem)
+  (:domain robot1)
+  (:objects
+    robot1 - robot
+    laptop - object
+    bed - object
+    desk - object
+  )
+  (:init
+    (holding robot1 laptop)
+    (at-location laptop desk)
+    (at robot1 desk)
+    (not (inaction robot1))
+  )
+  (:goal
+    (and
+      (at-location laptop bed)
+    )
+  )
+)
+```
+
+Problem file generation is done.

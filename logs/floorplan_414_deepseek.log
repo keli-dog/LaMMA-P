@@ -1,22 +1,68 @@
-Traceback (most recent call last):
-  File "/media/ubuntu/Student/gengzeyu/LaMMA-P/scripts/pddlrun_llmseparate.py", line 908, in load_dataset
-    values = list(json.loads(line_fixed).values())
-  File "/home/ubuntu/miniconda3/envs/lammap/lib/python3.9/json/__init__.py", line 346, in loads
-    return _default_decoder.decode(s)
-  File "/home/ubuntu/miniconda3/envs/lammap/lib/python3.9/json/decoder.py", line 337, in decode
-    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
-  File "/home/ubuntu/miniconda3/envs/lammap/lib/python3.9/json/decoder.py", line 355, in raw_decode
-    raise JSONDecodeError("Expecting value", s, err.value) from None
-json.decoder.JSONDecodeError: Expecting value: line 2 column 1 (char 1)
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/media/ubuntu/Student/gengzeyu/LaMMA-P/scripts/pddlrun_llmseparate.py", line 2060, in main
-    task_manager.load_dataset(test_file)
-  File "/media/ubuntu/Student/gengzeyu/LaMMA-P/scripts/pddlrun_llmseparate.py", line 930, in load_dataset
-    raise PDDLError(f"Error parsing JSON in test file: {str(e)}")
-PDDLError: Error parsing JSON in test file: Expecting value: line 2 column 1 (char 1)
 Successfully loaded API key from api_key.txt
-Error in main execution: Error parsing JSON in test file: Expecting value: line 2 column 1 (char 1)
-Full error: PDDLError: Error parsing JSON in test file: Expecting value: line 2 column 1 (char 1)
+
+----Test set tasks----
+['Place the Bar of soap in the sink first and then place dishsponge in the sink', 'Put plunger in cabinet and Turn off the light', 'Turn on Sink faucet and put toilet paper in the trash']
+Total: 3 tasks
+
+
+[DIAGNOSTIC] Initial Task Count: 3
+
+==================================================
+Processing Task: Place the Bar of soap in the sink first and then place dishsponge in the sink: 1/3
+==================================================
+✓ Decomposed plan generated
+✓ Allocation plan generated
+✓ Problem summary generated
+✓ Problem files generated
+✓ Split into subtasks complete
+✓ Validation and planning complete
+✓ Plans combined
+✓ References matched
+Final PDDL Plan:
+ Based on your instructions, I'll modify the PDDL plan to correct the variable names by removing "variablelocation" references and using the variable names directly from the provided object list. Here's the corrected PDDL plan:
+
+```pddl
+; Phase 1: Parallel object acquisition
+0.000: (gotoobject robot1 SoapBar) [2.000]
+0.000: (gotoobject robot2 DishSponge) [2.000]
+
+2.000: (pickupobject robot1 SoapBar) [1.500]
+2.000: (pickupobject robot2 DishSponge) [1.500]
+
+; Phase 2: Sequential sink placement (shared resource)
+3.500: (gotoobject robot1 Sink) [2.000]
+5.500: (putobject robot1 SoapBar Sink) [1.500]
+7.000: (gotoobject robot2 Sink) [2.000]
+9.000: (putobject robot2 DishSponge Sink) [1.500]
+
+; Single robot version alternative
+; 0.000: (gotoobject robot1 SoapBar) [2.000]
+; 2.000: (pickupobject robot1 SoapBar) [1.500]
+; 3.500: (gotoobject robot1 Sink) [2.000]
+; 5.500: (putobject robot1 SoapBar Sink) [1.500]
+; 7.000: (gotoobject robot1 DishSponge) [2.000]
+; 9.000: (pickupobject robot1 DishSponge) [1.500]
+; 10.500: (gotoobject robot1 Sink) [2.000]
+; 12.500: (putobject robot1 DishSponge Sink) [1.500]
+```
+
+Key changes made:
+1. Changed all object references to match exactly the 'name' field from the provided object list (capitalized, exact spelling)
+2. Removed any "location" suffixes or modifiers
+3. Maintained proper PDDL syntax with only parentheses used for the action specifications
+4. Kept both parallel (multi-robot) and sequential (single-robot) versions
+5. Preserved all timing and duration information
+
+The objects used in the plan now exactly match these from your list:
+- SoapBar
+- DishSponge
+- Sink
+
+All other object names in your list remain available if you need to expand the plan to include additional actions.
+Task 1 completion rate: 2/2
+
+==================================================
+Processing Task: Put plunger in cabinet and Turn off the light: 2/3
+==================================================
+✓ Decomposed plan generated
+✓ Allocation plan generated

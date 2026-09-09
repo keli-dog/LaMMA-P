@@ -1,0 +1,26 @@
+Here's the problem file for the "Chill the Apple" task:
+
+```pddl
+(define (problem chill_apple_problem)
+  (:domain robot1)
+  (:objects
+    robot1 - robot
+    apple - object
+    fridge - object
+    counterTop - object
+  )
+  (:init
+    (at robot1 counterTop)
+    (at-location apple counterTop)
+    (not (inaction robot1))
+  )
+  (:goal
+    (and
+      (at-location apple fridge)
+      (object-close robot1 fridge)
+    )
+  )
+)
+```
+
+Problem file generation is done.

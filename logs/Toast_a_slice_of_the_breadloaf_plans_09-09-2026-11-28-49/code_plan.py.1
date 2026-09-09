@@ -1,0 +1,48 @@
+# Problem File Extraction for Operating Toaster
+
+(define (problem putbreadintotoaster_problem)
+  (:domain robot2)
+  (:objects
+    robot2 - robot
+    BreadSlice - object
+    Toaster - object
+    counterTop - object
+    initialLocation - object
+  )
+  (:init
+    (at robot2 initialLocation)
+    (at-location BreadSlice counterTop)
+    (holding robot2 BreadSlice)
+    (inaction robot2)
+    (switch-off robot2 Toaster)
+  )
+  (:goal
+    (and
+      (at-location BreadSlice Toaster)
+      (not (holding robot2 BreadSlice))
+    )
+  )
+)
+
+(define (problem operatetoaster_problem)
+  (:domain robot1)
+  (:objects
+    robot1 - robot
+    Toaster - object
+    initialLocation - object
+  )
+  (:init
+    (at robot1 initialLocation)
+    (inaction robot1)
+    (switch-off robot1 Toaster)
+  )
+  (:goal
+    (and
+      (switch-on robot1 Toaster)
+      (switch-off robot1 Toaster)
+    )
+  )
+)
+
+# Problem file Extraction is done
+# IMPORTANT stop extracting after seeing Problem file extraction is done.
