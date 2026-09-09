@@ -1,0 +1,20 @@
+(define (problem trash_book_problem)
+  (:domain robot2)
+  (:objects
+    robot2 - robot
+    Book - object
+    GarbageCan - object
+    SideTable - object
+  )
+  (:init
+    (at robot2 SideTable)
+    (at-location Book SideTable)
+    (at-location GarbageCan SideTable)
+    (not (inaction robot2))
+  )
+  (:goal
+    (and
+      (at-location Book GarbageCan)
+    )
+  )
+)

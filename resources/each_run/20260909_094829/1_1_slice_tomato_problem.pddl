@@ -1,0 +1,21 @@
+(define (problem slice_tomato_problem)
+  (:domain robot1)
+  (:objects
+    robot1 - robot
+    Knife - object
+    Tomato - object
+    CounterTop - object
+    CuttingBoard - object
+  )
+  (:init
+    (not (inaction robot1))
+    (at robot1 CounterTop)
+    (at-location Knife CounterTop)
+    (at-location Tomato CounterTop)
+  )
+  (:goal
+    (and
+      (sliced Tomato)
+    )
+  )
+)

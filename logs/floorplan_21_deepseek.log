@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/media/ubuntu/Student/gengzeyu/LaMMA-P/scripts/pddlrun_llmseparate.py", line 912, in load_dataset
+    trans_cnt_tasks.append(values[3])
+IndexError: list index out of range
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/media/ubuntu/Student/gengzeyu/LaMMA-P/scripts/pddlrun_llmseparate.py", line 2060, in main
+    task_manager.load_dataset(test_file)
+  File "/media/ubuntu/Student/gengzeyu/LaMMA-P/scripts/pddlrun_llmseparate.py", line 932, in load_dataset
+    raise PDDLError(f"Error loading dataset: {str(e)}")
+PDDLError: Error loading dataset: list index out of range
+Successfully loaded API key from api_key.txt
+Error in main execution: Error loading dataset: list index out of range
+Full error: PDDLError: Error loading dataset: list index out of range

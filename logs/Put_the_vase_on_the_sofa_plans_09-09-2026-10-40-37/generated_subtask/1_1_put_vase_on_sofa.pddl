@@ -1,0 +1,19 @@
+(define (problem put_vase_on_sofa)
+  (:domain robot2)
+  (:objects
+    robot2 - robot
+    vase - object
+    sofa - object
+    sideTable - object
+  )
+  (:init
+    (at robot2 sideTable)
+    (at-location vase sideTable)
+    (not (inaction robot2))
+  )
+  (:goal
+    (and
+      (at-location vase sofa)
+    )
+  )
+)

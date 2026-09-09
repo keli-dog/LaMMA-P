@@ -1,0 +1,19 @@
+(define (problem turn_on_laptop_problem)
+  (:domain robot1)
+  (:objects
+    robot1 - robot
+    Laptop - object
+    SideTable - object
+  )
+  (:init
+    (at robot1 SideTable)
+    (at-location Laptop SideTable)
+    (object-open robot1 Laptop)
+    (not (inaction robot1))
+  )
+  (:goal
+    (and
+      (switch-on robot1 Laptop)
+    )
+  )
+)

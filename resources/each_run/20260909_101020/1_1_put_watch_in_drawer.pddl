@@ -1,0 +1,21 @@
+(define (problem put_watch_in_drawer)
+  (:domain robot1)
+  (:objects
+    robot1 - robot
+    Watch - object
+    Drawer - object
+    WatchLocation - object
+  )
+  (:init
+    (not (inaction robot1))
+    (at robot1 WatchLocation)
+    (at-location Watch WatchLocation)
+    (object-close robot1 Drawer)
+  )
+  (:goal
+    (and
+      (at-location Watch Drawer)
+      (object-close robot1 Drawer)
+    )
+  )
+)

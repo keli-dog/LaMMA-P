@@ -1,0 +1,22 @@
+Traceback (most recent call last):
+  File "/media/ubuntu/Student/gengzeyu/LaMMA-P/scripts/pddlrun_llmseparate.py", line 908, in load_dataset
+    values = list(json.loads(line_fixed).values())
+  File "/home/ubuntu/miniconda3/envs/lammap/lib/python3.9/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+  File "/home/ubuntu/miniconda3/envs/lammap/lib/python3.9/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+  File "/home/ubuntu/miniconda3/envs/lammap/lib/python3.9/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 2 column 1 (char 1)
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/media/ubuntu/Student/gengzeyu/LaMMA-P/scripts/pddlrun_llmseparate.py", line 2060, in main
+    task_manager.load_dataset(test_file)
+  File "/media/ubuntu/Student/gengzeyu/LaMMA-P/scripts/pddlrun_llmseparate.py", line 930, in load_dataset
+    raise PDDLError(f"Error parsing JSON in test file: {str(e)}")
+PDDLError: Error parsing JSON in test file: Expecting value: line 2 column 1 (char 1)
+Successfully loaded API key from api_key.txt
+Error in main execution: Error parsing JSON in test file: Expecting value: line 2 column 1 (char 1)
+Full error: PDDLError: Error parsing JSON in test file: Expecting value: line 2 column 1 (char 1)

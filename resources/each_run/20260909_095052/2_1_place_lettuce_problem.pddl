@@ -1,0 +1,20 @@
+(define (problem place_lettuce_problem)
+  (:domain robot3)
+  (:objects
+    robot3 - robot
+    lettuce - object
+    counterTop - object
+    sink - object
+  )
+  (:init
+    (at robot3 sink)
+    (holding robot3 lettuce)
+    (cleaned robot3 lettuce)
+    (not (inaction robot3))
+  )
+  (:goal
+    (and
+      (at-location lettuce counterTop)
+    )
+  )
+)

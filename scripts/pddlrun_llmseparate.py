@@ -903,12 +903,19 @@ class TaskManager:
         try:
             with open(test_file, "r") as f:
                 for line in f.readlines():
-                    values = list(json.loads(line).values())
-                    test_tasks.append(values[0])
-                    robots_test_tasks.append(values[1])
-                    gt_test_tasks.append(values[2])
-                    trans_cnt_tasks.append(values[3])
-                    min_trans_cnt_tasks.append(values[4])
+                    import ast
+                    line_stripped = line.strip().rstrip("\r")
+                    if not line_stripped:
+                        continue
+                    try:
+                        d = ast.literal_eval(line_stripped)
+                    except (ValueError, SyntaxError):
+                        d = json.loads(line_stripped)
+                    test_tasks.append(d.get("task", ""))
+                    robots_test_tasks.append(d.get("robot list", d.get("robot_list", [1])))
+                    gt_test_tasks.append(d.get("object_states", d.get("gt", [])))
+                    trans_cnt_tasks.append(d.get("trans", 0))
+                    min_trans_cnt_tasks.append(d.get("max_trans", d.get("min_trans", 0)))
             
             # Prepare robot configurations
             available_robots = []
