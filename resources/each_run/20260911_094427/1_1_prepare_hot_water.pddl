@@ -1,0 +1,18 @@
+(define (problem prepare_hot_water)
+  (:domain robot2)
+  (:objects
+    robot2 - robot
+    LightSwitch - object
+    Faucet - object
+    Floor - object
+  )
+  (:init
+    (at robot2 Floor)
+  )
+  (:goal
+    (and
+      (switch-on robot2 LightSwitch)
+      (switch-on robot2 Faucet)
+    )
+  )
+)

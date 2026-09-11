@@ -1,0 +1,49 @@
+Successfully loaded API key from api_key.txt
+
+----Test set tasks----
+['Execute a chaotic living room reset', 'Organize personal inventory and garden tools', 'De-clutter the reading area', 'Stage the furniture for a home staging photoshoot']
+Total: 4 tasks
+
+
+[DIAGNOSTIC] Initial Task Count: 4
+
+==================================================
+Processing Task: Execute a chaotic living room reset: 1/4
+==================================================
+鉁?Decomposed plan generated
+鉁?Allocation plan generated
+鉁?Problem summary generated
+
+[ERROR] Task Processing Failed:
+Error type: LLMError
+Error message: API Error after all retries: Error code: 402 - {'code': 30001, 'message': 'Sorry, your account balance is insufficient', 'data': None}
+Current task index: 0
+Error in main execution: API Error after all retries: Error code: 402 - {'code': 30001, 'message': 'Sorry, your account balance is insufficient', 'data': None}
+Full error: LLMError: API Error after all retries: Error code: 402 - {'code': 30001, 'message': 'Sorry, your account balance is insufficient', 'data': None}
+Traceback (most recent call last):
+  File "/media/ubuntu/Student/gengzeyu/LaMMA-P/scripts/pddlrun_llmseparate.py", line 675, in query_model
+    response = self.client.chat.completions.create(
+  File "/home/ubuntu/miniconda3/envs/lammap/lib/python3.9/site-packages/openai/_utils/_utils.py", line 298, in wrapper
+    return func(*args, **kwargs)
+  File "/home/ubuntu/miniconda3/envs/lammap/lib/python3.9/site-packages/openai/resources/chat/completions/completions.py", line 1284, in create
+    return self._post(
+  File "/home/ubuntu/miniconda3/envs/lammap/lib/python3.9/site-packages/openai/_base_client.py", line 1360, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+  File "/home/ubuntu/miniconda3/envs/lammap/lib/python3.9/site-packages/openai/_base_client.py", line 1133, in request
+    raise self._make_status_error_from_response(err.response) from None
+openai.APIStatusError: Error code: 402 - {'code': 30001, 'message': 'Sorry, your account balance is insufficient', 'data': None}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/media/ubuntu/Student/gengzeyu/LaMMA-P/scripts/pddlrun_llmseparate.py", line 2075, in main
+    task_manager.process_tasks(test_tasks, available_robots, objects_ai)
+  File "/media/ubuntu/Student/gengzeyu/LaMMA-P/scripts/pddlrun_llmseparate.py", line 1090, in process_tasks
+    code_plan = self._generate_problem_files(problem_summary)
+  File "/media/ubuntu/Student/gengzeyu/LaMMA-P/scripts/pddlrun_llmseparate.py", line 1287, in _generate_problem_files
+    problem_pddl = self.problemextracting(
+  File "/media/ubuntu/Student/gengzeyu/LaMMA-P/scripts/pddlrun_llmseparate.py", line 1452, in problemextracting
+    _, text = llm.query_model(prompt, gpt_version, max_tokens=1000, stop=["def"], frequency_penalty=0.30)
+  File "/media/ubuntu/Student/gengzeyu/LaMMA-P/scripts/pddlrun_llmseparate.py", line 695, in query_model
+    raise LLMError(f"API Error after all retries: {str(e)}")
+LLMError: API Error after all retries: Error code: 402 - {'code': 30001, 'message': 'Sorry, your account balance is insufficient', 'data': None}

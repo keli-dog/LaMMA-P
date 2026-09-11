@@ -1,0 +1,672 @@
+Successfully loaded API key from api_key.txt
+
+----Test set tasks----
+['Prepare ingrediants for cooking a sandwich tomorrow', 'Put a plate of food into the heating appliance', 'Secure the kitchen for the night', 'Execute a deep clean and waste disposal cycle', 'Process and archive nutritional supplies', 'Initialize multi-component thermal treatment', 'Simulate a morning caffeine routine', 'Perform bulk vegetable decomposition', 'Sanitize and organize carbohydrate assets', 'Consolidate organic inventory', 'Execute repetitive vegetable spatial rotation', 'Demonstrate a meal prep workflow', 'Stage ingredients for future consumption', 'Transfer payload to heat-induction chamber']
+Total: 14 tasks
+
+
+[DIAGNOSTIC] Initial Task Count: 14
+
+==================================================
+Processing Task: Prepare ingrediants for cooking a sandwich tomorrow: 1/14
+==================================================
+鉁?Decomposed plan generated
+鉁?Allocation plan generated
+鉁?Problem summary generated
+No team robot domains found; skipping team prompt.
+鉁?Problem files generated
+鉁?Split into subtasks complete
+鉁?Validation and planning complete
+鉁?Plans combined
+鉁?References matched
+Final PDDL Plan:
+ ```lisp
+0.0: (gotoobject robot1 lettuce) [1.0]
+0.0: (gotoobject robot2 tomato) [1.0]
+0.0: (gotoobject robot3 bread) [1.0]
+0.0: (gotoobject robot4 plate) [1.0]
+
+1.0: (pickupobject robot1 lettuce) [1.0]
+1.0: (pickupobject robot2 tomato) [1.0]
+1.0: (pickupobject robot3 bread) [1.0]
+1.0: (pickupobject robot4 plate) [1.0]
+
+2.0: (gotoobject robot1 countertop) [1.0]
+2.0: (gotoobject robot2 countertop) [1.0]
+2.0: (gotoobject robot3 countertop) [1.0]
+2.0: (gotoobject robot4 sink) [1.0]
+
+3.0: (putobject robot1 lettuce countertop) [1.0]
+3.0: (putobject robot2 tomato countertop) [1.0]
+3.0: (putobject robot3 bread countertop) [1.0]
+3.0: (putobject robot4 plate sink) [1.0]
+
+4.0: (sliceobject robot1 lettuce countertop) [1.0]
+4.0: (sliceobject robot2 tomato countertop) [1.0]
+4.0: (sliceobject robot3 bread countertop) [1.0]
+4.0: (washobject robot4 plate sink) [1.0]
+```
+Task 1 completion rate: 1/2
+
+==================================================
+Processing Task: Put a plate of food into the heating appliance: 2/14
+==================================================
+鉁?Decomposed plan generated
+鉁?Allocation plan generated
+鉁?Problem summary generated
+鉁?Problem files generated
+鉁?Split into subtasks complete
+鉁?Validation and planning complete
+鉁?Plans combined
+鉁?References matched
+Final PDDL Plan:
+ ```pddl
+0: (go-to-object robot1 plate) [2]
+0: (go-to-object robot2 appliance) [2]
+2: (pickup-object robot1 plate) [1]
+2: (open-object robot2 appliance) [1]
+3: (go-to-object robot1 appliance) [2]
+5: (put-object robot1 plate appliance) [1]
+6: (close-object robot1 appliance) [1]
+```
+Task 2 completion rate: 3/3
+
+==================================================
+Processing Task: Secure the kitchen for the night: 3/14
+==================================================
+鉁?Decomposed plan generated
+鉁?Allocation plan generated
+鉁?Problem summary generated
+鉁?Problem files generated
+鉁?Split into subtasks complete
+鉁?Validation and planning complete
+鉁?Plans combined
+鉁?References matched
+Final PDDL Plan:
+ ```pddl
+0.000: (gotoobject robot1 coffee_machine) [1.000]
+0.000: (gotoobject robot2 blinds) [1.000]
+0.000: (gotoobject robot3 fridge) [1.000]
+1.000: (switchoff robot1 coffee_machine) [1.000]
+1.000: (closeobject robot2 blinds) [1.000]
+1.000: (closeobject robot3 fridge) [1.000]
+2.000: (gotoobject robot1 light_switch) [1.000]
+2.000: (gotoobject robot2 cabinet1) [1.000]
+3.000: (switchoff robot1 light_switch) [1.000]
+3.000: (closeobject robot2 cabinet1) [1.000]
+4.000: (gotoobject robot1 microwave) [1.000]
+4.000: (gotoobject robot2 cabinet10) [1.000]
+5.000: (switchoff robot1 microwave) [1.000]
+5.000: (closeobject robot2 cabinet10) [1.000]
+6.000: (gotoobject robot1 stove_knob1) [1.000]
+6.000: (gotoobject robot2 cabinet11) [1.000]
+7.000: (switchoff robot1 stove_knob1) [1.000]
+7.000: (closeobject robot2 cabinet11) [1.000]
+8.000: (gotoobject robot1 stove_knob2) [1.000]
+8.000: (gotoobject robot2 cabinet2) [1.000]
+9.000: (switchoff robot1 stove_knob2) [1.000]
+9.000: (closeobject robot2 cabinet2) [1.000]
+10.000: (gotoobject robot1 stove_knob3) [1.000]
+10.000: (gotoobject robot2 cabinet3) [1.000]
+11.000: (switchoff robot1 stove_knob3) [1.000]
+11.000: (closeobject robot2 cabinet3) [1.000]
+12.000: (gotoobject robot1 stove_knob4) [1.000]
+12.000: (gotoobject robot2 cabinet4) [1.000]
+13.000: (switchoff robot1 stove_knob4) [1.000]
+13.000: (closeobject robot2 cabinet4) [1.000]
+14.000: (gotoobject robot1 toaster) [1.000]
+14.000: (gotoobject robot2 cabinet5) [1.000]
+15.000: (switchoff robot1 toaster) [1.000]
+15.000: (closeobject robot2 cabinet5) [1.000]
+16.000: (gotoobject robot2 cabinet6) [1.000]
+17.000: (closeobject robot2 cabinet6) [1.000]
+18.000: (gotoobject robot2 cabinet7) [1.000]
+19.000: (closeobject robot2 cabinet7) [1.000]
+20.000: (gotoobject robot2 cabinet8) [1.000]
+21.000: (closeobject robot2 cabinet8) [1.000]
+22.000: (gotoobject robot2 cabinet9) [1.000]
+23.000: (closeobject robot2 cabinet9) [1.000]
+24.000: (gotoobject robot2 drawer1) [1.000]
+25.000: (closeobject robot2 drawer1) [1.000]
+26.000: (gotoobject robot2 drawer2) [1.000]
+27.000: (closeobject robot2 drawer2) [1.000]
+28.000: (gotoobject robot2 drawer3) [1.000]
+29.000: (closeobject robot2 drawer3) [1.000]
+30.000: (gotoobject robot2 window) [1.000]
+31.000: (closeobject robot2 window) [1.000]
+```
+Task 3 completion rate: 3/3
+
+==================================================
+Processing Task: Execute a deep clean and waste disposal cycle: 4/14
+==================================================
+鉁?Decomposed plan generated
+鉁?Allocation plan generated
+鉁?Problem summary generated
+No robot number found in Assigned Robot; skipping.
+Assigned Robots content: None (missing required skill CleanObject)
+鉁?Problem files generated
+鉁?Split into subtasks complete
+鉁?Validation and planning complete
+鉁?Plans combined
+鉁?References matched
+Final PDDL Plan:
+ ```pddl
+0.000: (gotoobject robot1 plate) [1.000]
+0.000: (gotoobject robot2 leftover_food) [1.000]
+1.000: (cleanobject robot1 plate) [1.000]
+1.000: (pickupobject robot2 leftover_food) [1.000]
+2.000: (gotoobject robot1 cup) [1.000]
+2.000: (gotoobject robot2 garbagecan) [1.000]
+3.000: (cleanobject robot1 cup) [1.000]
+3.000: (putobject robot2 leftover_food garbagecan) [1.000]
+4.000: (gotoobject robot1 pan) [1.000]
+4.000: (gotoobject robot2 trash) [1.000]
+5.000: (cleanobject robot1 pan) [1.000]
+5.000: (pickupobject robot2 trash) [1.000]
+6.000: (gotoobject robot1 pot) [1.000]
+6.000: (gotoobject robot2 garbagecan) [1.000]
+7.000: (cleanobject robot1 pot) [1.000]
+7.000: (putobject robot2 trash garbagecan) [1.000]
+8.000: (gotoobject robot1 countertop) [1.000]
+8.000: (gotoobject robot2 garbage_bag) [1.000]
+9.000: (cleanobject robot1 countertop) [1.000]
+9.000: (pickupobject robot2 garbage_bag) [1.000]
+10.000: (gotoobject robot1 sink) [1.000]
+10.000: (gotoobject robot2 garbagecan) [1.000]
+11.000: (cleanobject robot1 sink) [1.000]
+11.000: (putobject robot2 garbage_bag garbagecan) [1.000]
+12.000: (gotoobject robot1 garbagecan) [1.000]
+13.000: (cleanobject robot1 garbagecan) [1.000]
+```
+Task 4 completion rate: 2/3
+
+==================================================
+Processing Task: Process and archive nutritional supplies: 5/14
+==================================================
+鉁?Decomposed plan generated
+鉁?Allocation plan generated
+鉁?Problem summary generated
+No robot number found in Assigned Robot; skipping.
+Assigned Robots content: None (No robot possesses the `CleanObject` skill)
+No team robot domains found; skipping team prompt.
+鉁?Problem files generated
+鉁?Split into subtasks complete
+鉁?Validation and planning complete
+鉁?Plans combined
+鉁?References matched
+Final PDDL Plan:
+ 0.000: (go-to-object robot1 Knife) [1.000]
+0.000: (go-to-object robot2 Pot) [1.000]
+1.000: (pickup-object robot1 Knife) [1.000]
+1.000: (clean-object robot2 Pot) [1.000]
+2.000: (go-to-object robot1 Apple) [1.000]
+3.000: (slice-object robot1 Apple) [1.000]
+4.000: (go-to-object robot1 Bread) [1.000]
+5.000: (slice-object robot1 Bread) [1.000]
+6.000: (go-to-object robot1 Lettuce) [1.000]
+7.000: (slice-object robot1 Lettuce) [1.000]
+8.000: (go-to-object robot1 Tomato) [1.000]
+9.000: (slice-object robot1 Tomato) [1.000]
+10.000: (pickup-object robot1 Tomato) [1.000]
+10.000: (go-to-object robot2 Apple) [1.000]
+11.000: (go-to-object robot1 Pot) [1.000]
+11.000: (pickup-object robot2 Apple) [1.000]
+12.000: (put-object robot1 Tomato Pot) [1.000]
+12.000: (go-to-object robot2 Pot) [1.000]
+13.000: (go-to-object robot1 Bread) [1.000]
+13.000: (put-object robot2 Apple Pot) [1.000]
+14.000: (pickup-object robot1 Bread) [1.000]
+14.000: (go-to-object robot2 Lettuce) [1.000]
+15.000: (go-to-object robot1 Pot) [1.000]
+15.000: (pickup-object robot2 Lettuce) [1.000]
+16.000: (put-object robot1 Bread Pot) [1.000]
+16.000: (go-to-object robot2 Pot) [1.000]
+17.000: (put-object robot2 Lettuce Pot) [1.000]
+18.000: (go-to-object robot1 Fridge) [1.000]
+18.000: (pickup-object robot2 Pot) [1.000]
+19.000: (open-object robot1 Fridge) [1.000]
+19.000: (go-to-object robot2 Fridge) [1.000]
+20.000: (put-object robot2 Pot Fridge) [1.000]
+21.000: (close-object robot2 Fridge) [1.000]
+Task 5 completion rate: 0/1
+
+==================================================
+Processing Task: Initialize multi-component thermal treatment: 6/14
+==================================================
+鉁?Decomposed plan generated
+鉁?Allocation plan generated
+鉁?Problem summary generated
+No team robot domains found; skipping team prompt.
+鉁?Problem files generated
+鉁?Split into subtasks complete
+鉁?Validation and planning complete
+鉁?Plans combined
+鉁?References matched
+Final PDDL Plan:
+ 0.000: (goto_object robot2 cabinet) [1.000]
+0.000: (goto_object robot4 countertop) [1.000]
+1.000: (pickup_object robot2 pot cabinet) [1.000]
+1.000: (pickup_object robot4 potato countertop) [1.000]
+2.000: (goto_object robot2 countertop) [1.000]
+2.000: (pickup_object robot4 knife countertop) [1.000]
+3.000: (put_object robot2 pot countertop) [1.000]
+3.000: (slice_object robot4 potato) [1.000]
+4.000: (goto_object robot2 microwave) [1.000]
+4.000: (goto_object robot4 pot) [1.000]
+5.000: (open_object robot2 microwave) [1.000]
+5.000: (put_object robot4 potato pot) [1.000]
+6.000: (goto_object robot2 countertop) [1.000]
+6.000: (goto_object robot4 countertop) [1.000]
+7.000: (pickup_object robot4 apple countertop) [1.000]
+8.000: (slice_object robot4 apple) [1.000]
+9.000: (goto_object robot4 pot) [1.000]
+10.000: (put_object robot4 apple pot) [1.000]
+11.000: (pickup_object robot2 pot countertop) [1.000]
+12.000: (goto_object robot2 microwave) [1.000]
+13.000: (put_object robot2 pot microwave) [1.000]
+14.000: (close_object robot2 microwave) [1.000]
+15.000: (switch_on robot2 microwave) [1.000]
+Task 6 completion rate: 2/2
+
+==================================================
+Processing Task: Simulate a morning caffeine routine: 7/14
+==================================================
+鉁?Decomposed plan generated
+鉁?Allocation plan generated
+鉁?Problem summary generated
+No team robot domains found; skipping team prompt.
+鉁?Problem files generated
+鉁?Split into subtasks complete
+鉁?Validation and planning complete
+鉁?Plans combined
+鉁?References matched
+Final PDDL Plan:
+ ```pddl
+; Corrected and merged plan: morning caffeine routine
+; Robot1: Prepare Coffee
+; Robot2: Set up a Mug
+; Robot3: Prepare Tea
+
+0.000: (gotoobject robot1 Mug) [1.000]
+0.000: (gotoobject robot2 Cup) [1.000]
+0.000: (gotoobject robot3 Kettle) [1.000]
+
+1.000: (pickupobject robot1 Mug) [1.000]
+1.000: (pickupobject robot2 Cup) [1.000]
+1.000: (pickupobject robot3 Kettle) [1.000]
+
+2.000: (gotoobject robot1 CoffeeMachine) [1.000]
+2.000: (gotoobject robot2 CounterTop) [1.000]
+2.000: (gotoobject robot3 StoveBurner) [1.000]
+
+3.000: (switchon robot1 CoffeeMachine) [1.000]
+3.000: (putobject robot2 Cup CounterTop) [1.000]
+3.000: (putobject robot3 Kettle StoveBurner) [1.000]
+
+4.000: (switchoff robot1 CoffeeMachine) [1.000]
+4.000: (switchon robot3 StoveBurner) [1.000]
+
+5.000: (gotoobject robot1 CounterTop) [1.000]
+5.000: (switchoff robot3 StoveBurner) [1.000]
+
+6.000: (putobject robot1 Mug CounterTop) [1.000]
+```
+Task 7 completion rate: 2/4
+
+==================================================
+Processing Task: Perform bulk vegetable decomposition: 8/14
+==================================================
+鉁?Decomposed plan generated
+鉁?Allocation plan generated
+鉁?Problem summary generated
+No team robot domains found; skipping team prompt.
+鉁?Problem files generated
+鉁?Split into subtasks complete
+鉁?Validation and planning complete
+鉁?Plans combined
+鉁?References matched
+Final PDDL Plan:
+ ```pddl
+0.000: (gotoobject robot1 lettuce) [1.000]
+0.000: (gotoobject robot2 tomato) [1.000]
+0.000: (gotoobject robot3 potato) [1.000]
+
+1.000: (sliceobject robot1 lettuce) [1.000]
+1.000: (sliceobject robot2 tomato) [1.000]
+1.000: (sliceobject robot3 potato) [1.000]
+
+2.000: (pickupobject robot1 lettuce) [1.000]
+2.000: (pickupobject robot2 tomato) [1.000]
+2.000: (pickupobject robot3 potato) [1.000]
+
+3.000: (gotoobject robot1 bowl) [1.000]
+3.000: (gotoobject robot2 bowl) [1.000]
+3.000: (gotoobject robot3 bowl) [1.000]
+
+4.000: (putobject robot1 lettuce bowl) [1.000]
+4.000: (putobject robot2 tomato bowl) [1.000]
+4.000: (putobject robot3 potato bowl) [1.000]
+```
+Task 8 completion rate: 1/2
+
+==================================================
+Processing Task: Sanitize and organize carbohydrate assets: 9/14
+==================================================
+鉁?Decomposed plan generated
+鉁?Allocation plan generated
+鉁?Problem summary generated
+No team robot domains found; skipping team prompt.
+鉁?Problem files generated
+鉁?Split into subtasks complete
+鉁?Validation and planning complete
+鉁?Plans combined
+鉁?References matched
+Final PDDL Plan:
+ ```pddl
+0.000: (gotoobject robot1 apple) [1.000]
+1.000: (cleanobject robot1 apple) [1.000]
+2.000: (gotoobject robot1 bread) [1.000]
+3.000: (cleanobject robot1 bread) [1.000]
+4.000: (gotoobject robot1 potato) [1.000]
+5.000: (cleanobject robot1 potato) [1.000]
+6.000: (gotoobject robot1 apple) [1.000]
+7.000: (pickupobject robot1 apple) [1.000]
+8.000: (gotoobject robot1 fridge) [1.000]
+9.000: (putobject robot1 apple fridge) [1.000]
+10.000: (gotoobject robot1 bread) [1.000]
+11.000: (pickupobject robot1 bread) [1.000]
+12.000: (gotoobject robot1 cabinet) [1.000]
+13.000: (putobject robot1 bread cabinet) [1.000]
+14.000: (gotoobject robot1 potato) [1.000]
+15.000: (pickupobject robot1 potato) [1.000]
+16.000: (gotoobject robot1 cabinet) [1.000]
+17.000: (putobject robot1 potato cabinet) [1.000]
+```
+Task 9 completion rate: 1/1
+
+==================================================
+Processing Task: Consolidate organic inventory: 10/14
+==================================================
+鉁?Decomposed plan generated
+鉁?Allocation plan generated
+鉁?Problem summary generated
+No team robot domains found; skipping team prompt.
+鉁?Problem files generated
+鉁?Split into subtasks complete
+鉁?Validation and planning complete
+鉁?Plans combined
+鉁?References matched
+Final PDDL Plan:
+ ```pddl
+0.000: (GoToObject robot1 Apple) [1.000]
+0.000: (GoToObject robot2 Egg) [1.000]
+1.000: (PickupObject robot1 Apple) [1.000]
+1.000: (PickupObject robot2 Egg) [1.000]
+2.000: (GoToObject robot1 Fridge) [1.000]
+2.000: (GoToObject robot2 Fridge) [1.000]
+3.000: (OpenObject robot1 Fridge) [1.000]
+4.000: (PutObject robot1 Apple Fridge) [1.000]
+4.000: (PutObject robot2 Egg Fridge) [1.000]
+5.000: (GoToObject robot1 Lettuce) [1.000]
+5.000: (GoToObject robot2 Tomato) [1.000]
+6.000: (PickupObject robot1 Lettuce) [1.000]
+6.000: (PickupObject robot2 Tomato) [1.000]
+7.000: (GoToObject robot1 Fridge) [1.000]
+7.000: (GoToObject robot2 Fridge) [1.000]
+8.000: (PutObject robot1 Lettuce Fridge) [1.000]
+8.000: (PutObject robot2 Tomato Fridge) [1.000]
+9.000: (GoToObject robot1 Potato) [1.000]
+10.000: (PickupObject robot1 Potato) [1.000]
+11.000: (GoToObject robot1 Fridge) [1.000]
+12.000: (PutObject robot1 Potato Fridge) [1.000]
+13.000: (CloseObject robot1 Fridge) [1.000]
+```
+Task 10 completion rate: 0/2
+
+==================================================
+Processing Task: Execute repetitive vegetable spatial rotation: 11/14
+==================================================
+鉁?Decomposed plan generated
+鉁?Allocation plan generated
+鉁?Problem summary generated
+No robot number found in Assigned Robot; skipping.
+Assigned Robots content: Robot B
+鉁?Problem files generated
+鉁?Split into subtasks complete
+鉁?Validation and planning complete
+鉁?Plans combined
+鉁?References matched
+Final PDDL Plan:
+ ```pddl
+; Corrected PDDL2.1 temporal plan
+; Robot B is the only robot assigned. Robot A is not used.
+; Cycle: CounterTop -> DiningTable -> Fridge -> CounterTop
+; Durations: go_to_object 0.5, pickup/put 0.3, open/close 0.2
+; The plan below shows one full rotation for tomato, lettuce, and potato.
+; For N repetitions, repeat the same vegetable sequence N times after the initial positioning.
+
+0.000: (go_to_object robot_b tomato) [0.500]
+0.500: (pickup_object robot_b tomato) [0.300]
+0.800: (go_to_object robot_b diningtable) [0.500]
+1.300: (put_object robot_b tomato diningtable) [0.300]
+1.600: (pickup_object robot_b tomato) [0.300]
+1.900: (go_to_object robot_b fridge) [0.500]
+2.400: (open_fridge robot_b fridge) [0.200]
+2.600: (put_object robot_b tomato fridge) [0.300]
+2.900: (pickup_object robot_b tomato) [0.300]
+3.200: (close_fridge robot_b fridge) [0.200]
+3.400: (go_to_object robot_b countertop) [0.500]
+3.900: (put_object robot_b tomato countertop) [0.300]
+
+4.200: (pickup_object robot_b lettuce) [0.300]
+4.500: (go_to_object robot_b diningtable) [0.500]
+5.000: (put_object robot_b lettuce diningtable) [0.300]
+5.300: (pickup_object robot_b lettuce) [0.300]
+5.600: (go_to_object robot_b fridge) [0.500]
+6.100: (open_fridge robot_b fridge) [0.200]
+6.300: (put_object robot_b lettuce fridge) [0.300]
+6.600: (pickup_object robot_b lettuce) [0.300]
+6.900: (close_fridge robot_b fridge) [0.200]
+7.100: (go_to_object robot_b countertop) [0.500]
+7.600: (put_object robot_b lettuce countertop) [0.300]
+
+7.900: (pickup_object robot_b potato) [0.300]
+8.200: (go_to_object robot_b diningtable) [0.500]
+8.700: (put_object robot_b potato diningtable) [0.300]
+9.000: (pickup_object robot_b potato) [0.300]
+9.300: (go_to_object robot_b fridge) [0.500]
+9.800: (open_fridge robot_b fridge) [0.200]
+10.000: (put_object robot_b potato fridge) [0.300]
+10.300: (pickup_object robot_b potato) [0.300]
+10.600: (close_fridge robot_b fridge) [0.200]
+10.800: (go_to_object robot_b countertop) [0.500]
+11.300: (put_object robot_b potato countertop) [0.300]
+```
+Task 11 completion rate: 0/0
+
+==================================================
+Processing Task: Demonstrate a meal prep workflow: 12/14
+==================================================
+鉁?Decomposed plan generated
+鉁?Allocation plan generated
+鉁?Problem summary generated
+LLM structure fix failed, using original subtask
+Invalid subtask structure, skipping
+鉁?Problem files generated
+鉁?Split into subtasks complete
+鉁?Validation and planning complete
+鉁?Plans combined
+鉁?References matched
+Final PDDL Plan:
+ ```pddl
+0.000: (GoToObject robot1 Knife) [3.000]
+0.000: (GoToObject robot2 Plate) [3.000]
+
+3.000: (PickupObject robot1 Knife) [1.000]
+3.000: (PickupObject robot2 Plate) [1.000]
+
+4.000: (GoToObject robot1 Lettuce) [3.000]
+4.000: (GoToObject robot2 Sink) [3.000]
+
+7.000: (PickupObject robot1 Lettuce) [1.000]
+7.000: (CleanObject robot2 Plate) [2.000]
+
+8.000: (SliceObject robot1 Lettuce) [2.000]
+
+9.000: (GoToObject robot2 CounterTop) [3.000]
+
+10.000: (GoToObject robot1 CounterTop) [3.000]
+
+12.000: (PutObject robot2 Plate CounterTop) [1.000]
+
+13.000: (PutObject robot1 Lettuce CounterTop) [1.000]
+
+14.000: (GoToObject robot1 Tomato) [3.000]
+
+17.000: (PickupObject robot1 Tomato) [1.000]
+
+18.000: (SliceObject robot1 Tomato) [2.000]
+
+20.000: (GoToObject robot1 CounterTop) [3.000]
+
+23.000: (PutObject robot1 Tomato CounterTop) [1.000]
+
+24.000: (GoToObject robot1 Bread) [3.000]
+
+27.000: (PickupObject robot1 Bread) [1.000]
+
+28.000: (SliceObject robot1 Bread) [2.000]
+
+30.000: (GoToObject robot1 CounterTop) [3.000]
+
+33.000: (PutObject robot1 Bread CounterTop) [1.000]
+
+34.000: (GoToObject robot1 Apple) [3.000]
+34.000: (GoToObject robot2 CounterTop) [3.000]
+
+37.000: (PickupObject robot1 Apple) [1.000]
+37.000: (PickupObject robot2 Bread) [1.000]
+
+38.000: (SliceObject robot1 Apple) [2.000]
+38.000: (GoToObject robot2 Plate) [3.000]
+
+40.000: (GoToObject robot1 Bowl) [3.000]
+
+41.000: (PutObject robot2 Bread Plate) [1.000]
+
+42.000: (GoToObject robot2 CounterTop) [3.000]
+
+43.000: (PutObject robot1 Apple Bowl) [1.000]
+
+44.000: (GoToObject robot1 CounterTop) [3.000]
+
+45.000: (PickupObject robot2 Lettuce) [1.000]
+
+46.000: (GoToObject robot2 Plate) [3.000]
+
+47.000: (PutObject robot1 Knife CounterTop) [1.000]
+
+49.000: (PutObject robot2 Lettuce Plate) [1.000]
+
+50.000: (GoToObject robot2 CounterTop) [3.000]
+
+53.000: (PickupObject robot2 Tomato) [1.000]
+
+54.000: (GoToObject robot2 Plate) [3.000]
+
+57.000: (PutObject robot2 Tomato Plate) [1.000]
+
+58.000: (GoToObject robot2 Bowl) [3.000]
+
+61.000: (PickupObject robot2 Bowl) [1.000]
+
+62.000: (GoToObject robot2 Plate) [3.000]
+
+65.000: (PutObject robot2 Bowl Plate) [1.000]
+```
+Task 12 completion rate: 0/0
+
+==================================================
+Processing Task: Stage ingredients for future consumption: 13/14
+==================================================
+鉁?Decomposed plan generated
+鉁?Allocation plan generated
+鉁?Problem summary generated
+No team robot domains found; skipping team prompt.
+鉁?Problem files generated
+鉁?Split into subtasks complete
+鉁?Validation and planning complete
+鉁?Plans combined
+鉁?References matched
+Final PDDL Plan:
+ ```lisp
+0.000: (gotoobject robot1 DiningTable) [1.000]
+0.000: (gotoobject robot2 Fridge) [1.000]
+
+1.000: (pickupobject robot1 Apple DiningTable) [1.000]
+1.000: (pickupobject robot2 Egg Fridge) [1.000]
+
+2.000: (gotoobject robot1 CounterTop) [1.000]
+2.000: (gotoobject robot2 CounterTop) [1.000]
+
+3.000: (putobject robot1 Apple CounterTop) [1.000]
+3.000: (putobject robot2 Egg CounterTop) [1.000]
+```
+Task 13 completion rate: 2/2
+
+==================================================
+Processing Task: Transfer payload to heat-induction chamber: 14/14
+==================================================
+鉁?Decomposed plan generated
+鉁?Allocation plan generated
+鉁?Problem summary generated
+鉁?Problem files generated
+鉁?Split into subtasks complete
+鉁?Validation and planning complete
+鉁?Plans combined
+鉁?References matched
+Final PDDL Plan:
+ ```pddl
+; Corrected and merged timed PDDL plan
+0.000: (gotoobject robot2 microwave) [1.000]
+0.000: (gotoobject robot1 mug) [1.000]
+1.000: (openobject robot2 microwave) [1.000]
+1.000: (pickupobject robot1 mug) [1.000]
+2.000: (gotoobject robot1 microwave) [1.000]
+3.000: (putobject robot1 mug microwave) [1.000]
+4.000: (closeobject robot2 microwave) [1.000]
+```
+Task 14 completion rate: 1/3
+
+==================================================
+All 14 tasks processed
+==================================================
+Writing plans for task 1
+Task 1 - TC: 1, Total Subtasks: 2
+Writing plans for task 2
+Task 2 - TC: 3, Total Subtasks: 3
+Writing plans for task 3
+Task 3 - TC: 3, Total Subtasks: 3
+Writing plans for task 4
+Task 4 - TC: 2, Total Subtasks: 3
+Writing plans for task 5
+Task 5 - TC: 0, Total Subtasks: 1
+Writing plans for task 6
+Task 6 - TC: 2, Total Subtasks: 2
+Writing plans for task 7
+Task 7 - TC: 2, Total Subtasks: 4
+Writing plans for task 8
+Task 8 - TC: 1, Total Subtasks: 2
+Writing plans for task 9
+Task 9 - TC: 1, Total Subtasks: 1
+Writing plans for task 10
+Task 10 - TC: 0, Total Subtasks: 2
+Writing plans for task 11
+Task 11 - TC: 0, Total Subtasks: 0
+Writing plans for task 12
+Task 12 - TC: 0, Total Subtasks: 0
+Writing plans for task 13
+Task 13 - TC: 2, Total Subtasks: 2
+Writing plans for task 14
+Task 14 - TC: 1, Total Subtasks: 3

@@ -1,0 +1,19 @@
+(define (problem slice_lettuce_problem)
+  (:domain robot1)
+  (:objects
+    robot1 - robot
+    lettuce - object
+    counterTop - object
+    floor - object
+  )
+  (:init
+    (at robot1 floor)
+    (at-location lettuce floor)
+    (inaction robot1)
+  )
+  (:goal
+    (and
+      (sliced lettuce)
+    )
+  )
+)
