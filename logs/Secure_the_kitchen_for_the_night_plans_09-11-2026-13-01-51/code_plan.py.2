@@ -1,0 +1,21 @@
+```pddl
+(define (problem close_fridge_problem)
+  (:domain robot3)
+  (:objects
+    robot3 - robot
+    fridge - object
+    floor - object
+  )
+  (:init
+    (at robot3 floor)
+    ; The fridge is assumed to be open initially, but not required by the action.
+    ; Uncomment the line below if you want to represent that the fridge is open.
+    ; (object-open robot3 fridge)
+  )
+  (:goal
+    (object-close robot3 fridge)
+  )
+)
+```
+
+Problem file generation is done.

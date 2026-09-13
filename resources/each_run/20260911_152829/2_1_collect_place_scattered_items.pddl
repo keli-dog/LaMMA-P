@@ -1,0 +1,33 @@
+(define (problem collect_place_scattered_items)
+  (:domain robot2)
+  (:objects
+    robot1 - robot
+    floor - object
+    book - object
+    laptop - object
+    remoteControl - object
+    vase - object
+    shelf - object
+    coffeeTable - object
+    sideTable - object
+  )
+  (:init
+    (at robot1 floor)
+    (inaction robot1)
+    (at-location book floor)
+    (at-location laptop floor)
+    (at-location remoteControl floor)
+    (at-location vase floor)
+    (at-location shelf floor)
+    (at-location coffeeTable floor)
+    (at-location sideTable floor)
+  )
+  (:goal
+    (and
+      (at-location book shelf)
+      (at-location laptop coffeeTable)
+      (at-location remoteControl coffeeTable)
+      (at-location vase sideTable)
+    )
+  )
+)

@@ -1,0 +1,87 @@
+#Problem file Extraction for SubTask 2: Dispose of Waste and Garbage
+
+Based on the provided domain files for robot1, robot2, and robot3, and the objects available, we generate the following PDDL problem definitions.  
+
+Each robot is assigned the same goal: to ensure the garbage bag is placed in the garbage can, and the robot is not holding it. This aligns with the subtask description of disposing of waste.
+
+---
+
+```pddl
+(define (problem dispose_waste_robot1)
+  (:domain robot1)
+  (:objects
+    robot1 - robot
+    garbageBag - object
+    garbageCan - object
+    counterTop - object
+    floor - object
+  )
+  (:init
+    (at robot1 floor)
+    (at-location garbageBag counterTop)
+    (at-location garbageCan floor)
+    (inaction robot1)
+    (not (holding robot1 garbageBag))
+  )
+  (:goal
+    (and
+      (at-location garbageBag garbageCan)
+      (not (holding robot1 garbageBag))
+    )
+  )
+)
+```
+
+```pddl
+(define (problem dispose_waste_robot2)
+  (:domain robot2)
+  (:objects
+    robot2 - robot
+    garbageBag - object
+    garbageCan - object
+    counterTop - object
+    floor - object
+  )
+  (:init
+    (at robot2 floor)
+    (at-location garbageBag counterTop)
+    (at-location garbageCan floor)
+    (inaction robot2)
+    (not (holding robot2 garbageBag))
+  )
+  (:goal
+    (and
+      (at-location garbageBag garbageCan)
+      (not (holding robot2 garbageBag))
+    )
+  )
+)
+```
+
+```pddl
+(define (problem dispose_waste_robot3)
+  (:domain robot3)
+  (:objects
+    robot3 - robot
+    garbageBag - object
+    garbageCan - object
+    counterTop - object
+    floor - object
+  )
+  (:init
+    (at robot3 floor)
+    (at-location garbageBag counterTop)
+    (at-location garbageCan floor)
+    (inaction robot3)
+    (not (holding robot3 garbageBag))
+  )
+  (:goal
+    (and
+      (at-location garbageBag garbageCan)
+      (not (holding robot3 garbageBag))
+    )
+  )
+)
+```
+
+#Problem file Extraction is done

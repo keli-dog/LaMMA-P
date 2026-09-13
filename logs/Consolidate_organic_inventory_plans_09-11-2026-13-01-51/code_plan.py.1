@@ -1,0 +1,23 @@
+```pddl
+(define (problem move_egg_to_fridge_problem)
+  (:domain robot2)
+  (:objects
+    robot2 - robot
+    egg - object
+    fridge - object
+    counterTop - object
+    floor - object
+  )
+  (:init
+    (at robot2 floor)
+    (at-location egg counterTop)
+    (inaction robot2)
+  )
+  (:goal
+    (and
+      (at-location egg fridge)
+    )
+  )
+)
+```
+Problem file generation is done.

@@ -1,0 +1,34 @@
+We need to generate a PDDL problem file for the task "Turn Off All Electronic Devices and Lights". Based on the provided object list, the relevant devices are: **FloorLamp**, **LightSwitch**, **Television**, and **Laptop**. The initial state must include the robot's location and each device being switched on. The goal is to switch them all off.
+
+Below is the problem file.
+
+```pddl
+(define (problem turn_off_devices)
+  (:domain robot1)
+  (:objects
+    robot1 - robot
+    FloorLamp - object
+    LightSwitch - object
+    Television - object
+    Laptop - object
+    Floor - object
+  )
+  (:init
+    (at robot1 Floor)
+    (switch-on robot1 FloorLamp)
+    (switch-on robot1 LightSwitch)
+    (switch-on robot1 Television)
+    (switch-on robot1 Laptop)
+  )
+  (:goal
+    (and
+      (switch-off robot1 FloorLamp)
+      (switch-off robot1 LightSwitch)
+      (switch-off robot1 Television)
+      (switch-off robot1 Laptop)
+    )
+  )
+)
+```
+
+Problem file generation is done.

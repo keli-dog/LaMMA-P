@@ -1,0 +1,19 @@
+(define (problem turn_on_lights_problem)
+  (:domain robot2)
+  (:objects
+    robot2 - robot
+    floorLamp - object
+    lightSwitch - object
+    floor - object
+  )
+  (:init
+    (at robot2 floor)
+    (not (inaction robot2))
+  )
+  (:goal
+    (and
+      (switch-on robot2 floorLamp)
+      (switch-on robot2 lightSwitch)
+    )
+  )
+)

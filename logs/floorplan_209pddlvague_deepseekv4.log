@@ -13,37 +13,220 @@ Processing Task: Execute a chaotic living room reset: 1/4
 鉁?Decomposed plan generated
 鉁?Allocation plan generated
 鉁?Problem summary generated
+No team robot domains found; skipping team prompt.
+鉁?Problem files generated
+鉁?Split into subtasks complete
+鉁?Validation and planning complete
+鉁?Plans combined
+鉁?References matched
+Final PDDL Plan:
+ ```pddl
+0.000: (gotoobject robot1 floorlamp) [1.000]
+0.000: (gotoobject robot2 book) [1.000]
+0.000: (gotoobject robot3 cabinet) [1.000]
+0.000: (gotoobject robot4 pillow) [1.000]
 
-[ERROR] Task Processing Failed:
-Error type: LLMError
-Error message: API Error after all retries: Error code: 402 - {'code': 30001, 'message': 'Sorry, your account balance is insufficient', 'data': None}
-Current task index: 0
-Error in main execution: API Error after all retries: Error code: 402 - {'code': 30001, 'message': 'Sorry, your account balance is insufficient', 'data': None}
-Full error: LLMError: API Error after all retries: Error code: 402 - {'code': 30001, 'message': 'Sorry, your account balance is insufficient', 'data': None}
-Traceback (most recent call last):
-  File "/media/ubuntu/Student/gengzeyu/LaMMA-P/scripts/pddlrun_llmseparate.py", line 675, in query_model
-    response = self.client.chat.completions.create(
-  File "/home/ubuntu/miniconda3/envs/lammap/lib/python3.9/site-packages/openai/_utils/_utils.py", line 298, in wrapper
-    return func(*args, **kwargs)
-  File "/home/ubuntu/miniconda3/envs/lammap/lib/python3.9/site-packages/openai/resources/chat/completions/completions.py", line 1284, in create
-    return self._post(
-  File "/home/ubuntu/miniconda3/envs/lammap/lib/python3.9/site-packages/openai/_base_client.py", line 1360, in post
-    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
-  File "/home/ubuntu/miniconda3/envs/lammap/lib/python3.9/site-packages/openai/_base_client.py", line 1133, in request
-    raise self._make_status_error_from_response(err.response) from None
-openai.APIStatusError: Error code: 402 - {'code': 30001, 'message': 'Sorry, your account balance is insufficient', 'data': None}
+1.000: (switchoff robot1 floorlamp) [1.000]
+1.000: (pickupobject robot2 book) [1.000]
+1.000: (closeobject robot3 cabinet) [1.000]
+1.000: (pickupobject robot4 pillow) [1.000]
 
-During handling of the above exception, another exception occurred:
+2.000: (gotoobject robot1 laptop) [1.000]
+2.000: (gotoobject robot2 shelf) [1.000]
+2.000: (gotoobject robot3 drawer) [1.000]
+2.000: (gotoobject robot4 couch) [1.000]
 
-Traceback (most recent call last):
-  File "/media/ubuntu/Student/gengzeyu/LaMMA-P/scripts/pddlrun_llmseparate.py", line 2075, in main
-    task_manager.process_tasks(test_tasks, available_robots, objects_ai)
-  File "/media/ubuntu/Student/gengzeyu/LaMMA-P/scripts/pddlrun_llmseparate.py", line 1090, in process_tasks
-    code_plan = self._generate_problem_files(problem_summary)
-  File "/media/ubuntu/Student/gengzeyu/LaMMA-P/scripts/pddlrun_llmseparate.py", line 1287, in _generate_problem_files
-    problem_pddl = self.problemextracting(
-  File "/media/ubuntu/Student/gengzeyu/LaMMA-P/scripts/pddlrun_llmseparate.py", line 1452, in problemextracting
-    _, text = llm.query_model(prompt, gpt_version, max_tokens=1000, stop=["def"], frequency_penalty=0.30)
-  File "/media/ubuntu/Student/gengzeyu/LaMMA-P/scripts/pddlrun_llmseparate.py", line 695, in query_model
-    raise LLMError(f"API Error after all retries: {str(e)}")
-LLMError: API Error after all retries: Error code: 402 - {'code': 30001, 'message': 'Sorry, your account balance is insufficient', 'data': None}
+3.000: (switchoff robot1 laptop) [1.000]
+3.000: (putobject robot2 book shelf) [1.000]
+3.000: (closeobject robot3 drawer) [1.000]
+3.000: (putobject robot4 pillow couch) [1.000]
+
+4.000: (gotoobject robot1 lightswitch) [1.000]
+4.000: (gotoobject robot2 remotecontrol) [1.000]
+4.000: (gotoobject robot3 fridge) [1.000]
+4.000: (gotoobject robot4 blanket) [1.000]
+
+5.000: (switchoff robot1 lightswitch) [1.000]
+5.000: (pickupobject robot2 remotecontrol) [1.000]
+5.000: (closefridge robot3 fridge) [1.000]
+5.000: (pickupobject robot4 blanket) [1.000]
+
+6.000: (gotoobject robot1 television) [1.000]
+6.000: (gotoobject robot2 coffeetable) [1.000]
+6.000: (gotoobject robot4 couch) [1.000]
+
+7.000: (switchoff robot1 television) [1.000]
+7.000: (putobject robot2 remotecontrol coffeetable) [1.000]
+7.000: (putobject robot4 blanket couch) [1.000]
+
+8.000: (gotoobject robot2 vase) [1.000]
+
+9.000: (pickupobject robot2 vase) [1.000]
+
+10.000: (gotoobject robot2 sidetable) [1.000]
+
+11.000: (putobject robot2 vase sidetable) [1.000]
+```
+Task 1 completion rate: 2/3
+
+==================================================
+Processing Task: Organize personal inventory and garden tools: 2/4
+==================================================
+鉁?Decomposed plan generated
+鉁?Allocation plan generated
+鉁?Problem summary generated
+鉁?Problem files generated
+鉁?Split into subtasks complete
+鉁?Validation and planning complete
+鉁?Plans combined
+鉁?References matched
+Final PDDL Plan:
+ 0.000: (gotoobject robot1 SideTable) [1.000]
+0.000: (gotoobject robot2 Floor) [1.000]
+1.000: (pickupobject robot1 Book SideTable) [1.000]
+1.000: (pickupobject robot2 Newspaper Floor) [1.000]
+2.000: (gotoobject robot1 Shelf) [1.000]
+2.000: (gotoobject robot2 Drawer2) [1.000]
+3.000: (putobject robot1 Book Shelf) [1.000]
+3.000: (openobject robot2 Drawer2) [1.000]
+4.000: (gotoobject robot1 SideTable) [1.000]
+4.000: (putobject robot2 Newspaper Drawer2) [1.000]
+5.000: (pickupobject robot1 Laptop SideTable) [1.000]
+5.000: (closeobject robot2 Drawer2) [1.000]
+6.000: (gotoobject robot1 Shelf) [1.000]
+6.000: (gotoobject robot2 Floor) [1.000]
+7.000: (putobject robot1 Laptop Shelf) [1.000]
+7.000: (pickupobject robot2 WateringCan Floor) [1.000]
+8.000: (gotoobject robot1 SideTable) [1.000]
+8.000: (gotoobject robot2 Shelf) [1.000]
+9.000: (pickupobject robot1 RemoteControl SideTable) [1.000]
+9.000: (putobject robot2 WateringCan Shelf) [1.000]
+10.000: (gotoobject robot1 Shelf) [1.000]
+11.000: (putobject robot1 RemoteControl Shelf) [1.000]
+Task 2 completion rate: 2/3
+
+==================================================
+Processing Task: De-clutter the reading area: 3/4
+==================================================
+鉁?Decomposed plan generated
+鉁?Allocation plan generated
+鉁?Problem summary generated
+鉁?Problem files generated
+鉁?Split into subtasks complete
+鉁?Validation and planning complete
+鉁?Plans combined
+鉁?References matched
+Final PDDL Plan:
+ 0.000: (gotoobject robot1 pen) [1.000]
+0.000: (gotoobject robot4 book) [1.000]
+0.000: (gotoobject robot2 laptop) [1.000]
+1.000: (pickupobject robot1 pen) [1.000]
+1.000: (pickupobject robot4 book) [1.000]
+1.000: (pickupobject robot2 laptop) [1.000]
+2.000: (gotoobject robot1 drawer1) [1.000]
+2.000: (gotoobject robot4 shelf) [1.000]
+2.000: (gotoobject robot2 sidetable) [1.000]
+3.000: (openobject robot1 drawer1) [1.000]
+3.000: (putobject robot4 book shelf) [1.000]
+3.000: (putobject robot2 laptop sidetable) [1.000]
+4.000: (putobject robot1 pen drawer1) [1.000]
+4.000: (gotoobject robot4 newspaper) [1.000]
+4.000: (gotoobject robot2 vase) [1.000]
+5.000: (closeobject robot1 drawer1) [1.000]
+5.000: (pickupobject robot4 newspaper) [1.000]
+5.000: (pickupobject robot2 vase) [1.000]
+6.000: (gotoobject robot1 creditcard) [1.000]
+6.000: (gotoobject robot4 garbagecan) [1.000]
+6.000: (gotoobject robot2 shelf) [1.000]
+7.000: (pickupobject robot1 creditcard) [1.000]
+7.000: (openobject robot4 garbagecan) [1.000]
+7.000: (putobject robot2 vase shelf) [1.000]
+8.000: (gotoobject robot1 drawer1) [1.000]
+8.000: (putobject robot4 newspaper garbagecan) [1.000]
+8.000: (gotoobject robot2 statue) [1.000]
+9.000: (openobject robot1 drawer1) [1.000]
+9.000: (closeobject robot4 garbagecan) [1.000]
+9.000: (pickupobject robot2 statue) [1.000]
+10.000: (putobject robot1 creditcard drawer1) [1.000]
+10.000: (gotoobject robot4 pillow) [1.000]
+10.000: (gotoobject robot2 sidetable) [1.000]
+11.000: (closeobject robot1 drawer1) [1.000]
+11.000: (pickupobject robot4 pillow) [1.000]
+11.000: (putobject robot2 statue sidetable) [1.000]
+12.000: (gotoobject robot1 keychain) [1.000]
+12.000: (gotoobject robot4 sofa) [1.000]
+13.000: (pickupobject robot1 keychain) [1.000]
+13.000: (putobject robot4 pillow sofa) [1.000]
+14.000: (gotoobject robot1 drawer1) [1.000]
+15.000: (openobject robot1 drawer1) [1.000]
+16.000: (putobject robot1 keychain drawer1) [1.000]
+17.000: (closeobject robot1 drawer1) [1.000]
+18.000: (gotoobject robot1 watch) [1.000]
+19.000: (pickupobject robot1 watch) [1.000]
+20.000: (gotoobject robot1 drawer1) [1.000]
+21.000: (openobject robot1 drawer1) [1.000]
+22.000: (putobject robot1 watch drawer1) [1.000]
+23.000: (closeobject robot1 drawer1) [1.000]
+24.000: (gotoobject robot1 remotecontrol) [1.000]
+25.000: (pickupobject robot1 remotecontrol) [1.000]
+26.000: (gotoobject robot1 drawer1) [1.000]
+27.000: (openobject robot1 drawer1) [1.000]
+28.000: (putobject robot1 remotecontrol drawer1) [1.000]
+29.000: (closeobject robot1 drawer1) [1.000]
+Task 3 completion rate: 1/1
+
+==================================================
+Processing Task: Stage the furniture for a home staging photoshoot: 4/4
+==================================================
+鉁?Decomposed plan generated
+鉁?Allocation plan generated
+鉁?Problem summary generated
+No robot number found in Assigned Robot; skipping.
+Assigned Robots content: None (infeasible – no robot has the CleanObject skill)
+鉁?Problem files generated
+鉁?Split into subtasks complete
+鉁?Validation and planning complete
+鉁?Plans combined
+鉁?References matched
+Final PDDL Plan:
+ 0.000: (gotoobject robot1 FloorLamp) [1.000]
+0.000: (gotoobject robot2 SideTable) [1.000]
+1.000: (switchon robot1 FloorLamp) [1.000]
+1.000: (cleanobject robot2 SideTable) [1.000]
+2.000: (gotoobject robot1 LightSwitch) [1.000]
+2.000: (placeobject robot2 Pen SideTable) [1.000]
+3.000: (switchon robot1 LightSwitch) [1.000]
+3.000: (gotoobject robot2 Dresser) [1.000]
+4.000: (gotoobject robot1 Sofa) [1.000]
+4.000: (cleanobject robot2 Dresser) [1.000]
+5.000: (cleanobject robot1 Sofa) [1.000]
+5.000: (placeobject robot2 KeyChain Dresser) [1.000]
+6.000: (gotoobject robot1 CoffeeTable) [1.000]
+6.000: (placeobject robot2 Watch Dresser) [1.000]
+7.000: (cleanobject robot1 CoffeeTable) [1.000]
+7.000: (gotoobject robot2 Drawer2) [1.000]
+8.000: (placeobject robot1 RemoteControl CoffeeTable) [1.000]
+8.000: (cleanobject robot2 Drawer2) [1.000]
+9.000: (placeobject robot1 Newspaper CoffeeTable) [1.000]
+9.000: (gotoobject robot2 Drawer3) [1.000]
+10.000: (gotoobject robot1 Shelf) [1.000]
+10.000: (cleanobject robot2 Drawer3) [1.000]
+11.000: (cleanobject robot1 Shelf) [1.000]
+11.000: (gotoobject robot2 Drawer4) [1.000]
+12.000: (placeobject robot1 Book Shelf) [1.000]
+12.000: (cleanobject robot2 Drawer4) [1.000]
+13.000: (gotoobject robot1 Drawer1) [1.000]
+14.000: (cleanobject robot1 Drawer1) [1.000]
+Task 4 completion rate: 1/1
+
+==================================================
+All 4 tasks processed
+==================================================
+Writing plans for task 1
+Task 1 - TC: 2, Total Subtasks: 3
+Writing plans for task 2
+Task 2 - TC: 2, Total Subtasks: 3
+Writing plans for task 3
+Task 3 - TC: 1, Total Subtasks: 1
+Writing plans for task 4
+Task 4 - TC: 1, Total Subtasks: 1

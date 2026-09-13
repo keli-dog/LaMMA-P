@@ -1,0 +1,22 @@
+```lisp
+(define (problem place_plate_in_microwave)
+  (:domain robot1)
+  (:objects
+    robot1 - robot
+    plate - object
+    microwave - object
+    counterTop - object
+  )
+  (:init
+    (at robot1 counterTop)
+    (holding robot1 plate)
+    (object-open robot1 microwave)
+  )
+  (:goal
+    (and
+      (at-location plate microwave)
+      (object-close robot1 microwave)
+    )
+  )
+)
+```

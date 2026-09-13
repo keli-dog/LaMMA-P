@@ -1,0 +1,38 @@
+Successfully loaded API key from api_key.txt
+
+----Test set tasks----
+['prepare hot water for shower and put toilet paper in the trash']
+Total: 1 tasks
+
+
+[DIAGNOSTIC] Initial Task Count: 1
+
+==================================================
+Processing Task: prepare hot water for shower and put toilet paper in the trash: 1/1
+==================================================
+鉁?Decomposed plan generated
+鉁?Allocation plan generated
+鉁?Problem summary generated
+鉁?Problem files generated
+鉁?Split into subtasks complete
+鉁?Validation and planning complete
+鉁?Plans combined
+鉁?References matched
+Final PDDL Plan:
+ ```pddl
+0.000: (gotoobject robot2 faucet) [0.000, 1.000]
+0.000: (gotoobject robot3 countertop) [0.000, 1.000]
+1.000: (switchon robot2 faucet) [1.000, 2.000]
+1.000: (pickupobject robot3 toiletpaper) [1.000, 2.000]
+2.000: (gotoobject robot2 lightswitch) [2.000, 3.000]
+2.000: (gotoobject robot3 garbagecan) [2.000, 3.000]
+3.000: (switchon robot2 lightswitch) [3.000, 4.000]
+3.000: (putobject robot3 toiletpaper garbagecan) [3.000, 4.000]
+```
+Task 1 completion rate: 2/2
+
+==================================================
+All 1 tasks processed
+==================================================
+Writing plans for task 1
+Task 1 - TC: 2, Total Subtasks: 2
