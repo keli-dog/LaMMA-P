@@ -40,7 +40,7 @@ def compile_aithor_exec_file(expt_name):
         executable_plan += ("robots = [{'name': 'robot1', 'skills': ['GoToObject', 'PickupObject', 'PutObject'], 'mass': 100}]\n")
     
     # Set default floor number (since it's not in current log format)
-    executable_plan += ("floor_no = 1\n\n")
+    executable_plan += ("floor_no = 6\n\n")
     
     # Find ground truth line (contains "ground_truth =")
     gt_line = None

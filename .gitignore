@@ -3,3 +3,6 @@ __pycache__/
 *.pyc
 sas_plan
 api_key.txt
+*.bak
+*.bak2
+*.bak3

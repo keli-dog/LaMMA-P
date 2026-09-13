@@ -18,10 +18,24 @@ event = c.step(action="AddThirdPartyCamera", **event.metadata["actionReturn"])
 reachable_positions_ = c.step(action="GetReachablePositions").metadata["actionReturn"]
 reachable_positions = positions_tuple = [(p["x"], p["y"], p["z"]) for p in reachable_positions_]
 
-# randomize postions of the agents
-for i in range (no_robot):
-    init_pos = random.choice(reachable_positions_)
-    c.step(dict(action="Teleport", position=init_pos, agentId=i))
+# distribute agents to four corners of the scene (avoid blocking)
+if no_robot > 0 and len(reachable_positions_) > 0:
+    xs = [p["x"] for p in reachable_positions_]
+    zs = [p["z"] for p in reachable_positions_]
+    min_x, max_x = min(xs), max(xs)
+    min_z, max_z = min(zs), max(zs)
+    corners = [
+        (min_x, min_z),
+        (max_x, min_z),
+        (min_x, max_z),
+        (max_x, max_z),
+    ]
+    for i in range(no_robot):
+        cx, cz = corners[i % 4]
+        best_pos = min(reachable_positions_,
+                       key=lambda p: (p["x"]-cx)**2 + (p["z"]-cz)**2)
+        c.step(dict(action="Teleport", position=best_pos, agentId=i))
+        print(f"  Robot {i} initialized at corner: x={best_pos['x']:.2f}, z={best_pos['z']:.2f}")
     
 objs = list([obj["objectId"] for obj in c.last_event.metadata["objects"]])
 # print (objs)

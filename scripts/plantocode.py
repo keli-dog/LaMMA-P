@@ -45,6 +45,7 @@ class LLMHandler:
                 if not api_key:
                     raise ValueError("API key file is empty")
                 openai.api_key = api_key
+                self.client = openai.OpenAI(api_key=api_key, base_url="https://api.siliconflow.cn/v1")
                 print("Successfully loaded API key from", api_key_file + '.txt')
             except FileNotFoundError:
                 # Try without .txt extension
@@ -53,6 +54,7 @@ class LLMHandler:
                     if not api_key:
                         raise ValueError("API key file is empty")
                     openai.api_key = api_key
+                    self.client = openai.OpenAI(api_key=api_key, base_url="https://api.siliconflow.cn/v1")
                     print("Successfully loaded API key from", api_key_file)
                 except FileNotFoundError:
                     raise LLMError(f"API key file not found: {api_key_file} or {api_key_file}.txt")
@@ -75,27 +77,18 @@ class LLMHandler:
         
         for attempt in range(MAX_RETRIES):
             try:
-                if "gpt" not in gpt_version:
-                    response = openai.completions.create(
-                        model=gpt_version, 
-                        prompt=prompt, 
-                        max_tokens=max_tokens, 
-                        temperature=temperature, 
-                        stop=stop, 
-                        logprobs=logprobs, 
-                        frequency_penalty=frequency_penalty
-                    )
-                    return response, response.choices[0].text.strip()
-                else:
-                    response = openai.chat.completions.create(
-                        model=gpt_version, 
-                        messages=prompt, 
-                        max_tokens=max_tokens, 
-                        temperature=temperature, 
-                        frequency_penalty=frequency_penalty
-                    )
-                    return response, response.choices[0].message.content.strip()
-                    
+                if not isinstance(prompt, list):
+                    prompt = [{"role": "user", "content": prompt}]
+                response = self.client.chat.completions.create(
+                    model=gpt_version,
+                    messages=prompt,
+                    max_tokens=max_tokens,
+                    temperature=temperature,
+                    stop=stop,
+                    frequency_penalty=frequency_penalty
+                )
+                return response, response.choices[0].message.content.strip()
+
             except openai.RateLimitError:
                 if attempt < MAX_RETRIES - 1:
                     time.sleep(retry_delay)
@@ -355,19 +348,39 @@ Return ONLY the corrected code that follows the template structure exactly.
         except Exception as e:
             return False, f"Validation and fixing error: {str(e)}", mimic_code
     
-    def create_few_shot_prompt(self, task_description: str, combined_plan: str) -> Union[str, List[Dict]]:
+    def create_few_shot_prompt(self, task_description: str, combined_plan: str, objects_list: str = '') -> Union[str, List[Dict]]:
         # Few-shot examples for complete plan translation
         few_shot_examples = f"""# CRITICAL INSTRUCTION: DO NOT REDEFINE AI2-THOR FUNCTIONS
 # The following AI2-THOR functions are ALREADY DEFINED and available:
 # - GoToObject(robot, object_name)
-# - PickupObject(robot, object_name) 
+# - PickupObject(robot, object_name)
 # - PutObject(robot, object_name, target_location)
 # - SwitchOn(robot, object_name)
 # - SwitchOff(robot, object_name)
+# - SliceObject(robot, object_name)
+# - BreakObject(robot, object_name)
+# - CleanObject(robot, object_name)
+# - ThrowObject(robot, object_name)
+# - OpenObject(robot, object_name)
+# - CloseObject(robot, object_name)
 # - time.sleep(seconds)
-# 
-# DO NOT create new function definitions for these. Use them directly as shown in the template.
-# DO NOT add "def GoToObject(...):" or similar definitions.
+#
+# Available objects in this scene (use ONLY these exact names):
+# {objects_list}
+#
+# === STRICT RULES ===
+# 1. Output ONLY executable Python code. NO comments, NO explanations, NO markdown.
+# 2. Use ONLY the function names listed above.
+# 3. Use ONLY object names from the available objects list above.
+# 4. NEVER use time.sleep to simulate actions - use the actual action functions.
+# 5. DO NOT redefine any function. Use them directly.
+# 6. SINGLE-HAND RULE: An agent can hold only ONE object at a time. PickupObject fails if hand is not empty. Put down current object first if needed.
+# 7. SliceObject/BreakObject/CleanObject act on objects IN THE SCENE - do NOT PickupObject first. Just GoToObject then SliceObject/BreakObject/CleanObject directly.
+# 8. PutObject requires the agent to be HOLDING that object. Only put down what you picked up.
+# 9. FIXED objects (CounterTop, Floor, Wall, SinkBasin, StoveBurner, Faucet, LightSwitch, Window) CANNOT be picked up.
+# 10. Always GoToObject before PickupObject/PutObject/SliceObject/SwitchOn/OpenObject.
+# 11. PutObject target must be a receptacle (CounterTop, Sink, Fridge, Drawer, Plate, Bowl, Box, GarbageCan, Microwave, etc.).
+# 12. After SliceObject, the sliced object stays in place - do NOT try to pick it up and put it down again.
 
 # Example: Complete PDDL Plan Translation with Multi-Robot Coordination
 Task: Wash multiple vegetables (apple, tomato, lettuce, potato)
@@ -524,13 +537,14 @@ def execute_task():
             ]
     
     def translate_to_mimic_format(self, task_description: str, combined_plan: str,
-                                max_tokens: int = 2048,  # Increased for complete plans
+                                objects_list: str = '',
+                                max_tokens: int = 2048,
                                 temperature: float = 0.1,
                                 frequency_penalty: float = 0.0) -> str:
         """Translate complete PDDL plan to mimic format using OpenAI API."""
         try:
             # Create few-shot prompt
-            prompt = self.create_few_shot_prompt(task_description, combined_plan)
+            prompt = self.create_few_shot_prompt(task_description, combined_plan, objects_list)
             
             # Query the model
             start_time = time.time()
@@ -679,9 +693,27 @@ def process_results_for_plan_to_code(results: List[Dict[str, Any]], translator: 
                     processed_results.append(processed_result)
                     continue
                 
+                # Read scene objects from log.txt
+                log_folder = result.get('log_folder', '')
+                objects_list = ''
+                if log_folder:
+                    log_path = os.path.join(log_folder, 'log.txt')
+                    if os.path.exists(log_path):
+                        with open(log_path, 'r') as _lf:
+                            _log_content = _lf.read()
+                        _obj_match = re.search(r'objects\s*=\s*(\[.*?\])', _log_content, re.DOTALL)
+                        if _obj_match:
+                            try:
+                                import ast as _ast
+                                _objs = _ast.literal_eval(_obj_match.group(1))
+                                _obj_names = list(set(_o['name'] for _o in _objs if 'name' in _o))
+                                objects_list = ', '.join(sorted(_obj_names))
+                            except Exception:
+                                pass
+
                 # Translate to mimic format using OpenAI API
                 start_time = time.time()
-                mimic_code = translator.translate_to_mimic_format(task_description, combined_plan)
+                mimic_code = translator.translate_to_mimic_format(task_description, combined_plan, objects_list=objects_list)
                 translation_time = time.time() - start_time
                 
                 # Extract function name
@@ -895,7 +927,7 @@ def parse_arguments() -> argparse.Namespace:
     parser.add_argument('--openai-api-key-file', type=str, default="api_key",
                        help='Path to OpenAI API key file')
     parser.add_argument('--gpt-version', type=str, default="gpt-4o",
-                       choices=['gpt-3.5-turbo', 'gpt-4o', 'gpt-3.5-turbo-16k'],
+                       choices=['gpt-3.5-turbo', 'gpt-4o', 'gpt-3.5-turbo-16k', 'deepseek-ai/DeepSeek-R1-0528-Qwen3-8B', 'deepseek-ai/DeepSeek-V3'],
                        help='GPT model version to use')
     parser.add_argument('--input-source', type=str, choices=['json', 'pddl_logs'], default='pddl_logs',
                        help='Input source type: json file or pddl_logs directory')
