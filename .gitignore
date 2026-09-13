@@ -9,3 +9,10 @@ api_key.txt
 *.bak
 *.bak2
 *.bak3
+logs/*/agent_*/
+logs/*/top_view/
+logs/trial/
+logs/*/*.mp4
+logs/*/*.avi
+*.mp4
+*.avi
