@@ -1,0 +1,21 @@
+验证轮次: 1
+验证模型: Pro/deepseek-ai/DeepSeek-V3
+LLM VALID: True
+LLM 问题数: 0
+确定性检查问题数: 1
+总问题数: 1
+
+=== LLM 发现的问题 ===
+(none)
+
+=== 确定性检查发现的问题 ===
+- [Deterministic] 物体 'Done' 不在场景物体列表中
+
+=== 修复建议 ===
+(none)
+
+=== LLM 原始响应 ===
+VALID: true
+ISSUE_COUNT: 0
+ISSUES:
+SUGGESTIONS:
