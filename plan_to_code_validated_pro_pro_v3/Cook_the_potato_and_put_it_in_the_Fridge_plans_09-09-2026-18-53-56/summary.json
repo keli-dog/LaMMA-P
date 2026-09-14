@@ -1,0 +1,75 @@
+{
+  "task": "Cook_the_potato_and_put_it_in_the_Fridge_plans_09-09-2026-18-53-56",
+  "task_description": "Cook the potato and put it in the Fridge",
+  "translate_model": "Pro/deepseek-ai/DeepSeek-V3",
+  "validate_model": "Pro/deepseek-ai/DeepSeek-V3",
+  "translate_time": 18.344000577926636,
+  "final_valid": false,
+  "final_issue_count": 5,
+  "final_source": "original_v0",
+  "validation_rounds": 3,
+  "issues_history": [
+    {
+      "round": 1,
+      "llm_valid": false,
+      "llm_issues": [
+        "[Physical Constraint] Violation of single-hand rule: prepare_potato tries to PickupObject('Potato') while already holding Knife (line: prepare_potato function)",
+        "[Physical Constraint] Missing PutObject for Pan after cooking in cook_potato (line: cook_potato function)",
+        "[Threading] Incorrect number of Done actions (4) for number of threads (4) - should match 1:1 (line: action_queue.append)",
+        "[Logic] Missing time.sleep after SwitchOn(StoveKnob) before putting potato in pan (line: setup_stove function)"
+      ],
+      "deterministic_issues": [
+        "[Deterministic] 疑似单手冲突: PickupObject(3次) > PutObject+Drop(1次)"
+      ],
+      "suggestions": [
+        "Fix 1: In prepare_potato, add PutObject(robots[0], 'Knife', 'CounterTop') before picking up sliced potato",
+        "Fix 2: In cook_potato, add GoToObject(robots[0], 'Pan') and PickupObject(robots[0], 'Pan') after cooking to clean up",
+        "Fix 3: Remove one action_queue.append({'action':'Done'}) to match thread count",
+        "Fix 4: Add time.sleep(2) after SwitchOn(robots[1], 'StoveKnob') in setup_stove to let burner heat up"
+      ]
+    },
+    {
+      "round": 2,
+      "llm_valid": false,
+      "llm_issues": [
+        "[Physical Constraint] After slicing potato, robot tries to PickupObject('Potato') but hasn't PutObject('Knife') first (line: prepare_potato function)",
+        "[Physical Constraint] In cook_potato, robot tries to PickupObject('Pan') while still holding Potato (line: cook_potato function)",
+        "[Physical Constraint] In store_potato, robot tries to PickupObject('Potato') but it's already in the pan (line: store_potato function)",
+        "[Threading] action_queue.append({'action':'Done'}) called 3 times but there are 4 threads (line: end of code)",
+        "[Logic] Missing step to PickupObject('Potato') from pan after cooking (line: between cook_potato and store_potato)",
+        "[Logic] Missing step to OpenObject('Fridge') before putting potato in (line: store_potato function)"
+      ],
+      "deterministic_issues": [
+        "[Deterministic] 疑似单手冲突: PickupObject(3次) > PutObject+Drop(1次)"
+      ],
+      "suggestions": [
+        "Fix 1: In prepare_potato, add PutObject(robots[0], 'Knife', 'CounterTop') before trying to pickup potato slices",
+        "Fix 2: In cook_potato, add PickupObject(robots[0], 'Potato') from pan before moving to store_potato",
+        "Fix 3: In store_potato, remove the initial PickupObject('Potato') since it should already be held",
+        "Fix 4: Change action_queue.append to 4 Done actions matching the 4 threads",
+        "Fix 5: Add OpenObject(robots[0], 'Fridge') at start of store_potato function",
+        "Fix 6: Add PickupObject(robots[0], 'Potato') after cooking and before storing"
+      ]
+    },
+    {
+      "round": 3,
+      "llm_valid": false,
+      "llm_issues": [
+        "[Threading] Incorrect number of Done actions (4) for threads (4) - should match robot count (line: near end)",
+        "[Physics] Missing PutObject for Pan after cooking (line: cook_potato function)",
+        "[Physics] Missing PickupObject for Potato after slicing (already exists, but redundant with earlier Pickup)",
+        "[Logic] Missing time delay after putting potato in pan before turning off stove (line: cook_potato function)"
+      ],
+      "deterministic_issues": [
+        "[Deterministic] 疑似单手冲突: PickupObject(3次) > PutObject+Drop(1次)"
+      ],
+      "suggestions": [
+        "Fix 1: Remove redundant PickupObject(robots[0], 'Potato') after SliceObject in prepare_potato",
+        "Fix 2: Add PutObject(robots[1], 'Pan', 'CounterTop') after cooking in cook_potato",
+        "Fix 3: Adjust Done actions to match robot count (2 robots = 2 Done)",
+        "Fix 4: Increase sleep time after putting potato in pan to 15-20 seconds for realistic cooking"
+      ]
+    }
+  ],
+  "output_dir": "/media/ubuntu/Student/gengzeyu/LaMMA-P/plan_to_code_validated_pro_pro_v3/Cook_the_potato_and_put_it_in_the_Fridge_plans_09-09-2026-18-53-56"
+}
