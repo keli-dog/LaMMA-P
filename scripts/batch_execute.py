@@ -25,7 +25,8 @@ def set_floor_no(floor_no):
         f.write(re.sub(r'floor_no = \d+', f'floor_no = {floor_no}', content))
 
 def execute_task(task_dir, floor_no, log_path, timeout=300):
-    """用 Popen 实时读取输出，边跑边写日志，超时 kill"""
+    """用 Popen + 读线程实时输出，主线程等超时，超时 kill"""
+    import threading
     task_name = os.path.basename(task_dir)
     if not os.path.exists(os.path.join(task_dir, 'code_plan.py')):
         with open(log_path, 'w', encoding='utf-8') as f:
@@ -35,53 +36,62 @@ def execute_task(task_dir, floor_no, log_path, timeout=300):
     set_floor_no(floor_no)
     cmd = [sys.executable, 'scripts/execute_plan.py', '--command', task_name]
 
-    with open(log_path, 'w', encoding='utf-8') as logf:
-        logf.write(f"=== START {time.strftime('%Y-%m-%d %H:%M:%S')} ===\n")
-        logf.write(f"CMD: {' '.join(cmd)}\n")
-        logf.write(f"floor_no: {floor_no}\n")
-        logf.write("=" * 60 + "\n\n")
-        logf.flush()
+    logf = open(log_path, 'w', encoding='utf-8')
+    logf.write(f"=== START {time.strftime('%Y-%m-%d %H:%M:%S')} ===\n")
+    logf.write(f"CMD: {' '.join(cmd)}\n")
+    logf.write(f"floor_no: {floor_no}\n")
+    logf.write("=" * 60 + "\n\n")
+    logf.flush()
 
-        try:
-            proc = subprocess.Popen(
-                cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
-                text=True, bufsize=1, env={**os.environ, 'PYTHONUNBUFFERED': '1'})
-        except Exception as e:
-            logf.write(f"[POPEN ERROR] {e}\n")
-            return 'launch_error', {}
+    try:
+        proc = subprocess.Popen(
+            cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+            text=True, bufsize=1, env={**os.environ, 'PYTHONUNBUFFERED': '1'})
+    except Exception as e:
+        logf.write(f"[POPEN ERROR] {e}\n")
+        logf.close()
+        return 'launch_error', {}
 
-        output_lines = []
-        start = time.time()
-        try:
-            for line in proc.stdout:
-                logf.write(line)
-                logf.flush()
-                output_lines.append(line)
-                # 同时打印到控制台（tmux 里能看到）
-                print(f"    {line.rstrip()}")
-            proc.wait(timeout=max(1, timeout - (time.time() - start)))
-        except subprocess.TimeoutExpired:
-            proc.kill()
-            proc.wait()
-            msg = f"\n[TIMEOUT] 超过 {timeout}秒，强制终止（可能导航死锁/转圈）\n"
-            logf.write(msg)
-            print(msg)
-            output_lines.append(msg)
-        except Exception as e:
-            proc.kill()
-            msg = f"\n[EXCEPTION] {type(e).__name__}: {e}\n"
-            logf.write(msg)
-            print(msg)
-            output_lines.append(msg)
+    output_lines = []
+    timed_out = False
 
-        output = ''.join(output_lines)
-        logf.write(f"\n=== END {time.strftime('%Y-%m-%d %H:%M:%S')} (exit={proc.returncode}) ===\n")
+    def reader():
+        for line in proc.stdout:
+            logf.write(line)
+            logf.flush()
+            output_lines.append(line)
+            print(f"    {line.rstrip()}")
+
+    t = threading.Thread(target=reader, daemon=True)
+    t.start()
+
+    try:
+        proc.wait(timeout=timeout)
+    except subprocess.TimeoutExpired:
+        timed_out = True
+        proc.kill()
+        proc.wait()
+        msg = f"\n[TIMEOUT] 超过 {timeout}秒，强制终止（可能导航死锁/转圈）\n"
+        logf.write(msg)
+        print(msg)
+        output_lines.append(msg)
+    except Exception as e:
+        proc.kill()
+        msg = f"\n[EXCEPTION] {type(e).__name__}: {e}\n"
+        logf.write(msg)
+        print(msg)
+        output_lines.append(msg)
+
+    t.join(timeout=5)
+    output = ''.join(output_lines)
+    logf.write(f"\n=== END {time.strftime('%Y-%m-%d %H:%M:%S')} (exit={proc.returncode}) ===\n")
+    logf.close()
 
     metrics = {}
     for key in ['SR', 'TC', 'GCR', 'Exec', 'RU']:
         m = re.search(rf'{key}:([\d.]+)', output)
         metrics[key] = m.group(1) if m else ''
-    status = 'success' if metrics.get('SR') else ('timeout' if 'TIMEOUT' in output else 'failed')
+    status = 'success' if metrics.get('SR') else ('timeout' if timed_out else 'failed')
     return status, metrics
 
 def main():
