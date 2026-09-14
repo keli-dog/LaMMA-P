@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import os, re, subprocess, argparse, csv, sys
+import os, re, subprocess, argparse, csv, sys, time, signal
 from pathlib import Path
 from difflib import get_close_matches
 
@@ -24,26 +24,65 @@ def set_floor_no(floor_no):
     with open(path, 'w') as f:
         f.write(re.sub(r'floor_no = \d+', f'floor_no = {floor_no}', content))
 
-def execute_task(task_dir, floor_no, timeout=300):
+def execute_task(task_dir, floor_no, log_path, timeout=300):
+    """用 Popen 实时读取输出，边跑边写日志，超时 kill"""
     task_name = os.path.basename(task_dir)
     if not os.path.exists(os.path.join(task_dir, 'code_plan.py')):
-        return 'no_code_plan', {}, 'code_plan.py not found'
+        with open(log_path, 'w', encoding='utf-8') as f:
+            f.write('[ERROR] code_plan.py not found\n')
+        return 'no_code_plan', {}
+
     set_floor_no(floor_no)
-    try:
-        result = subprocess.run(
-            [sys.executable, 'scripts/execute_plan.py', '--command', task_name],
-            capture_output=True, text=True, timeout=timeout)
-        output = result.stdout + result.stderr
-    except subprocess.TimeoutExpired as e:
-        output = (e.stdout or '') + (e.stderr or '')
-        output += f'\n[TIMEOUT] 超过 {timeout}秒，强制终止（可能导航死锁/转圈）'
-        return 'timeout', {}, output
+    cmd = [sys.executable, 'scripts/execute_plan.py', '--command', task_name]
+
+    with open(log_path, 'w', encoding='utf-8') as logf:
+        logf.write(f"=== START {time.strftime('%Y-%m-%d %H:%M:%S')} ===\n")
+        logf.write(f"CMD: {' '.join(cmd)}\n")
+        logf.write(f"floor_no: {floor_no}\n")
+        logf.write("=" * 60 + "\n\n")
+        logf.flush()
+
+        try:
+            proc = subprocess.Popen(
+                cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                text=True, bufsize=1, env={**os.environ, 'PYTHONUNBUFFERED': '1'})
+        except Exception as e:
+            logf.write(f"[POPEN ERROR] {e}\n")
+            return 'launch_error', {}
+
+        output_lines = []
+        start = time.time()
+        try:
+            for line in proc.stdout:
+                logf.write(line)
+                logf.flush()
+                output_lines.append(line)
+                # 同时打印到控制台（tmux 里能看到）
+                print(f"    {line.rstrip()}")
+            proc.wait(timeout=max(1, timeout - (time.time() - start)))
+        except subprocess.TimeoutExpired:
+            proc.kill()
+            proc.wait()
+            msg = f"\n[TIMEOUT] 超过 {timeout}秒，强制终止（可能导航死锁/转圈）\n"
+            logf.write(msg)
+            print(msg)
+            output_lines.append(msg)
+        except Exception as e:
+            proc.kill()
+            msg = f"\n[EXCEPTION] {type(e).__name__}: {e}\n"
+            logf.write(msg)
+            print(msg)
+            output_lines.append(msg)
+
+        output = ''.join(output_lines)
+        logf.write(f"\n=== END {time.strftime('%Y-%m-%d %H:%M:%S')} (exit={proc.returncode}) ===\n")
+
     metrics = {}
     for key in ['SR', 'TC', 'GCR', 'Exec', 'RU']:
         m = re.search(rf'{key}:([\d.]+)', output)
         metrics[key] = m.group(1) if m else ''
-    status = 'success' if metrics.get('SR') else 'failed'
-    return status, metrics, output
+    status = 'success' if metrics.get('SR') else ('timeout' if 'TIMEOUT' in output else 'failed')
+    return status, metrics
 
 def main():
     parser = argparse.ArgumentParser()
@@ -72,11 +111,10 @@ def main():
             continue
         dn = os.path.basename(task_dir)
         print(f"  Dir: {dn}")
-        status, metrics, output = execute_task(task_dir, args.floor, args.timeout)
-        with open(os.path.join(args.output_dir, f'{dn}.log'), 'w', encoding='utf-8') as f:
-            f.write(output)
+        log_path = os.path.join(args.output_dir, f'{dn}.log')
+        status, metrics = execute_task(task_dir, args.floor, log_path, args.timeout)
         if status == 'success': ok += 1
-        print(f"  {status} | SR={metrics.get('SR','')} GCR={metrics.get('GCR','')} Exec={metrics.get('Exec','')}")
+        print(f"  >> {status} | SR={metrics.get('SR','')} GCR={metrics.get('GCR','')} Exec={metrics.get('Exec','')}")
         with open(summary, 'a', newline='', encoding='utf-8') as f:
             csv.writer(f).writerow([dn, status, metrics.get('SR',''), metrics.get('TC',''),
                 metrics.get('GCR',''), metrics.get('Exec',''), metrics.get('RU','')])
