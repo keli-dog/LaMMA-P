@@ -45,7 +45,7 @@ def generate_video():
 
 
 
-robots = [{'name': 'robot1', 'skills': ['GoToObject', 'OpenObject', 'CloseObject', 'BreakObject', 'SliceObject', 'SwitchOn', 'SwitchOff', 'PickupObject', 'PutObject', 'DropHandObject', 'ThrowObject', 'PushObject', 'PullObject'], 'mass': 100}, {'name': 'robot2', 'skills': ['GoToObject', 'OpenObject', 'CloseObject', 'BreakObject', 'SliceObject', 'SwitchOn', 'SwitchOff', 'PickupObject', 'PutObject', 'DropHandObject', 'ThrowObject', 'PushObject', 'PullObject'], 'mass': 100}]
+robots = [{'name': 'robot2', 'skills': ['GoToObject', 'OpenObject', 'CloseObject', 'BreakObject', 'SliceObject', 'DropHandObject', 'ThrowObject', 'PushObject', 'PullObject'], 'mass': 100}, {'name': 'robot2', 'skills': ['GoToObject', 'OpenObject', 'CloseObject', 'SliceObject', 'PickupObject', 'PutObject', 'DropHandObject', 'ThrowObject', 'PushObject', 'PullObject'], 'mass': 100}]
 floor_no = 15
 
 ground_truth = [{'name': 'Fridge', 'contains': ['Apple'], 'state': 'None'}]
@@ -575,37 +575,23 @@ def ThrowObject(robot, sw_obj):
     
     action_queue.append({'action':'ThrowObject', 'objectId':sw_obj_id, 'agent_id':agent_id}) 
     time.sleep(1)
-def put_apple_in_fridge(robots):
-    GoToObject(robots[0], 'Apple')
-    PickupObject(robots[0], 'Apple')
-    GoToObject(robots[0], 'Fridge')
-    OpenObject(robots[0], 'Fridge')
-    PutObject(robots[0], 'Apple', 'Fridge')
-    CloseObject(robots[0], 'Fridge')
+def rotate_between_vegetables(robots):
+    GoToObject(robots[0], 'Lettuce')
+    GoToObject(robots[0], 'Tomato')
+    GoToObject(robots[0], 'Lettuce')
+    GoToObject(robots[0], 'Tomato')
+    GoToObject(robots[0], 'Lettuce')
+    GoToObject(robots[0], 'Tomato')
+    GoToObject(robots[0], 'Lettuce')
 
-def put_lettuce_in_fridge(robots):
-    GoToObject(robots[1], 'Lettuce')
-    PickupObject(robots[1], 'Lettuce')
-    GoToObject(robots[1], 'Fridge')
-    OpenObject(robots[1], 'Fridge')
-    PutObject(robots[1], 'Lettuce', 'Fridge')
-    CloseObject(robots[1], 'Fridge')
-
-task1_thread = threading.Thread(target=put_apple_in_fridge, args=(robots,))
-task2_thread = threading.Thread(target=put_lettuce_in_fridge, args=(robots,))
-
-task1_thread.start()
-task2_thread.start()
-
-task1_thread.join()
-task2_thread.join()
-
-action_queue.append({'action':'Done'})
-action_queue.append({'action':'Done'})
-
-task_over = True
-time.sleep(5)
-no_trans = 3
+def execute_task():
+    rotate_thread = threading.Thread(target=rotate_between_vegetables, args=(robots,))
+    rotate_thread.start()
+    rotate_thread.join()
+    action_queue.append({'action':'Done'})
+    task_over = True
+    time.sleep(5)
+no_trans = 0
 
 for i in range(25):
     action_queue.append({'action':'Done'})

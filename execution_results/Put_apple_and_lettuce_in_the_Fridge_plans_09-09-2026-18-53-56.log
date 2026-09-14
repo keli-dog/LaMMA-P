@@ -1,33 +1,37 @@
-=== START 2026-09-14 17:25:00 ===
+=== START 2026-09-14 17:34:14 ===
 CMD: /home/ubuntu/miniconda3/envs/lammap/bin/python scripts/execute_plan.py --command Put_apple_and_lettuce_in_the_Fridge_plans_09-09-2026-18-53-56
 floor_no: 15
 ============================================================
 
 Put_apple_and_lettuce_in_the_Fridge_plans_09-09-2026-18-53-56
 No Breaks:  3
-Traceback (most recent call last):
-  File "/media/ubuntu/Student/gengzeyu/LaMMA-P/logs/Put_apple_and_lettuce_in_the_Fridge_plans_09-09-2026-18-53-56/executable_plan.py", line 59, in <module>
-    c = Controller( height=1000, width=1000)
-  File "/home/ubuntu/miniconda3/envs/lammap/lib/python3.9/site-packages/ai2thor/controller.py", line 518, in __init__
-    self.start(
-  File "/home/ubuntu/miniconda3/envs/lammap/lib/python3.9/site-packages/ai2thor/controller.py", line 1439, in start
-    self.last_event = self.server.receive(timeout=self.server_start_timeout)
-  File "/home/ubuntu/miniconda3/envs/lammap/lib/python3.9/site-packages/ai2thor/fifo_server.py", line 229, in receive
-    metadata, files = self._recv_message(
-  File "/home/ubuntu/miniconda3/envs/lammap/lib/python3.9/site-packages/ai2thor/fifo_server.py", line 140, in _recv_message
-    self.server_pipe = open(self.server_pipe_path, "rb")
-KeyboardInterrupt
-Traceback (most recent call last):
-  File "/media/ubuntu/Student/gengzeyu/LaMMA-P/scripts/execute_plan.py", line 97, in <module>
-    subprocess.run(["python", ai_exec_file])
-  File "/home/ubuntu/miniconda3/envs/lammap/lib/python3.9/subprocess.py", line 507, in run
-    stdout, stderr = process.communicate(input, timeout=timeout)
-  File "/home/ubuntu/miniconda3/envs/lammap/lib/python3.9/subprocess.py", line 1126, in communicate
-    self.wait()
-  File "/home/ubuntu/miniconda3/envs/lammap/lib/python3.9/subprocess.py", line 1189, in wait
-    return self._wait(timeout=timeout)
-  File "/home/ubuntu/miniconda3/envs/lammap/lib/python3.9/subprocess.py", line 1933, in _wait
-    (pid, sts) = self._try_wait(0)
-  File "/home/ubuntu/miniconda3/envs/lammap/lib/python3.9/subprocess.py", line 1891, in _try_wait
-    (pid, sts) = os.waitpid(self.pid, wait_flags)
-KeyboardInterrupt
+  Robot 0 initialized at corner: x=-2.75, z=0.00
+  Robot 1 initialized at corner: x=-0.25, z=0.50
+Going to  Apple|-03.24|+00.97|+02.94 {'x': -3.2419326305389404, 'y': 0.9667198657989502, 'z': 2.951723098754883}
+Going to  Lettuce|-01.67|+00.96|+00.10 {'x': -1.6635602712631226, 'y': 0.9659523367881775, 'z': 0.10285889357328415}
+Reached:  Apple
+PIcking:  Apple
+Picking Up  Apple|-03.24|+00.97|+02.94 {'x': -3.2419326305389404, 'y': 0.9667198657989502, 'z': 2.951723098754883}
+Going to  Fridge|-00.44|+00.01|+04.00 {'x': -0.43213582038879395, 'y': 0.947960376739502, 'z': 3.9271628856658936}
+Reached:  Lettuce
+PIcking:  Lettuce
+Picking Up  Lettuce|-01.67|+00.96|+00.10 {'x': -1.6635602712631226, 'y': 0.9659523367881775, 'z': 0.10285889357328415}
+Going to  Fridge|-00.44|+00.01|+04.00 {'x': -0.43213582038879395, 'y': 0.947960376739502, 'z': 3.9271628856658936}
+Reached:  Fridge
+Going to  Fridge|-00.44|+00.01|+04.00 {'x': -0.44, 'y': 0.01, 'z': 4.0}
+Reached:  Fridge|-00.44|+00.01|+04.00
+Going to  Fridge|-00.44|+00.01|+04.00 {'x': -0.44, 'y': 0.01, 'z': 4.0}
+Reached:  Fridge|-00.44|+00.01|+04.00
+Reached:  Fridge
+Going to  Fridge|-00.44|+00.01|+04.00 {'x': -0.44, 'y': 0.01, 'z': 4.0}
+Reached:  Fridge|-00.44|+00.01|+04.00
+Going to  Fridge|-00.44|+00.01|+04.00 {'x': -0.44, 'y': 0.01, 'z': 4.0}
+Reached:  Fridge|-00.44|+00.01|+04.00
+[{'name': 'Fridge', 'contains': ['Apple'], 'state': 'None'}]
+  [GT] Fridge state=None contains=['Apple'] -> OK
+1 11 3
+SR:0, TC:1, GCR:1.0, Exec:1.0, RU:0.8
+QObject::killTimer: Timers cannot be stopped from another thread
+QObject::~QObject: Timers cannot be stopped from another thread
+
+=== END 2026-09-14 17:35:35 (exit=0) ===

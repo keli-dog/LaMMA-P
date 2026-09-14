@@ -6,3 +6,6 @@ Microwave_a_plate_containing_a_egg_and_a_tomato_plans_09-09-2026-18-53-56,timeou
 put_mug_in_the_coffee_machine_and_switch_on_the_coffee_machine_plans_09-09-2026-18-53-56,failed,0,0,0.0,1.0,1.1
 "slice_the_lettuce_and_tomoate,_then_store_in_fridge_plans_09-09-2026-18-53-56",timeout,,,,,
 "Slice_the_potato,_clean_the_plate,_and_put_potato_on_the_plate_plans_09-09-2026-18-53-56",failed,,,,,
+Put_apple_and_lettuce_in_the_Fridge_plans_09-09-2026-18-53-56,failed,0,1,1.0,1.0,0.8
+Rotate_3_times_between_two_veges_plans_09-09-2026-18-53-56,failed,0,0,0.0,0.0,1.1
+"slice_the_potato,_then_put_in_fridge_plans_09-09-2026-18-53-56",failed,0,0,0.0,0.0,1.1
