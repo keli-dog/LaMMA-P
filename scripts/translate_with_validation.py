@@ -467,6 +467,17 @@ def deterministic_check(code: str, objects_list: str) -> List[str]:
     return issues
 
 
+def deterministic_fix(code: str) -> Tuple[str, int]:
+    """确定性修复：把动作函数里的 robots 列表参数改成 robots[0]
+    返回 (修复后的代码, 修复处数)
+    """
+    action_funcs = ('GoToObject|PickupObject|PutObject|SwitchOn|SwitchOff|'
+                   'SliceObject|BreakObject|CleanObject|ThrowObject|OpenObject|CloseObject')
+    pattern = rf'({action_funcs})\(robots\s*,'
+    fixed_code, count = re.subn(pattern, r'\1(robots[0],', code)
+    return fixed_code, count
+
+
 # ============================================================
 # 7. 主流程：单个任务转换+验证
 # ============================================================
@@ -630,7 +641,13 @@ LLM 问题数: {issue_count}
     else:
         final_code = code  # 原始v0
         final_source = "original_v0"
-        print(f"\n  ⚠ 最终使用原始代码(v0)，修复未通过验证")
+        # 回退v0后做确定性修复（robots列表参数 → robots[0]）
+        final_code, fix_count = deterministic_fix(final_code)
+        if fix_count > 0:
+            final_source = "original_v0_deterministic_fixed"
+            print(f"  ⚠ 最终使用原始代码(v0) + 确定性修复({fix_count}处 robots→robots[0])")
+        else:
+            print(f"\n  ⚠ 最终使用原始代码(v0)，修复未通过验证")
 
     (task_output / "code_plan_final.py").write_text(final_code, encoding='utf-8')
 
