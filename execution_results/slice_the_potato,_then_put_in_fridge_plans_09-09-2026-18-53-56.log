@@ -1,4 +1,4 @@
-=== START 2026-09-14 17:35:56 ===
+=== START 2026-09-14 19:43:12 ===
 CMD: /home/ubuntu/miniconda3/envs/lammap/bin/python scripts/execute_plan.py --command slice_the_potato,_then_put_in_fridge_plans_09-09-2026-18-53-56
 floor_no: 15
 ============================================================
@@ -7,11 +7,32 @@ slice_the_potato,_then_put_in_fridge_plans_09-09-2026-18-53-56
 No Breaks:  0
   Robot 0 initialized at corner: x=-2.75, z=0.00
   Robot 1 initialized at corner: x=-0.25, z=0.50
+Going to  Knife|-01.36|+00.88|+00.50 {'x': -1.3175888061523438, 'y': 0.8819946646690369, 'z': 0.5123047232627869}
+Reached:  Knife
+PIcking:  Knife
+Picking Up  Knife|-01.36|+00.88|+00.50 {'x': -1.3175888061523438, 'y': 0.8819946646690369, 'z': 0.5123047232627869}
+Going to  Potato|-01.80|+00.91|+00.52 {'x': -1.801037311553955, 'y': 0.9173721075057983, 'z': 0.5217834711074829}
+Reached:  Potato
+Slicing:  Potato
+Going to  Potato|-01.80|+00.91|+00.52 {'x': -1.8, 'y': 0.91, 'z': 0.52}
+Reached:  Potato|-01.80|+00.91|+00.52
+Going to  CounterTop|-03.38|+00.95|+03.34 {'x': -2.5739498138427734, 'y': 0.9122816920280457, 'z': 3.4951980113983154}
+Reached:  CounterTop
+Going to  Potato|-01.80|+00.91|+00.52|PotatoSliced_0 {'x': -1.8147575855255127, 'y': 0.9140565395355225, 'z': 0.5417978167533875}
+Reached:  Potato
+PIcking:  Potato
+Picking Up  Potato|-01.80|+00.91|+00.52|PotatoSliced_0 {'x': -1.8147575855255127, 'y': 0.9140565395355225, 'z': 0.5417978167533875}
+Going to  Fridge|-00.44|+00.01|+04.00 {'x': -0.43213582038879395, 'y': 0.947960376739502, 'z': 3.9271628856658936}
+Reached:  Fridge
+Going to  Fridge|-00.44|+00.01|+04.00 {'x': -0.44, 'y': 0.01, 'z': 4.0}
+Reached:  Fridge|-00.44|+00.01|+04.00
+Going to  Fridge|-00.44|+00.01|+04.00 {'x': -0.44, 'y': 0.01, 'z': 4.0}
+Reached:  Fridge|-00.44|+00.01|+04.00
 [{'name': 'Fridge', 'contains': ['Potato'], 'state': 'None'}]
-  [GT] Fridge state=None contains=['Potato'] -> MISS
+  [GT] Fridge state=None contains=['Potato'] -> OK
 1 11 0
-SR:0, TC:0, GCR:0.0, Exec:0.0, RU:1.1
-QObject::killTimer: Timers cannot be stopped from another thread
-QObject::~QObject: Timers cannot be stopped from another thread
+SR:0, TC:1, GCR:1.0, Exec:1.0, RU:1.1
 
-=== END 2026-09-14 17:36:09 (exit=0) ===
+[TIMEOUT] 超过 300秒，强制终止（可能导航死锁/转圈）
+
+=== END 2026-09-14 19:48:17 (exit=-9) ===
