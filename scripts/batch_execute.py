@@ -91,7 +91,7 @@ def execute_task(task_dir, floor_no, log_path, timeout=300):
     for key in ['SR', 'TC', 'GCR', 'Exec', 'RU']:
         m = re.search(rf'{key}:([\d.]+)', output)
         metrics[key] = m.group(1) if m else ''
-    status = 'success' if metrics.get('SR') else ('timeout' if timed_out else 'failed')
+    status = 'success' if metrics.get('SR') == '1' else ('timeout' if timed_out else 'failed')
     return status, metrics
 
 def main():
