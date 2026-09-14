@@ -122,25 +122,48 @@ def build_translate_prompt(task_description: str, combined_plan: str,
 # {objects_list}
 #
 # === STRICT RULES ===
-# 1. Output ONLY executable Python code. NO comments, NO explanations, NO markdown.
-# 2. Use ONLY the function names listed above.
+# 1. Output ONLY executable Python code. NO comments, NO explanations, NO markdown, NO imports.
+# 2. Use ONLY the function names listed above. NEVER invent new functions (no ObjectState, no CheckState, etc.).
 # 3. Use ONLY object names from the available objects list above.
-# 4. NEVER use time.sleep to simulate actions - use the actual action functions.
+# 4. NEVER use time.sleep to simulate actions - use the actual action functions. time.sleep only for waiting (cooking, washing).
 # 5. DO NOT redefine any function. Use them directly.
 # 6. SINGLE-HAND RULE: An agent can hold only ONE object at a time. PickupObject fails if hand is not empty. Put down current object first if needed.
-# 7. SliceObject/BreakObject/CleanObject act on objects IN THE SCENE - do NOT PickupObject first. Just GoToObject then SliceObject/BreakObject/CleanObject directly.
+# 7. SLICE RULE: SliceObject requires holding a Knife first. Correct flow: PickupObject(Knife) -> GoToObject(target) -> SliceObject(target). Do NOT PickupObject the target before slicing. After slicing, if you need to pick up the sliced object, you MUST first PutObject(Knife) down (single-hand rule).
 # 8. PutObject requires the agent to be HOLDING that object. Only put down what you picked up.
 # 9. FIXED objects (CounterTop, Floor, Wall, SinkBasin, StoveBurner, Faucet, LightSwitch, Window) CANNOT be picked up.
 # 10. Always GoToObject before PickupObject/PutObject/SliceObject/SwitchOn/OpenObject.
-# 11. PutObject target must be a receptacle (CounterTop, Sink, Fridge, Drawer, Plate, Bowl, Box, GarbageCan, Microwave, CoffeeMachine, etc.).
-# 12. After SliceObject, the sliced object stays in place - do NOT try to pick it up and put it down again.
-# 13. OPEN-BEFORE-PUT RULE: If target is an openable receptacle (Fridge, Microwave, Drawer, Cabinet), you MUST OpenObject first, then PutObject, then CloseObject.
-# 14. ROBOT PARAMETER RULE: Always use robots[0], robots[1], etc. NEVER pass the raw 'robots' list to action functions.
+# 11. PutObject target must be a receptacle (CounterTop, Sink, Fridge, Drawer, Plate, Bowl, Box, GarbageCan, Microwave, CoffeeMachine, Pan, etc.).
+# 12. OPEN-BEFORE-PUT RULE: If target is an openable receptacle (Fridge, Microwave, Drawer, Cabinet), you MUST OpenObject first, then PutObject, then CloseObject.
+# 13. ROBOT PARAMETER RULE: Always use robots[0], robots[1], etc. NEVER pass the raw 'robots' list to action functions.
+# 14. STRUCTURE RULE: Every task MUST have: (a) function(s) with def name(robots):, (b) taskN_thread = threading.Thread(target=name, args=(robots,)), (c) taskN_thread.start() for each, (d) taskN_thread.join() for each, (e) action_queue.append({{'action':'Done'}}) once PER THREAD, (f) task_over = True, (g) time.sleep(5).
+# 15. NO IMPORTS: Do NOT add 'import threading' or 'import time' - they are already imported in the execution wrapper.
+# 16. NO NEW VARIABLES: Do NOT create action_queue = [] or task_over = False - they are already defined externally. Just append to action_queue and set task_over = True.
 
-# Example: Complete PDDL Plan Translation with Multi-Robot Coordination
-Task: Wash multiple vegetables (apple, tomato, lettuce, potato)
-Complete PDDL Plan: (define (problem wash_vegetables) ... )
+# Example 1: Slice vegetable and put in fridge (single robot)
+Task: Slice the potato then put it in the fridge
+def slice_and_store(robots):
+    GoToObject(robots[0], 'Knife')
+    PickupObject(robots[0], 'Knife')
+    GoToObject(robots[0], 'Potato')
+    SliceObject(robots[0], 'Potato')
+    GoToObject(robots[0], 'CounterTop')
+    PutObject(robots[0], 'Knife', 'CounterTop')
+    GoToObject(robots[0], 'Potato')
+    PickupObject(robots[0], 'Potato')
+    GoToObject(robots[0], 'Fridge')
+    OpenObject(robots[0], 'Fridge')
+    PutObject(robots[0], 'Potato', 'Fridge')
+    CloseObject(robots[0], 'Fridge')
 
+task1_thread = threading.Thread(target=slice_and_store, args=(robots,))
+task1_thread.start()
+task1_thread.join()
+action_queue.append({{'action':'Done'}})
+task_over = True
+time.sleep(5)
+
+# Example 2: Multi-robot parallel tasks
+Task: Wash apple and tomato, then turn off light
 def wash_apple(robots):
     GoToObject(robots[0], 'Apple')
     PickupObject(robots[0], 'Apple')
@@ -165,12 +188,20 @@ def wash_tomato(robots):
     GoToObject(robots[1], 'CounterTop')
     PutObject(robots[1], 'Tomato', 'CounterTop')
 
+def off_light(robots):
+    GoToObject(robots[2], 'LightSwitch')
+    SwitchOff(robots[2], 'LightSwitch')
+
 task1_thread = threading.Thread(target=wash_apple, args=(robots,))
 task2_thread = threading.Thread(target=wash_tomato, args=(robots,))
+task3_thread = threading.Thread(target=off_light, args=(robots,))
 task1_thread.start()
 task2_thread.start()
+task3_thread.start()
 task1_thread.join()
 task2_thread.join()
+task3_thread.join()
+action_queue.append({{'action':'Done'}})
 action_queue.append({{'action':'Done'}})
 action_queue.append({{'action':'Done'}})
 task_over = True
@@ -200,6 +231,11 @@ def build_validate_prompt(code: str, task_description: str,
     """构建验证 Prompt —— 比原 plantocode 的验证更严格"""
     return f"""You are validating Python code generated from a PDDL plan for AI2-THOR simulation.
 
+IMPORTANT: This code is a FRAGMENT that will be inserted into a larger execution wrapper. 
+- 'import threading' and 'import time' are already in the wrapper - DO NOT flag missing imports.
+- 'action_queue' and 'task_over' are already defined externally - DO NOT flag them as undefined.
+- Single-threaded code is VALID. Do NOT require multiple threads just because multiple robots exist.
+
 Task: "{task_description}"
 
 Scene objects (only these exist): {objects_list}
@@ -227,35 +263,36 @@ Available variables (already defined):
 
 【语法检查】
 1. Python 语法是否正确？有无缩进错误、括号不匹配？
-2. 是否引用了未定义的变量或函数？
+2. 是否引用了未定义的函数？（只允许上面列出的11个AI2-THOR函数 + time.sleep）
 3. 是否重新定义了 AI2-THOR 函数（def GoToObject 等）？
+4. 是否有 return 语句？（不应该有，代码是过程式执行）
 
 【参数检查 —— 最常见错误】
-4. 所有动作函数的第一个参数是否是 robots[0]/robots[1]/robots[2]？
+5. 所有动作函数的第一个参数是否是 robots[0]/robots[1]/robots[2]？
    ❌ 错误: GoToObject(robots, 'Apple')  ← 传了列表
    ✅ 正确: GoToObject(robots[0], 'Apple')
-5. threading.Thread 的 args 是否是 (robots,) 而不是 (robots[0],)？
-6. 函数定义的参数名是否是 robots（不是 robot）？
+6. threading.Thread 的 args 是否是 (robots,) 而不是 (robots[0],)？
+7. 函数定义的参数名是否是 robots（不是 robot）？
 
 【物体检查】
-7. 所有物体名是否在场景物体列表中？有无编造不存在的物体？
-8. 固定物体（CounterTop, Floor, Wall, SinkBasin, StoveBurner, Faucet, LightSwitch, Window）是否被 PickupObject 了？
+8. 所有物体名是否在场景物体列表中？有无编造不存在的物体？
+9. 固定物体（CounterTop, Floor, Wall, SinkBasin, StoveBurner, Faucet, LightSwitch, Window）是否被 PickupObject 了？
 
 【物理约束检查】
-9. 单手规则：PickupObject 之前手上是否为空？有无连续 PickupObject 不 PutObject？
-10. 容器规则：往 Fridge/Microwave/Drawer/Cabinet 放东西前是否 OpenObject 了？放完是否 CloseObject？
-11. PutObject 之前是否 PickupObject 了该物体？
-12. SliceObject/BreakObject/CleanObject 之前是否错误地 PickupObject 了目标物体？（应该直接切，不需先拿）
+10. 单手规则：PickupObject 之前手上是否为空？有无连续 PickupObject 不 PutObject？
+11. 容器规则：往 Fridge/Microwave/Drawer/Cabinet 放东西前是否 OpenObject 了？放完是否 CloseObject？
+12. PutObject 之前是否 PickupObject 了该物体？
+13. SLICE 规则：SliceObject 之前是否 PickupObject 了 Knife？（必须拿刀）SliceObject 之前是否错误地 PickupObject 了目标物体？（不需要拿目标，直接切场景里的物体）切完后要拿切好的物体，是否先 PutObject(Knife) 了？（单手规则）
 
 【线程检查】
-13. 是否所有线程都 start() 了？
-14. 是否所有线程都 join() 了？
-15. 是否在所有线程 join() 之后才设置 task_over = True？
-16. action_queue.append 的数量是否等于线程数？
+14. 如果有多个 taskN_thread，是否都 start() 了？
+15. 如果有多个 taskN_thread，是否都 join() 了？
+16. action_queue.append 的数量是否等于线程数？（每个线程1个Done）
+17. 是否有 task_over = True？
 
 【逻辑检查】
-17. 动作顺序是否合理？（GoTo → Pickup → GoTo → Put）
-18. 是否有死循环或不可能完成的动作序列？
+18. 动作顺序是否合理？（GoTo → Pickup → GoTo → Put）
+19. 是否有死循环或不可能完成的动作序列？
 
 Code to validate:
 ```python
@@ -319,7 +356,8 @@ def parse_validation_response(response: str) -> Tuple[bool, int, List[str], List
 # ============================================================
 
 FIX_SYSTEM = """You are a Python code fixer for AI2-THOR robot execution.
-Fix the code based on the validation issues. Return ONLY the corrected code."""
+Fix the code based on the validation issues. Return ONLY the corrected code.
+CRITICAL: Make MINIMAL changes. Only fix the specific issues. Do NOT refactor, do NOT add new functions, do NOT change the overall structure."""
 
 
 def build_fix_prompt(code: str, issues: List[str], suggestions: List[str],
@@ -339,22 +377,24 @@ Issues found:
 Suggestions:
 {suggestions_text}
 
-Rules:
-- Use robots[0], robots[1], etc. NEVER pass raw 'robots' list to action functions
-- OpenObject before PutObject into Fridge/Microwave/Drawer/Cabinet, then CloseObject
-- Single hand: only hold one object at a time
-- Only use objects from the scene list
-- Do NOT redefine AI2-THOR functions
-- DO NOT remove action_queue.append({{'action':'Done'}}) calls — they are required for task completion detection
-- DO NOT remove task_over = True — it signals all threads finished
-- Return ONLY the corrected Python code, no explanations, no markdown
+=== STRICT FIX RULES ===
+1. MINIMAL CHANGES ONLY: Fix only the specific lines with issues. Do NOT rewrite the whole function.
+2. NO NEW FUNCTIONS: Do NOT invent functions like ObjectState, CheckState, IsCooked, etc. Only use the 11 AI2-THOR functions listed below.
+3. NO IMPORTS: Do NOT add 'import threading' or 'import time'. They are already imported externally.
+4. NO FORMAT CHANGE: Keep the exact same code structure (function calls, not dictionaries, not return statements).
+5. NO NEW VARIABLES: Do NOT create action_queue = [] or task_over = False. They already exist externally.
+6. KEEP action_queue.append({{'action':'Done'}}): Do NOT remove these lines. One per thread.
+7. KEEP task_over = True and time.sleep(5): Do NOT remove these.
+8. Available functions ONLY: GoToObject, PickupObject, PutObject, SwitchOn, SwitchOff, SliceObject, BreakObject, CleanObject, ThrowObject, OpenObject, CloseObject, time.sleep.
+9. SliceObject requires holding Knife first. After slicing, put Knife down before picking up sliced object.
+10. Single-hand rule: only hold ONE object at a time.
 
 Original code:
 ```python
 {code}
 ```
 
-Corrected code:
+Corrected code (minimal fixes only):
 """
 
 
@@ -579,10 +619,20 @@ LLM 问题数: {issue_count}
                 print(f"  ✗ 修复失败: {e}")
                 break
         else:
-            print(f"\n  ⚠ 达到最大修复轮次，仍有 {all_issue_count} 个问题")
+            print(f"\n  ⚠ 达到最大修复轮次，仍有 {all_issue_count} 个问题，回退到原始代码(v0)")
 
     # ---- 保存最终结果 ----
-    (task_output / "code_plan_final.py").write_text(current_code, encoding='utf-8')
+    # 策略：验证通过用修复版，验证失败用原始v0（避免修复模型越修越烂）
+    if all_issue_count == 0:
+        final_code = current_code
+        final_source = "fixed"
+        print(f"\n  ✓ 最终使用修复后的代码")
+    else:
+        final_code = code  # 原始v0
+        final_source = "original_v0"
+        print(f"\n  ⚠ 最终使用原始代码(v0)，修复未通过验证")
+
+    (task_output / "code_plan_final.py").write_text(final_code, encoding='utf-8')
 
     summary = {
         "task": task_name,
@@ -592,6 +642,7 @@ LLM 问题数: {issue_count}
         "translate_time": translate_time,
         "final_valid": all_issue_count == 0,
         "final_issue_count": all_issue_count,
+        "final_source": final_source,  # "fixed" or "original_v0"
         "validation_rounds": round_num + 1,
         "issues_history": all_issues_history,
         "output_dir": str(task_output)
