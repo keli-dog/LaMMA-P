@@ -1,0 +1,53 @@
+=== START 2026-09-14 17:09:29 ===
+CMD: /home/ubuntu/miniconda3/envs/lammap/bin/python scripts/execute_plan.py --command Microwave_a_plate_containing_a_egg_and_a_tomato_plans_09-09-2026-18-53-56
+floor_no: 15
+============================================================
+
+Microwave_a_plate_containing_a_egg_and_a_tomato_plans_09-09-2026-18-53-56
+No Breaks:  2
+  Robot 0 initialized at corner: x=-2.75, z=0.00
+  Robot 1 initialized at corner: x=-0.25, z=0.50
+  Robot 2 initialized at corner: x=-2.75, z=3.00
+  Robot 3 initialized at corner: x=-0.25, z=3.25
+Going to  Plate|-03.01|+00.90|+03.68 {'x': -3.005998373031616, 'y': 0.9162968397140503, 'z': 3.675257444381714}
+QFontDatabase: Cannot find font directory /home/ubuntu/miniconda3/envs/lammap/lib/python3.9/site-packages/cv2/qt/fonts.
+Note that Qt no longer ships fonts. Deploy some (from https://dejavu-fonts.github.io/ for example) or switch to fontconfig.
+QFontDatabase: Cannot find font directory /home/ubuntu/miniconda3/envs/lammap/lib/python3.9/site-packages/cv2/qt/fonts.
+Note that Qt no longer ships fonts. Deploy some (from https://dejavu-fonts.github.io/ for example) or switch to fontconfig.
+QFontDatabase: Cannot find font directory /home/ubuntu/miniconda3/envs/lammap/lib/python3.9/site-packages/cv2/qt/fonts.
+Note that Qt no longer ships fonts. Deploy some (from https://dejavu-fonts.github.io/ for example) or switch to fontconfig.
+QFontDatabase: Cannot find font directory /home/ubuntu/miniconda3/envs/lammap/lib/python3.9/site-packages/cv2/qt/fonts.
+Note that Qt no longer ships fonts. Deploy some (from https://dejavu-fonts.github.io/ for example) or switch to fontconfig.
+QFontDatabase: Cannot find font directory /home/ubuntu/miniconda3/envs/lammap/lib/python3.9/site-packages/cv2/qt/fonts.
+Note that Qt no longer ships fonts. Deploy some (from https://dejavu-fonts.github.io/ for example) or switch to fontconfig.
+Reached:  Plate
+PIcking:  Plate
+Picking Up  Plate|-03.01|+00.90|+03.68 {'x': -3.005998373031616, 'y': 0.9162968397140503, 'z': 3.675257444381714}
+Going to  Microwave|-03.48|+01.43|+02.18 {'x': -3.480743646621704, 'y': 1.6061713695526123, 'z': 2.1844165325164795}
+Reached:  Microwave
+Target openable Receptacle is CLOSED, can't place if target is not open!
+Going to  Egg|-00.15|+01.01|+03.90 {'x': -0.14779523015022278, 'y': 1.0086408853530884, 'z': 3.897223472595215}
+Going to  Tomato|-02.30|+00.96|+03.80 {'x': -2.2962539196014404, 'y': 0.9633669853210449, 'z': 3.7923147678375244}
+Reached:  Tomato
+PIcking:  Tomato
+Picking Up  Tomato|-02.30|+00.96|+03.80 {'x': -2.2962539196014404, 'y': 0.9633669853210449, 'z': 3.7923147678375244}
+Going to  Microwave|-03.48|+01.43|+02.18 {'x': -3.480743646621704, 'y': 1.6061713695526123, 'z': 2.1844165325164795}
+InvalidOperationException: Agent hand has something in it already! Can't pick up anything else. trace:   at UnityStandardAssets.Characters.FirstPerson.PhysicsRemoteFPSAgentController.pickupObject (SimObjPhysics target, System.Boolean forceAction, System.Boolean manualInteract, System.Boolean markActionFinished) [0x0003c] in <40d6a6c54fa349fab67f7470c3432f83>:0 
+  at UnityStandardAssets.Characters.FirstPerson.PhysicsRemoteFPSAgentController.PickupObject (System.String objectId, System.Boolean forceAction, System.Boolean manualInteract) [0x00009] in <40d6a6c54fa349fab67f7470c3432f83>:0 
+  at (wrapper managed-to-native) System.Reflection.MonoMethod.InternalInvoke(System.Reflection.MonoMethod,object,object[],System.Exception&)
+  at System.Reflection.MonoMethod.Invoke (System.Object obj, System.Reflection.BindingFlags invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo culture) [0x00032] in <695d1cc93cca45069c528c15c9fdd749>:0 
+Reached:  Egg
+PIcking:  Egg
+Picking Up  Egg|-00.15|+01.01|+03.90 {'x': -0.14779523015022278, 'y': 1.0086408853530884, 'z': 3.897223472595215}
+Going to  Microwave|-03.48|+01.43|+02.18 {'x': -3.480743646621704, 'y': 1.6061713695526123, 'z': 2.1844165325164795}
+Reached:  Microwave
+InvalidOperationException: Agent hand has something in it already! Can't pick up anything else. trace:   at UnityStandardAssets.Characters.FirstPerson.PhysicsRemoteFPSAgentController.pickupObject (SimObjPhysics target, System.Boolean forceAction, System.Boolean manualInteract, System.Boolean markActionFinished) [0x0003c] in <40d6a6c54fa349fab67f7470c3432f83>:0 
+  at UnityStandardAssets.Characters.FirstPerson.PhysicsRemoteFPSAgentController.PickupObject (System.String objectId, System.Boolean forceAction, System.Boolean manualInteract) [0x00009] in <40d6a6c54fa349fab67f7470c3432f83>:0 
+  at (wrapper managed-to-native) System.Reflection.MonoMethod.InternalInvoke(System.Reflection.MonoMethod,object,object[],System.Exception&)
+  at System.Reflection.MonoMethod.Invoke (System.Object obj, System.Reflection.BindingFlags invokeAttr, System.Reflection.Binder binder, System.Object[] parameters, System.Globalization.CultureInfo culture) [0x00032] in <695d1cc93cca45069c528c15c9fdd749>:0 
+Reached:  Microwave
+Going to  Microwave|-03.48|+01.43|+02.18 {'x': -3.480743646621704, 'y': 1.6061713695526123, 'z': 2.1844165325164795}
+
+[TIMEOUT] 超过 300秒，强制终止（可能导航死锁/转圈）
+
+=== END 2026-09-14 17:14:34 (exit=-9) ===
