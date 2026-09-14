@@ -345,6 +345,8 @@ Rules:
 - Single hand: only hold one object at a time
 - Only use objects from the scene list
 - Do NOT redefine AI2-THOR functions
+- DO NOT remove action_queue.append({'action':'Done'}) calls — they are required for task completion detection
+- DO NOT remove task_over = True — it signals all threads finished
 - Return ONLY the corrected Python code, no explanations, no markdown
 
 Original code:
@@ -389,16 +391,25 @@ def deterministic_check(code: str, objects_list: str) -> List[str]:
         if re.search(rf'def\s+{func}\s*\(', code):
             issues.append(f"[Deterministic] 重新定义了 {func}，该函数已导入")
 
-    # 检查3: 物体名是否在场景列表中
+    # 检查3: 物体名是否在场景列表中（只从动作函数参数里提取，排除 action_queue 等）
     if objects_list:
         scene_objects = set(o.strip() for o in objects_list.split(','))
-        # 提取代码中引用的物体名（字符串字面量）
-        code_objects = set(re.findall(r"['\"]([A-Z][a-zA-Z]+)['\"]", code))
+        # 只提取动作函数调用括号内的字符串参数
+        action_funcs = ('GoToObject|PickupObject|PutObject|SwitchOn|SwitchOff|'
+                       'SliceObject|BreakObject|CleanObject|ThrowObject|OpenObject|CloseObject')
+        action_calls = re.findall(
+            rf'(?:{action_funcs})\(([^)]+)\)',
+            code
+        )
+        code_objects = set()
+        for call in action_calls:
+            objs = re.findall(r"['\"]([A-Za-z][A-Za-z0-9]*)['\"]", call)
+            code_objects.update(objs)
         fixed_objects = {'CounterTop', 'Floor', 'Wall', 'SinkBasin', 'StoveBurner',
                          'Faucet', 'LightSwitch', 'Window', 'Sink', 'Fridge',
                          'Microwave', 'Drawer', 'Cabinet', 'GarbageCan', 'Plate',
                          'Bowl', 'Box', 'CoffeeMachine', 'StoveKnob', 'Toaster',
-                         'Kettle', 'Pan', 'Pot'}
+                         'Kettle', 'Pan', 'Pot', 'Countertop', 'countertop'}
         for obj in code_objects:
             if obj not in scene_objects and obj not in fixed_objects:
                 issues.append(f"[Deterministic] 物体 '{obj}' 不在场景物体列表中")
