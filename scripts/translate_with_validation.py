@@ -345,7 +345,7 @@ Rules:
 - Single hand: only hold one object at a time
 - Only use objects from the scene list
 - Do NOT redefine AI2-THOR functions
-- DO NOT remove action_queue.append({'action':'Done'}) calls — they are required for task completion detection
+- DO NOT remove action_queue.append({{'action':'Done'}}) calls — they are required for task completion detection
 - DO NOT remove task_over = True — it signals all threads finished
 - Return ONLY the corrected Python code, no explanations, no markdown
 
