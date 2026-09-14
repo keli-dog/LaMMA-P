@@ -128,7 +128,7 @@ def build_translate_prompt(task_description: str, combined_plan: str,
 # 4. NEVER use time.sleep to simulate actions - use the actual action functions. time.sleep only for waiting (cooking, washing).
 # 5. DO NOT redefine any function. Use them directly.
 # 6. SINGLE-HAND RULE: An agent can hold only ONE object at a time. PickupObject fails if hand is not empty. Put down current object first if needed.
-# 7. SLICE RULE: SliceObject requires holding a Knife first. Correct flow: PickupObject(Knife) -> GoToObject(target) -> SliceObject(target). Do NOT PickupObject the target before slicing. After slicing, if you need to pick up the sliced object, you MUST first PutObject(Knife) down (single-hand rule).
+# 7. SLICE RULE: SliceObject requires holding a Knife first. Correct flow: PickupObject(Knife) -> GoToObject(target) -> SliceObject(target). Do NOT PickupObject the target before slicing. After slicing, if you need to pick up the sliced object, use the ORIGINAL object name (e.g. PickupObject('Tomato'), NOT 'TomatoSliced'). AI2-THOR automatically finds the sliced version. You MUST first PutObject(Knife) down before picking up the sliced object (single-hand rule).
 # 8. PutObject requires the agent to be HOLDING that object. Only put down what you picked up.
 # 9. FIXED objects (CounterTop, Floor, Wall, SinkBasin, StoveBurner, Faucet, LightSwitch, Window) CANNOT be picked up.
 # 10. Always GoToObject before PickupObject/PutObject/SliceObject/SwitchOn/OpenObject.
@@ -282,7 +282,7 @@ Available variables (already defined):
 10. 单手规则：PickupObject 之前手上是否为空？有无连续 PickupObject 不 PutObject？
 11. 容器规则：往 Fridge/Microwave/Drawer/Cabinet 放东西前是否 OpenObject 了？放完是否 CloseObject？
 12. PutObject 之前是否 PickupObject 了该物体？
-13. SLICE 规则：SliceObject 之前是否 PickupObject 了 Knife？（必须拿刀）SliceObject 之前是否错误地 PickupObject 了目标物体？（不需要拿目标，直接切场景里的物体）切完后要拿切好的物体，是否先 PutObject(Knife) 了？（单手规则）
+13. SLICE 规则：SliceObject 之前是否 PickupObject 了 Knife？（必须拿刀）SliceObject 之前是否错误地 PickupObject 了目标物体？（不需要拿目标，直接切场景里的物体）切完后要拿切好的物体，是否先 PutObject(Knife) 了？（单手规则）注意：切完后 PickupObject 用原名即可（如 PickupObject('Tomato')），不需要改成 'TomatoSliced'，AI2-THOR 会自动处理。
 
 【线程检查】
 14. 如果有多个 taskN_thread，是否都 start() 了？
