@@ -12,7 +12,3 @@ api_key.txt
 logs/*/agent_*/
 logs/*/top_view/
 logs/trial/
-logs/*/*.mp4
-logs/*/*.avi
-*.mp4
-*.avi

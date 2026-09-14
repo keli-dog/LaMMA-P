@@ -1,0 +1,13 @@
+def execute_task():
+    GoToObject(robots[0], 'Lettuce')
+    SliceObject(robots[0], 'Lettuce')
+    GoToObject(robots[0], 'Plate')
+    PickupObject(robots[0], 'Plate')
+    GoToObject(robots[0], 'Lettuce')
+    PutObject(robots[0], 'Plate', 'Lettuce')
+    GoToObject(robots[0], 'Plate')
+    PickupObject(robots[0], 'Plate')
+    GoToObject(robots[0], 'Microwave')
+    OpenObject(robots[0], 'Microwave')
+    PutObject(robots[0], 'Plate', 'Microwave')
+    CloseObject(robots[0], 'Microwave')

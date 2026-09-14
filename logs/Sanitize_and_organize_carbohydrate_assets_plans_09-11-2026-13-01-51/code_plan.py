@@ -1,0 +1,25 @@
+def sanitize_and_organize(robots):
+    GoToObject(robots[0], 'Apple')
+    CleanObject(robots[0], 'Apple')
+    GoToObject(robots[0], 'Bread')
+    CleanObject(robots[0], 'Bread')
+    GoToObject(robots[0], 'Potato')
+    CleanObject(robots[0], 'Potato')
+    GoToObject(robots[0], 'Apple')
+    PickupObject(robots[0], 'Apple')
+    GoToObject(robots[0], 'Fridge')
+    PutObject(robots[0], 'Apple', 'Fridge')
+    GoToObject(robots[0], 'Bread')
+    PickupObject(robots[0], 'Bread')
+    GoToObject(robots[0], 'Cabinet')
+    PutObject(robots[0], 'Bread', 'Cabinet')
+    GoToObject(robots[0], 'Potato')
+    PickupObject(robots[0], 'Potato')
+    GoToObject(robots[0], 'Cabinet')
+    PutObject(robots[0], 'Potato', 'Cabinet')
+
+def execute_task():
+    sanitize_and_organize(robots)
+    action_queue.append({'action':'Done'})
+    task_over = True
+    time.sleep(5)

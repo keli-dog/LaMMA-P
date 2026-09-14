@@ -1,0 +1,21 @@
+def stage_furniture(robots):
+    GoToObject(robots[0], 'Sofa')
+    GoToObject(robots[1], 'Dresser')
+    PickupObject(robots[0], 'Sofa')
+    PickupObject(robots[1], 'Dresser')
+    PutObject(robots[0], 'Sofa', 'Floor')
+    PutObject(robots[1], 'Dresser', 'Floor')
+    GoToObject(robots[0], 'CoffeeTable')
+    GoToObject(robots[1], 'SideTable')
+    PickupObject(robots[0], 'CoffeeTable')
+    PickupObject(robots[1], 'SideTable')
+    PutObject(robots[0], 'CoffeeTable', 'Floor')
+    PutObject(robots[1], 'SideTable', 'Floor')
+    GoToObject(robots[1], 'LightSwitch')
+    SwitchOn(robots[1], 'LightSwitch')
+
+task1_thread = threading.Thread(target=stage_furniture, args=(robots,))
+task1_thread.start()
+task1_thread.join()
+action_queue.append({'action':'Done'})
+task_over = True
