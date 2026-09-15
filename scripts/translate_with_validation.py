@@ -677,7 +677,7 @@ LLM 问题数: {issue_count}
 
 def get_tasks_by_floor(logs_dir: Path, floor: int) -> List[Path]:
     """按 floor 从测试集 JSON 读取任务列表，匹配 logs 目录"""
-    import json, re
+    import re
     from difflib import get_close_matches
     
     task_names = []
@@ -687,13 +687,9 @@ def get_tasks_by_floor(logs_dir: Path, floor: int) -> List[Path]:
         if json_file.exists():
             with open(json_file, 'r', encoding='utf-8') as f:
                 for line in f:
-                    line = line.strip()
-                    if line.startswith('{') and '"task"' in line:
-                        try:
-                            obj = json.loads(line)
-                            task_names.append(obj["task"])
-                        except:
-                            pass
+                    m = re.search(r'"task":\s*"([^"]+)"', line)
+                    if m:
+                        task_names.append(m.group(1))
     
     all_dirs = [d.name for d in logs_dir.iterdir() if d.is_dir() and "_plans_" in d.name]
     tasks = []
@@ -745,6 +741,16 @@ def main():
 
     results = []
     for task_dir in tasks:
+        task_output = output_dir / task_dir.name
+        existing_final = task_output / "code_plan_final.py"
+        existing_summary = task_output / "summary.json"
+        if existing_final.exists() and existing_summary.exists():
+            print(f"\n[跳过] {task_dir.name} 已翻译过，使用已有结果")
+            import json as _json
+            with open(existing_summary, 'r', encoding='utf-8') as f:
+                result = _json.load(f)
+            results.append(result)
+            continue
         result = process_task(task_dir, output_dir, client,
                              args.translate_model, args.validate_model,
                              args.max_fix_rounds)
