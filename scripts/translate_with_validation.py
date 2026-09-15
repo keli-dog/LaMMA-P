@@ -675,13 +675,42 @@ LLM 问题数: {issue_count}
 # 8. 批量处理
 # ============================================================
 
-def get_floor15_tasks(logs_dir: Path) -> List[Path]:
-    """获取 floor 15 的10个任务目录"""
+def get_tasks_by_floor(logs_dir: Path, floor: int) -> List[Path]:
+    """按 floor 从测试集 JSON 读取任务列表，匹配 logs 目录"""
+    import json, re
+    from difflib import get_close_matches
+    
+    task_names = []
+    test_dir = PROJECT_ROOT / "data" / "final_test"
+    for suffix in ["", "pddl", "vague", "pddlvague"]:
+        json_file = test_dir / f"FloorPlan{floor}{suffix}.json"
+        if json_file.exists():
+            with open(json_file, 'r', encoding='utf-8') as f:
+                for line in f:
+                    line = line.strip()
+                    if line.startswith('{') and '"task"' in line:
+                        try:
+                            obj = json.loads(line)
+                            task_names.append(obj["task"])
+                        except:
+                            pass
+    
+    all_dirs = [d.name for d in logs_dir.iterdir() if d.is_dir() and "_plans_" in d.name]
     tasks = []
-    for d in sorted(logs_dir.iterdir()):
-        if d.is_dir() and d.name.endswith("_09-09-2026-18-53-56"):
-            tasks.append(d)
-    return tasks
+    for name in task_names:
+        pattern = re.sub(r'[^\w\s]', '', name).replace(' ', '_')
+        matches = get_close_matches(pattern, all_dirs, n=1, cutoff=0.3)
+        if matches:
+            tasks.append(logs_dir / matches[0])
+    
+    # 去重
+    seen = set()
+    unique = []
+    for t in tasks:
+        if t.name not in seen:
+            seen.add(t.name)
+            unique.append(t)
+    return sorted(unique)
 
 
 def main():
@@ -706,8 +735,8 @@ def main():
     logs_dir = PROJECT_ROOT / args.logs_dir
 
     if args.batch:
-        tasks = get_floor15_tasks(logs_dir)
-        print(f"批量模式: 找到 {len(tasks)} 个任务")
+        tasks = get_tasks_by_floor(logs_dir, args.floor)
+        print(f"批量模式 (floor {args.floor}): 找到 {len(tasks)} 个任务")
     elif args.task_dir:
         tasks = [Path(args.task_dir)]
     else:
