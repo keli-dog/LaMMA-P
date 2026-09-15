@@ -127,10 +127,10 @@ def build_translate_prompt(task_description: str, combined_plan: str,
 # 3. Use ONLY object names from the available objects list above.
 # 4. NEVER use time.sleep to simulate actions - use the actual action functions. time.sleep only for waiting (cooking, washing).
 # 5. DO NOT redefine any function. Use them directly.
-# 6. SINGLE-HAND RULE: An agent can hold only ONE object at a time. PickupObject fails if hand is not empty. Put down current object first if needed.
+# 6. SINGLE-HAND RULE: An agent can hold only ONE object at a time. PickupObject fails if hand is not empty. Put down current object first if needed. CRITICAL for multi-thread: each thread MUST use a DIFFERENT robot (robots[0], robots[1], robots[2]). NEVER let two threads use the same robot index - they will collide and cause "hand has something already" errors. If a task needs sequential actions on one object, use ONE thread with ONE robot, not multiple threads.
 # 7. SLICE RULE: SliceObject requires holding a Knife first. Correct flow: PickupObject(Knife) -> GoToObject(target) -> SliceObject(target). Do NOT PickupObject the target before slicing. After slicing, if you need to pick up the sliced object, use the ORIGINAL object name (e.g. PickupObject('Tomato'), NOT 'TomatoSliced'). AI2-THOR automatically finds the sliced version. You MUST first PutObject(Knife) down before picking up the sliced object (single-hand rule).
 # 8. PutObject requires the agent to be HOLDING that object. Only put down what you picked up.
-# 9. FIXED objects (CounterTop, Floor, Wall, SinkBasin, StoveBurner, Faucet, LightSwitch, Window) CANNOT be picked up.
+# 9. FIXED objects (CounterTop, Floor, Wall, Sink, StoveBurner, Faucet, LightSwitch, Window) CANNOT be picked up. Use 'Sink' for washing, NOT 'SinkBasin'.
 # 10. Always GoToObject before PickupObject/PutObject/SliceObject/SwitchOn/OpenObject.
 # 11. PutObject target must be a receptacle (CounterTop, Sink, Fridge, Drawer, Plate, Bowl, Box, GarbageCan, Microwave, CoffeeMachine, Pan, etc.).
 # 12. OPEN-BEFORE-PUT RULE: If target is an openable receptacle (Fridge, Microwave, Drawer, Cabinet), you MUST OpenObject first, then PutObject, then CloseObject.
@@ -276,10 +276,12 @@ Available variables (already defined):
 
 【物体检查】
 8. 所有物体名是否在场景物体列表中？有无编造不存在的物体？
-9. 固定物体（CounterTop, Floor, Wall, SinkBasin, StoveBurner, Faucet, LightSwitch, Window）是否被 PickupObject 了？
+9. 固定物体（CounterTop, Floor, Wall, Sink, StoveBurner, Faucet, LightSwitch, Window）是否被 PickupObject 了？洗东西用 Sink 不是 SinkBasin。
 
 【物理约束检查】
 10. 单手规则：PickupObject 之前手上是否为空？有无连续 PickupObject 不 PutObject？
+10b. 多线程机器人分配：多个线程是否每个用了不同 robot 索引？两个线程用同一个 robot 会导致单手冲突。
+10c. 洗东西用 Sink 不是 SinkBasin（SinkBasin 运行时匹配不到）。
 11. 容器规则：往 Fridge/Microwave/Drawer/Cabinet 放东西前是否 OpenObject 了？放完是否 CloseObject？
 12. PutObject 之前是否 PickupObject 了该物体？
 13. SLICE 规则：SliceObject 之前是否 PickupObject 了 Knife？（必须拿刀）SliceObject 之前是否错误地 PickupObject 了目标物体？（不需要拿目标，直接切场景里的物体）切完后要拿切好的物体，是否先 PutObject(Knife) 了？（单手规则）注意：切完后 PickupObject 用原名即可（如 PickupObject('Tomato')），不需要改成 'TomatoSliced'，AI2-THOR 会自动处理。
