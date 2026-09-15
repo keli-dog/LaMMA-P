@@ -3,7 +3,7 @@
 total_exec = 0
 success_exec = 0
 
-c = Controller( height=1000, width=1000)
+c = Controller(height=1000, width=1000, timeout=300)
 c.reset("FloorPlan" + str(floor_no)) 
 no_robot = len(robots)
 
