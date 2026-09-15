@@ -1,0 +1,45 @@
+=== START 2026-09-15 13:20:59 ===
+CMD: /media/ubuntu/Student/anaconda3/envs/lammap/bin/python scripts/execute_plan.py --command Slice_the_tomato_plans_09-09-2026-09-53-33
+floor_no: 6
+============================================================
+
+Slice_the_tomato_plans_09-09-2026-09-53-33
+No Breaks:  1
+  Robot 0 initialized at corner: x=-2.00, z=-1.50
+  Robot 1 initialized at corner: x=1.00, z=-0.75
+  Robot 2 initialized at corner: x=-1.75, z=2.50
+Going to  Knife|-00.64|+00.91|+01.62 {'x': -0.6178590059280396, 'y': 0.9067923426628113, 'z': 1.6430227756500244}
+Reached:  Knife
+PIcking:  Knife
+Picking Up  Knife|-00.64|+00.91|+01.62 {'x': -0.6178590059280396, 'y': 0.9067923426628113, 'z': 1.6430227756500244}
+Going to  Tomato|+01.30|+00.96|-01.08 {'x': 1.2965524196624756, 'y': 0.9594416618347168, 'z': -1.082675576210022}
+Reached:  Tomato
+Slicing:  Tomato
+Going to  Tomato|+01.30|+00.96|-01.08 {'x': 1.3, 'y': 0.96, 'z': -1.08}
+Reached:  Tomato|+01.30|+00.96|-01.08
+Going to  CounterTop|-00.36|+00.95|+01.09 {'x': -0.34021228551864624, 'y': 0.9094499349594116, 'z': 1.0938019752502441}
+Reached:  CounterTop
+[{'name': 'Tomato', 'contains': [], 'state': 'SLICED'}]
+  [GT] Tomato state=SLICED contains=[] -> OK
+1 11 1
+SR:1, TC:1, GCR:1.0, Exec:1.0, RU:1.0
+[image2 @ 0x5eb1682ae980] Could not open file : /media/ubuntu/Student/gengzeyu/LaMMA-P/logs/Slice_the_tomato_plans_09-09-2026-09-53-33/agent_1//img_00000.png
+[image2 @ 0x5eb1682ae980] Could not find codec parameters for stream 0 (Video: png, none(pc)): unspecified size
+Consider increasing the value for the 'analyzeduration' and 'probesize' options
+Output file #0 does not contain any stream
+[image2 @ 0x5f4f097a4980] Could not open file : /media/ubuntu/Student/gengzeyu/LaMMA-P/logs/Slice_the_tomato_plans_09-09-2026-09-53-33/agent_2//img_00000.png
+[image2 @ 0x5f4f097a4980] Could not find codec parameters for stream 0 (Video: png, none(pc)): unspecified size
+Consider increasing the value for the 'analyzeduration' and 'probesize' options
+Output file #0 does not contain any stream
+[image2 @ 0x59e0c679b980] Could not open file : /media/ubuntu/Student/gengzeyu/LaMMA-P/logs/Slice_the_tomato_plans_09-09-2026-09-53-33/agent_3//img_00000.png
+[image2 @ 0x59e0c679b980] Could not find codec parameters for stream 0 (Video: png, none(pc)): unspecified size
+Consider increasing the value for the 'analyzeduration' and 'probesize' options
+Output file #0 does not contain any stream
+[image2 @ 0x6520cfce5980] Could not open file : /media/ubuntu/Student/gengzeyu/LaMMA-P/logs/Slice_the_tomato_plans_09-09-2026-09-53-33/top_view//img_00000.png
+[image2 @ 0x6520cfce5980] Could not find codec parameters for stream 0 (Video: png, none(pc)): unspecified size
+Consider increasing the value for the 'analyzeduration' and 'probesize' options
+Output file #0 does not contain any stream
+QObject::killTimer: Timers cannot be stopped from another thread
+QObject::~QObject: Timers cannot be stopped from another thread
+
+=== END 2026-09-15 13:22:23 (exit=0) ===

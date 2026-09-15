@@ -1,0 +1,49 @@
+=== START 2026-09-15 13:24:23 ===
+CMD: /media/ubuntu/Student/anaconda3/envs/lammap/bin/python scripts/execute_plan.py --command Chill_the_apple_and_wash_the_knife_plans_09-09-2026-11-28-49
+floor_no: 21
+============================================================
+
+Chill_the_apple_and_wash_the_knife_plans_09-09-2026-11-28-49
+No Breaks:  1
+  Robot 0 initialized at corner: x=-2.00, z=-2.75
+  Robot 1 initialized at corner: x=0.75, z=-3.50
+Going to Going to  Knife|+00.74|+00.76|-00.19 {'x': 0.7141741514205933, 'y': 0.7575367093086243, 'z': -0.21821387112140656}
+ Apple|-01.90|+00.87|-01.40 {'x': -1.8985345363616943, 'y': 0.8740527629852295, 'z': -1.398831844329834}
+Reached:  Apple
+PIcking:  Apple
+Picking Up  Apple|-01.90|+00.87|-01.40 {'x': -1.8985345363616943, 'y': 0.8740527629852295, 'z': -1.398831844329834}
+Reached:  Knife
+PIcking:  Knife
+Picking Up  Knife|+00.74|+00.76|-00.19 {'x': 0.7141741514205933, 'y': 0.7575367093086243, 'z': -0.21821387112140656}
+Going to  Fridge|+00.68|-00.03|-01.96 {'x': 0.6799988746643066, 'y': 0.8935573101043701, 'z': -1.9614769220352173}
+Going to  Sink|+00.75|+00.88|-00.68 {'x': 0.7530224919319153, 'y': 0.8191193342208862, 'z': -0.6798887848854065}
+Reached:  Sink
+Going to  Knife|+00.74|+00.76|-00.19 {'x': 0.74, 'y': 0.76, 'z': -0.19}
+Reached: Reached:  Fridge
+Going to  Fridge|+00.68|-00.03|-01.96 {'x': 0.68, 'y': -0.03, 'z': -1.96}
+ Knife|+00.74|+00.76|-00.19
+Reached:  Fridge|+00.68|-00.03|-01.96
+Going to  CounterTop|+00.79|+00.92|-00.11 {'x': 0.8001425266265869, 'y': 0.8812419176101685, 'z': -0.41060352325439453}
+Going to  Fridge|+00.68|-00.03|-01.96 {'x': 0.68, 'y': -0.03, 'z': -1.96}
+Reached:  Fridge|+00.68|-00.03|-01.96
+Reached:  CounterTop
+[{'name': 'Fridge', 'contains': ['Apple'], 'state': None}]
+  [GT] Fridge state=None contains=['Apple'] -> OK
+1 11 1
+SR:1, TC:1, GCR:1.0, Exec:1.0, RU:1.0
+[image2 @ 0x5f3193e58980] Could not open file : /media/ubuntu/Student/gengzeyu/LaMMA-P/logs/Chill_the_apple_and_wash_the_knife_plans_09-09-2026-11-28-49/agent_1//img_00000.png
+[image2 @ 0x5f3193e58980] Could not find codec parameters for stream 0 (Video: png, none(pc)): unspecified size
+Consider increasing the value for the 'analyzeduration' and 'probesize' options
+Output file #0 does not contain any stream
+[image2 @ 0x5aba5fb11980] Could not open file : /media/ubuntu/Student/gengzeyu/LaMMA-P/logs/Chill_the_apple_and_wash_the_knife_plans_09-09-2026-11-28-49/agent_2//img_00000.png
+[image2 @ 0x5aba5fb11980] Could not find codec parameters for stream 0 (Video: png, none(pc)): unspecified size
+Consider increasing the value for the 'analyzeduration' and 'probesize' options
+Output file #0 does not contain any stream
+[image2 @ 0x61da70b6e980] Could not open file : /media/ubuntu/Student/gengzeyu/LaMMA-P/logs/Chill_the_apple_and_wash_the_knife_plans_09-09-2026-11-28-49/top_view//img_00000.png
+[image2 @ 0x61da70b6e980] Could not find codec parameters for stream 0 (Video: png, none(pc)): unspecified size
+Consider increasing the value for the 'analyzeduration' and 'probesize' options
+Output file #0 does not contain any stream
+QObject::killTimer: Timers cannot be stopped from another thread
+QObject::~QObject: Timers cannot be stopped from another thread
+
+=== END 2026-09-15 13:25:11 (exit=0) ===

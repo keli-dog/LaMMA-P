@@ -1,0 +1,59 @@
+=== START 2026-09-15 13:18:09 ===
+CMD: /media/ubuntu/Student/anaconda3/envs/lammap/bin/python scripts/execute_plan.py --command Put_a_plate_of_slice_lettuce_into_the_microwave_plans_09-09-2026-18-24-43
+floor_no: 6
+============================================================
+
+Put_a_plate_of_slice_lettuce_into_the_microwave_plans_09-09-2026-18-24-43
+No Breaks:  1
+  Robot 0 initialized at corner: x=-2.00, z=-1.50
+  Robot 1 initialized at corner: x=1.00, z=-0.75
+Going to  Knife|-00.64|+00.91|+01.62 {'x': -0.6178590059280396, 'y': 0.9067923426628113, 'z': 1.6430227756500244}
+Reached:  Knife
+PIcking:  Knife
+Picking Up  Knife|-00.64|+00.91|+01.62 {'x': -0.6178590059280396, 'y': 0.9067923426628113, 'z': 1.6430227756500244}
+Going to  Lettuce|+01.11|+00.83|-01.43 {'x': 1.1213102340698242, 'y': 0.8314238786697388, 'z': -1.4405661821365356}
+Reached:  Lettuce
+Slicing:  Lettuce
+Going to  Lettuce|+01.11|+00.83|-01.43 {'x': 1.11, 'y': 0.83, 'z': -1.43}
+Reached:  Lettuce|+01.11|+00.83|-01.43
+Going to  CounterTop|-00.36|+00.95|+01.09 {'x': -0.34021228551864624, 'y': 0.9094499349594116, 'z': 1.0938019752502441}
+Reached:  CounterTop
+Going to  Lettuce|+01.11|+00.83|-01.43|LettuceSliced_0 {'x': 1.0973262786865234, 'y': 0.8232080936431885, 'z': -1.4028527736663818}
+Reached:  Lettuce
+PIcking:  Lettuce
+Picking Up  Lettuce|+01.11|+00.83|-01.43|LettuceSliced_0 {'x': 1.0973262786865234, 'y': 0.8232080936431885, 'z': -1.4028527736663818}
+Going to  Plate|-02.35|+00.90|+00.05 {'x': -2.3524301052093506, 'y': 0.9078962802886963, 'z': 0.052885644137859344}
+Reached:  Plate
+Going to  Plate|-02.35|+00.90|+00.05 {'x': -2.3524301052093506, 'y': 0.9078962802886963, 'z': 0.052885644137859344}
+Reached:  Plate
+PIcking:  Plate
+Picking Up  Plate|-02.35|+00.90|+00.05 {'x': -2.3524301052093506, 'y': 0.9078962802886963, 'z': 0.052885644137859344}
+Going to  Microwave|-02.58|+00.90|+02.44 {'x': -2.5842645168304443, 'y': 1.076263189315796, 'z': 2.441420555114746}
+Reached:  Microwave
+Going to  CounterTop|-00.36|+00.95|+01.09 {'x': -0.36, 'y': 0.95, 'z': 1.09}
+Reached:  CounterTop|-00.36|+00.95|+01.09
+CounterTop|-00.36|+00.95|+01.09 is not an Openable object
+Target openable Receptacle is CLOSED, can't place if target is not open!
+Going to  CounterTop|-00.36|+00.95|+01.09 {'x': -0.36, 'y': 0.95, 'z': 1.09}
+Reached:  CounterTop|-00.36|+00.95|+01.09
+CounterTop|-00.36|+00.95|+01.09 is not an Openable object
+[{'name': 'Microwave', 'contains': ['Plate'], 'state': 'None'}]
+  [GT] Microwave state=None contains=['Plate'] -> MISS
+1 11 1
+SR:0, TC:0, GCR:0.0, Exec:0.6666666666666666, RU:1.0
+[image2 @ 0x630bc293b980] Could not open file : /media/ubuntu/Student/gengzeyu/LaMMA-P/logs/Put_a_plate_of_slice_lettuce_into_the_microwave_plans_09-09-2026-18-24-43/agent_1//img_00000.png
+[image2 @ 0x630bc293b980] Could not find codec parameters for stream 0 (Video: png, none(pc)): unspecified size
+Consider increasing the value for the 'analyzeduration' and 'probesize' options
+Output file #0 does not contain any stream
+[image2 @ 0x5f1de95cc980] Could not open file : /media/ubuntu/Student/gengzeyu/LaMMA-P/logs/Put_a_plate_of_slice_lettuce_into_the_microwave_plans_09-09-2026-18-24-43/agent_2//img_00000.png
+[image2 @ 0x5f1de95cc980] Could not find codec parameters for stream 0 (Video: png, none(pc)): unspecified size
+Consider increasing the value for the 'analyzeduration' and 'probesize' options
+Output file #0 does not contain any stream
+[image2 @ 0x60a75d83a980] Could not open file : /media/ubuntu/Student/gengzeyu/LaMMA-P/logs/Put_a_plate_of_slice_lettuce_into_the_microwave_plans_09-09-2026-18-24-43/top_view//img_00000.png
+[image2 @ 0x60a75d83a980] Could not find codec parameters for stream 0 (Video: png, none(pc)): unspecified size
+Consider increasing the value for the 'analyzeduration' and 'probesize' options
+Output file #0 does not contain any stream
+QObject::killTimer: Timers cannot be stopped from another thread
+QObject::~QObject: Timers cannot be stopped from another thread
+
+=== END 2026-09-15 13:20:56 (exit=0) ===

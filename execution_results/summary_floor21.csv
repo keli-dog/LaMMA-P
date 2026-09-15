@@ -1,0 +1,10 @@
+task_name,status,SR,TC,GCR,Exec,RU
+Chill_the_apple_and_wash_the_knife_plans_09-09-2026-11-28-49,success,1,1,1.0,1.0,1.0
+Put_two_vegetables_in_the_fridge_parallely_plans_09-09-2026-11-28-49,failed,0,1,1.0,0.8,1.1
+"Slice_apple_and_lettuce_parallelly,_and_throw_them_in_the_trash_plans_09-09-2026-19-08-31",failed,0,0,0.0,0.5833333333333334,1.0
+Slice_apple_and_throw_it_in_the_trash_plans_09-09-2026-11-28-49,success,1,1,1.0,1.0,1.0
+Slice_lettuce_and_put_in_fridge_plans_09-09-2026-19-08-31,failed,0,0,0.5,1.0,1.0
+Toast_a_slice_of_the_breadloaf_plans_09-09-2026-11-28-49,failed,0,0,0.0,0.46153846153846156,1.0
+"Wash_the_fork_and_put_it_in_the_bowl,_and_turn_off_the_light_plans_09-09-2026-19-08-31",failed,0,0,0.0,1.0,1.0
+Wash_the_fork_and_put_it_in_the_bowl_plans_09-09-2026-11-28-49,failed,0,0,0.0,1.0,1.0
+"Wash_the_knife_and_put_it_in_the_bowl,_and_slice_lettuce_plans_09-09-2026-19-08-31",failed,0,0,0.0,0.7777777777777778,1.0
