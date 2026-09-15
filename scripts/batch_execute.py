@@ -31,13 +31,7 @@ def execute_task(task_dir, floor_no, log_path, timeout=300):
             f.write('[ERROR] code_plan.py not found\n')
         return 'no_code_plan', {}
     # 清理残留的 Unity/AI2-THOR 进程，避免窗口越积越多
-    subprocess.run(['pkill', '-f', 'Unity'], capture_output=True)
-    subprocess.run(['pkill', '-f', 'AI2THOR'], capture_output=True)
-    subprocess.run(['pkill', '-f', 'execute_plan.py'], capture_output=True)
-    time.sleep(2)
-
-    # 清理残留的 Unity/AI2-THOR 进程，避免窗口越积越多
-    subprocess.run(['pkill', '-f', 'Unity'], capture_output=True)
+    subprocess.run(['pkill', '-f', 'thor-Linux'], capture_output=True)
     subprocess.run(['pkill', '-f', 'AI2THOR'], capture_output=True)
     subprocess.run(['pkill', '-f', 'execute_plan.py'], capture_output=True)
     time.sleep(2)
@@ -101,6 +95,10 @@ def execute_task(task_dir, floor_no, log_path, timeout=300):
         print(msg)
         output_lines.append(msg)
     t.join(timeout=5)
+    # 任务结束后强制清理 Unity 子进程（无论成功/超时/异常）
+    subprocess.run(['pkill', '-f', 'thor-Linux'], capture_output=True)
+    subprocess.run(['pkill', '-f', 'AI2THOR'], capture_output=True)
+    time.sleep(1)
     output = ''.join(output_lines)
     logf.write(f"\n=== END {time.strftime('%Y-%m-%d %H:%M:%S')} (exit={proc.returncode}) ===\n")
     logf.close()
