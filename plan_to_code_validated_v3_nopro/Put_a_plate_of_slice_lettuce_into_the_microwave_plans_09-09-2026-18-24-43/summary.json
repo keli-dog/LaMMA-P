@@ -1,0 +1,21 @@
+{
+  "task": "Put_a_plate_of_slice_lettuce_into_the_microwave_plans_09-09-2026-18-24-43",
+  "task_description": "Put a plate of slice lettuce into the microwave",
+  "translate_model": "deepseek-ai/DeepSeek-V3",
+  "validate_model": "deepseek-ai/DeepSeek-V3",
+  "translate_time": 10.77391505241394,
+  "final_valid": true,
+  "final_issue_count": 0,
+  "final_source": "fixed",
+  "validation_rounds": 1,
+  "issues_history": [
+    {
+      "round": 1,
+      "llm_valid": true,
+      "llm_issues": [],
+      "deterministic_issues": [],
+      "suggestions": []
+    }
+  ],
+  "output_dir": "/media/ubuntu/Student/gengzeyu/LaMMA-P/plan_to_code_validated_v3_nopro/Put_a_plate_of_slice_lettuce_into_the_microwave_plans_09-09-2026-18-24-43"
+}

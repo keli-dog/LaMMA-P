@@ -1,0 +1,36 @@
+{
+  "task": "Wash_the_lettuce_and_place_lettuce_on_the_Countertop_plans_09-09-2026-09-53-33",
+  "task_description": "Wash the lettuce and place lettuce on the Countertop",
+  "translate_model": "deepseek-ai/DeepSeek-V3",
+  "validate_model": "deepseek-ai/DeepSeek-V3",
+  "translate_time": 4.553274393081665,
+  "final_valid": true,
+  "final_issue_count": 0,
+  "final_source": "fixed",
+  "validation_rounds": 2,
+  "issues_history": [
+    {
+      "round": 1,
+      "llm_valid": false,
+      "llm_issues": [
+        "[Logical] CleanObject before PickupObject is invalid - cannot clean while lettuce is in scene (line: 3)",
+        "[Physical] Missing PickupObject before PutObject (line: 5)",
+        "[Physical] Missing Faucet/SinkBasin interaction for washing (line: 3)"
+      ],
+      "deterministic_issues": [],
+      "suggestions": [
+        "Fix 1: Move CleanObject after PickupObject and add Faucet interaction",
+        "Fix 2: Add PickupObject before PutObject",
+        "Fix 3: Add GoToObject and SwitchOn for Faucet before cleaning"
+      ]
+    },
+    {
+      "round": 2,
+      "llm_valid": true,
+      "llm_issues": [],
+      "deterministic_issues": [],
+      "suggestions": []
+    }
+  ],
+  "output_dir": "/media/ubuntu/Student/gengzeyu/LaMMA-P/plan_to_code_validated_v3_nopro/Wash_the_lettuce_and_place_lettuce_on_the_Countertop_plans_09-09-2026-09-53-33"
+}

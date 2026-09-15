@@ -1,0 +1,18 @@
+def slice_and_trash(robots):
+    GoToObject(robots[0], 'Knife')
+    PickupObject(robots[0], 'Knife')
+    time.sleep(1)
+    GoToObject(robots[0], 'Apple')
+    SliceObject(robots[0], 'Apple')
+    PutObject(robots[0], 'Knife', 'CounterTop')
+    time.sleep(1)
+    PickupObject(robots[0], 'Apple')
+    GoToObject(robots[0], 'GarbageCan')
+    PutObject(robots[0], 'Apple', 'GarbageCan')
+
+task1_thread = threading.Thread(target=slice_and_trash, args=(robots,))
+task1_thread.start()
+task1_thread.join()
+action_queue.append({'action':'Done'})
+task_over = True
+time.sleep(5)
