@@ -575,22 +575,26 @@ def ThrowObject(robot, sw_obj):
     
     action_queue.append({'action':'ThrowObject', 'objectId':sw_obj_id, 'agent_id':agent_id}) 
     time.sleep(1)
-def slice_potato_and_store(robot):
-    GoToObject(robot, 'Knife')
-    PickupObject(robot, 'Knife')
-    GoToObject(robot, 'Potato')
-    SliceObject(robot, 'Potato')
-    GoToObject(robot, 'CounterTop')
-    PutObject(robot, 'Knife', 'CounterTop')
-    GoToObject(robot, 'Potato')
-    PickupObject(robot, 'Potato')
-    GoToObject(robot, 'Fridge')
-    OpenObject(robot, 'Fridge')
-    PutObject(robot, 'Potato', 'Fridge')
-    CloseObject(robot, 'Fridge')
+def slice_and_store_potato(robots):
+    GoToObject(robots[0], 'Knife')
+    PickupObject(robots[0], 'Knife')
+    GoToObject(robots[0], 'Potato')
+    SliceObject(robots[0], 'Potato')
+    GoToObject(robots[0], 'CounterTop')
+    PutObject(robots[0], 'Knife', 'CounterTop')
+    GoToObject(robots[0], 'Potato')
+    PickupObject(robots[0], 'Potato')
+    GoToObject(robots[0], 'Fridge')
+    OpenObject(robots[0], 'Fridge')
+    PutObject(robots[0], 'Potato', 'Fridge')
+    CloseObject(robots[0], 'Fridge')
 
-def execute_task():
-    slice_potato_and_store(robots[0])
+task1_thread = threading.Thread(target=slice_and_store_potato, args=(robots,))
+task1_thread.start()
+task1_thread.join()
+action_queue.append({'action':'Done'})
+task_over = True
+time.sleep(5)
 no_trans = 0
 
 for i in range(25):

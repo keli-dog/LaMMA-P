@@ -589,19 +589,15 @@ def switch_off_light(robots):
 
 task1_thread = threading.Thread(target=put_apple_in_fridge, args=(robots,))
 task2_thread = threading.Thread(target=switch_off_light, args=(robots,))
-
 task1_thread.start()
 task2_thread.start()
-
 task1_thread.join()
 task2_thread.join()
-
 action_queue.append({'action':'Done'})
 action_queue.append({'action':'Done'})
-
 task_over = True
 time.sleep(5)
-no_trans = 3
+no_trans = 0
 
 for i in range(25):
     action_queue.append({'action':'Done'})
@@ -613,7 +609,7 @@ task_over = True
 time.sleep(5)
 
 
-exec = float(success_exec) / float(total_exec)
+exec = float(success_exec) / float(total_exec) if total_exec > 0 else 0.0
 
 print (ground_truth)
 objs = list([obj for obj in c.last_event.metadata["objects"]])
@@ -625,54 +621,41 @@ for obj_gt in ground_truth:
     state = obj_gt['state']
     contains = obj_gt['contains']
     gcr_tasks += 1
+    gt_done = False
     for obj in objs:
-        # if obj_name in obj["name"]:
-        #     print (obj)
         if state == 'SLICED':
             if obj_name in obj["name"] and obj["isSliced"]:
-                gcr_complete += 1 
-                
+                gcr_complete += 1; gt_done = True
         if state == 'OFF':
             if obj_name in obj["name"] and not obj["isToggled"]:
-                gcr_complete += 1 
-        
+                gcr_complete += 1; gt_done = True
         if state == 'ON':
             if obj_name in obj["name"] and obj["isToggled"]:
-                gcr_complete += 1 
-        
+                gcr_complete += 1; gt_done = True
         if state == 'HOT':
-            # print (obj)
             if obj_name in obj["name"] and obj["temperature"] == 'Hot':
-                gcr_complete += 1 
-                
+                gcr_complete += 1; gt_done = True
         if state == 'COOKED':
             if obj_name in obj["name"] and obj["isCooked"]:
-                gcr_complete += 1 
-                
+                gcr_complete += 1; gt_done = True
         if state == 'OPENED':
             if obj_name in obj["name"] and obj["isOpen"]:
-                gcr_complete += 1 
-                
+                gcr_complete += 1; gt_done = True
         if state == 'CLOSED':
             if obj_name in obj["name"] and not obj["isOpen"]:
-                gcr_complete += 1 
-                
+                gcr_complete += 1; gt_done = True
         if state == 'PICKED':
             if obj_name in obj["name"] and obj["isPickedUp"]:
-                gcr_complete += 1 
-        
+                gcr_complete += 1; gt_done = True
         if len(contains) != 0 and obj_name in obj["name"]:
-            print (contains, obj_name, obj["name"])   
             for rec in contains:
                 if obj['receptacleObjectIds'] is not None:
                     for r in obj['receptacleObjectIds']:
-                        print (rec, r)
                         if rec in r:
-                            print (rec, r)
-                            gcr_complete += 1 
-                    
-            
-             
+                            gcr_complete += 1; gt_done = True
+    print(f"  [GT] {obj_name} state={state} contains={contains} -> {'OK' if gt_done else 'MISS'}")
+
+
 sr = 0
 tc = 0
 if gcr_tasks == 0:
@@ -681,8 +664,8 @@ else:
     gcr = gcr_complete / gcr_tasks
 
 if gcr == 1.0:
-    tc = 1 
-    
+    tc = 1
+
 max_trans += 1
 no_trans_gt += 1
 print (no_trans_gt, max_trans, no_trans)
@@ -699,3 +682,4 @@ if tc == 1 and ru == 1:
 print (f"SR:{sr}, TC:{tc}, GCR:{gcr}, Exec:{exec}, RU:{ru}")
 
 generate_video()
+

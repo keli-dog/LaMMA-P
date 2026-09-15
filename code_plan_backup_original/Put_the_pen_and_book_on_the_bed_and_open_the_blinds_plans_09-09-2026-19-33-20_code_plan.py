@@ -1,0 +1,34 @@
+def execute_task(robots):
+    task1_thread = threading.Thread(target=task1_open_blinds, args=(robots,))
+    task2_thread = threading.Thread(target=task2_move_book, args=(robots,))
+    task3_thread = threading.Thread(target=task3_move_pen, args=(robots,))
+    
+    task1_thread.start()
+    task2_thread.start()
+    task3_thread.start()
+    
+    task1_thread.join()
+    task2_thread.join()
+    task3_thread.join()
+    
+    action_queue.append({'action':'Done'})
+    action_queue.append({'action':'Done'})
+    action_queue.append({'action':'Done'})
+    
+    task_over = True
+
+def task1_open_blinds(robots):
+    GoToObject(robots[1], 'Blinds')
+    OpenObject(robots[1], 'Blinds')
+
+def task2_move_book(robots):
+    GoToObject(robots[3], 'Book')
+    PickupObject(robots[3], 'Book')
+    GoToObject(robots[3], 'Bed')
+    PutObject(robots[3], 'Book', 'Bed')
+
+def task3_move_pen(robots):
+    GoToObject(robots[0], 'Pen')
+    PickupObject(robots[0], 'Pen')
+    GoToObject(robots[0], 'Bed')
+    PutObject(robots[0], 'Pen', 'Bed')

@@ -579,49 +579,53 @@ def prepare_plate(robots):
     GoToObject(robots[1], 'Plate')
     PickupObject(robots[1], 'Plate')
     GoToObject(robots[1], 'Microwave')
+    OpenObject(robots[1], 'Microwave')
     PutObject(robots[1], 'Plate', 'Microwave')
+    CloseObject(robots[1], 'Microwave')
 
 def prepare_egg(robots):
     GoToObject(robots[1], 'Egg')
     PickupObject(robots[1], 'Egg')
     GoToObject(robots[1], 'Microwave')
+    OpenObject(robots[1], 'Microwave')
     PutObject(robots[1], 'Egg', 'Plate')
+    CloseObject(robots[1], 'Microwave')
 
 def prepare_tomato(robots):
     GoToObject(robots[1], 'Tomato')
     PickupObject(robots[1], 'Tomato')
     GoToObject(robots[1], 'Microwave')
+    OpenObject(robots[1], 'Microwave')
     PutObject(robots[1], 'Tomato', 'Plate')
+    CloseObject(robots[1], 'Microwave')
 
 def microwave_food(robots):
     GoToObject(robots[2], 'Microwave')
+    OpenObject(robots[2], 'Microwave')
     SwitchOn(robots[2], 'Microwave')
     time.sleep(30)
     SwitchOff(robots[2], 'Microwave')
+    CloseObject(robots[2], 'Microwave')
 
-plate_thread = threading.Thread(target=prepare_plate, args=(robots,))
-egg_thread = threading.Thread(target=prepare_egg, args=(robots,))
-tomato_thread = threading.Thread(target=prepare_tomato, args=(robots,))
-
-plate_thread.start()
-plate_thread.join()
-
-egg_thread.start()
-tomato_thread.start()
-egg_thread.join()
-tomato_thread.join()
-
-microwave_thread = threading.Thread(target=microwave_food, args=(robots,))
-microwave_thread.start()
-microwave_thread.join()
-
+task1_thread = threading.Thread(target=prepare_plate, args=(robots,))
+task2_thread = threading.Thread(target=prepare_egg, args=(robots,))
+task3_thread = threading.Thread(target=prepare_tomato, args=(robots,))
+task4_thread = threading.Thread(target=microwave_food, args=(robots,))
+task1_thread.start()
+task1_thread.join()
+task2_thread.start()
+task3_thread.start()
+task2_thread.join()
+task3_thread.join()
+task4_thread.start()
+task4_thread.join()
 action_queue.append({'action':'Done'})
 action_queue.append({'action':'Done'})
 action_queue.append({'action':'Done'})
-
+action_queue.append({'action':'Done'})
 task_over = True
 time.sleep(5)
-no_trans = 2
+no_trans = 0
 
 for i in range(25):
     action_queue.append({'action':'Done'})
@@ -633,7 +637,7 @@ task_over = True
 time.sleep(5)
 
 
-exec = float(success_exec) / float(total_exec)
+exec = float(success_exec) / float(total_exec) if total_exec > 0 else 0.0
 
 print (ground_truth)
 objs = list([obj for obj in c.last_event.metadata["objects"]])
@@ -645,54 +649,41 @@ for obj_gt in ground_truth:
     state = obj_gt['state']
     contains = obj_gt['contains']
     gcr_tasks += 1
+    gt_done = False
     for obj in objs:
-        # if obj_name in obj["name"]:
-        #     print (obj)
         if state == 'SLICED':
             if obj_name in obj["name"] and obj["isSliced"]:
-                gcr_complete += 1 
-                
+                gcr_complete += 1; gt_done = True
         if state == 'OFF':
             if obj_name in obj["name"] and not obj["isToggled"]:
-                gcr_complete += 1 
-        
+                gcr_complete += 1; gt_done = True
         if state == 'ON':
             if obj_name in obj["name"] and obj["isToggled"]:
-                gcr_complete += 1 
-        
+                gcr_complete += 1; gt_done = True
         if state == 'HOT':
-            # print (obj)
             if obj_name in obj["name"] and obj["temperature"] == 'Hot':
-                gcr_complete += 1 
-                
+                gcr_complete += 1; gt_done = True
         if state == 'COOKED':
             if obj_name in obj["name"] and obj["isCooked"]:
-                gcr_complete += 1 
-                
+                gcr_complete += 1; gt_done = True
         if state == 'OPENED':
             if obj_name in obj["name"] and obj["isOpen"]:
-                gcr_complete += 1 
-                
+                gcr_complete += 1; gt_done = True
         if state == 'CLOSED':
             if obj_name in obj["name"] and not obj["isOpen"]:
-                gcr_complete += 1 
-                
+                gcr_complete += 1; gt_done = True
         if state == 'PICKED':
             if obj_name in obj["name"] and obj["isPickedUp"]:
-                gcr_complete += 1 
-        
+                gcr_complete += 1; gt_done = True
         if len(contains) != 0 and obj_name in obj["name"]:
-            print (contains, obj_name, obj["name"])   
             for rec in contains:
                 if obj['receptacleObjectIds'] is not None:
                     for r in obj['receptacleObjectIds']:
-                        print (rec, r)
                         if rec in r:
-                            print (rec, r)
-                            gcr_complete += 1 
-                    
-            
-             
+                            gcr_complete += 1; gt_done = True
+    print(f"  [GT] {obj_name} state={state} contains={contains} -> {'OK' if gt_done else 'MISS'}")
+
+
 sr = 0
 tc = 0
 if gcr_tasks == 0:
@@ -701,8 +692,8 @@ else:
     gcr = gcr_complete / gcr_tasks
 
 if gcr == 1.0:
-    tc = 1 
-    
+    tc = 1
+
 max_trans += 1
 no_trans_gt += 1
 print (no_trans_gt, max_trans, no_trans)
@@ -719,3 +710,4 @@ if tc == 1 and ru == 1:
 print (f"SR:{sr}, TC:{tc}, GCR:{gcr}, Exec:{exec}, RU:{ru}")
 
 generate_video()
+
