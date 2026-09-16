@@ -1,7 +1,7 @@
 task_name,status,SR,TC,GCR,Exec,RU
-"Wash_the_lettuce_and_place_lettuce,_tomato_on_the_Countertop_plans_09-09-2026-18-24-43",failed,0,0,0.0,0.75,1.0
-Throw_the_Spatula_and_knife_in_the_trash_plans_09-09-2026-18-24-43,failed,,,,,
-Put_a_plate_of_slice_lettuce_into_the_microwave_plans_09-09-2026-18-24-43,failed,0,0,0.0,0.6666666666666666,1.0
+"Wash_the_lettuce_and_place_lettuce,_tomato_on_the_Countertop_plans_09-09-2026-18-24-43",success,1,1,1.0,1.0,1.0
+Throw_the_Spatula_and_knife_in_the_trash_plans_09-09-2026-18-24-43,success,1,1,1.0,1.0,1.0
+Put_a_plate_of_slice_lettuce_into_the_microwave_plans_09-09-2026-18-24-43,failed,0,0,0.0,0.5454545454545454,1.0
 Slice_the_tomato_plans_09-09-2026-09-53-33,success,1,1,1.0,1.0,1.0
 Throw_the_Spatula_in_the_trash_plans_09-09-2026-09-53-33,success,1,1,1.0,1.0,1.0
-Wash_the_lettuce_and_place_lettuce_on_the_Countertop_plans_09-09-2026-09-53-33,failed,0,0,0.0,1.0,1.0
+Wash_the_lettuce_and_place_lettuce_on_the_Countertop_plans_09-09-2026-09-53-33,failed,0,0,0.0,0.75,1.1

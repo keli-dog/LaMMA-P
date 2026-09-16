@@ -9,13 +9,16 @@ def wash_knife_and_slice_lettuce(robots):
     PickupObject(robots[0], 'ButterKnife')
     GoToObject(robots[0], 'Bowl')
     PutObject(robots[0], 'ButterKnife', 'Bowl')
+    GoToObject(robots[0], 'ButterKnife')
+    PickupObject(robots[0], 'ButterKnife')
     GoToObject(robots[0], 'Lettuce')
     SliceObject(robots[0], 'Lettuce')
+    GoToObject(robots[0], 'CounterTop')
+    PutObject(robots[0], 'ButterKnife', 'CounterTop')
 
-task_thread = threading.Thread(target=wash_knife_and_slice_lettuce, args=(robots,))
-task_thread.start()
-task_thread.join()
-
+task1_thread = threading.Thread(target=wash_knife_and_slice_lettuce, args=(robots,))
+task1_thread.start()
+task1_thread.join()
 action_queue.append({'action':'Done'})
 task_over = True
 time.sleep(5)

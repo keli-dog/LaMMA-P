@@ -1,0 +1,57 @@
+{
+  "task": "Wash_the_fork_and_put_it_in_the_bowl_plans_09-09-2026-11-28-49",
+  "task_description": "Wash the fork and put it in the bowl",
+  "translate_model": "deepseek-ai/DeepSeek-V3",
+  "validate_model": "deepseek-ai/DeepSeek-V3",
+  "translate_time": 7.521226167678833,
+  "final_valid": false,
+  "final_issue_count": 3,
+  "final_source": "original_v0",
+  "validation_rounds": 3,
+  "issues_history": [
+    {
+      "round": 1,
+      "llm_valid": false,
+      "llm_issues": [
+        "[Physical Constraint] Missing CleanObject step after putting fork in sink (line: between SwitchOn and SwitchOff)",
+        "[Physical Constraint] Putting fork directly in Sink instead of SinkBasin (line: PutObject to Sink)",
+        "[Threading] Unnecessary sleep after task_over (line: last line)"
+      ],
+      "deterministic_issues": [],
+      "suggestions": [
+        "Fix 1: Add CleanObject(robots[0], 'Fork') after SwitchOn and before SwitchOff",
+        "Fix 2: Change PutObject target from 'Sink' to 'SinkBasin'",
+        "Fix 3: Remove the final time.sleep(5) since task_over is already set"
+      ]
+    },
+    {
+      "round": 2,
+      "llm_valid": false,
+      "llm_issues": [
+        "[Object] Using 'SinkBasin' instead of 'Sink' for washing (line: 4)",
+        "[Physics] Missing PutObject after first PickupObject before second PickupObject (violates single-hand rule) (line: 8)"
+      ],
+      "deterministic_issues": [],
+      "suggestions": [
+        "Fix 1: Change 'SinkBasin' to 'Sink' in line 4",
+        "Fix 2: Add PutObject(robots[0], 'Fork', 'Sink') before the second PickupObject in line 8"
+      ]
+    },
+    {
+      "round": 3,
+      "llm_valid": false,
+      "llm_issues": [
+        "[Physical Constraint] Trying to CleanObject while Fork is in Sink (should be holding it) (line: CleanObject call)",
+        "[Parameter Check] PutObject target should be 'SinkBasin' not 'Sink' for washing (line: first PutObject)",
+        "[Physical Constraint] Missing time.sleep after SwitchOn(Faucet) to allow water flow (line: between SwitchOn and CleanObject)"
+      ],
+      "deterministic_issues": [],
+      "suggestions": [
+        "Fix 1: Change PutObject target from 'Sink' to 'SinkBasin'",
+        "Fix 2: Add PickupObject(robots[0], 'Fork') before CleanObject",
+        "Fix 3: Add time.sleep(2) after SwitchOn(Faucet)"
+      ]
+    }
+  ],
+  "output_dir": "/media/ubuntu/Student/gengzeyu/LaMMA-P/plan_to_code_validated_v3_nopro_v2/Wash_the_fork_and_put_it_in_the_bowl_plans_09-09-2026-11-28-49"
+}

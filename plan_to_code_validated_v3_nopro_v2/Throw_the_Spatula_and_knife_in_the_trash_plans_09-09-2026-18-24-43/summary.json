@@ -1,0 +1,21 @@
+{
+  "task": "Throw_the_Spatula_and_knife_in_the_trash_plans_09-09-2026-18-24-43",
+  "task_description": "Throw the Spatula and knife in the trash",
+  "translate_model": "deepseek-ai/DeepSeek-V3",
+  "validate_model": "deepseek-ai/DeepSeek-V3",
+  "translate_time": 7.335546255111694,
+  "final_valid": true,
+  "final_issue_count": 0,
+  "final_source": "fixed",
+  "validation_rounds": 1,
+  "issues_history": [
+    {
+      "round": 1,
+      "llm_valid": true,
+      "llm_issues": [],
+      "deterministic_issues": [],
+      "suggestions": []
+    }
+  ],
+  "output_dir": "/media/ubuntu/Student/gengzeyu/LaMMA-P/plan_to_code_validated_v3_nopro_v2/Throw_the_Spatula_and_knife_in_the_trash_plans_09-09-2026-18-24-43"
+}

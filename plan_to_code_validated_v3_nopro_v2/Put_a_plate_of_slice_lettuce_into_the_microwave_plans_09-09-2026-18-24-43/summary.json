@@ -1,0 +1,63 @@
+{
+  "task": "Put_a_plate_of_slice_lettuce_into_the_microwave_plans_09-09-2026-18-24-43",
+  "task_description": "Put a plate of slice lettuce into the microwave",
+  "translate_model": "deepseek-ai/DeepSeek-V3",
+  "validate_model": "deepseek-ai/DeepSeek-V3",
+  "translate_time": 15.433404684066772,
+  "final_valid": false,
+  "final_issue_count": 4,
+  "final_source": "original_v0",
+  "validation_rounds": 3,
+  "issues_history": [
+    {
+      "round": 1,
+      "llm_valid": false,
+      "llm_issues": [
+        "[Physical Constraint] After slicing lettuce, should put down knife before picking up lettuce (line: 6-8)",
+        "[Physical Constraint] Should not pickup Plate while already holding Lettuce (line: 10)",
+        "[Logical] Missing GoToObject before OpenObject for Microwave (line: 16)"
+      ],
+      "deterministic_issues": [],
+      "suggestions": [
+        "Fix 1: Add PutObject(robots[0], 'Knife', 'CounterTop') before picking up sliced lettuce",
+        "Fix 2: Put down lettuce before picking up plate, or vice versa to maintain single-hand rule",
+        "Fix 3: Add GoToObject(robots[0], 'Microwave') before OpenObject(robots[0], 'Microwave')"
+      ]
+    },
+    {
+      "round": 2,
+      "llm_valid": false,
+      "llm_issues": [
+        "[Logic] Unnecessary double GoToObject for Microwave (line: 20)",
+        "[Physics] Missing PutObject after picking up sliced Lettuce before picking up Plate (line: 12-13)",
+        "[Physics] Missing PutObject after placing Lettuce on Plate before picking up Plate again (line: 15-16)",
+        "[Physics] Missing PutObject after placing Plate in Microwave before closing it (line: 22)"
+      ],
+      "deterministic_issues": [],
+      "suggestions": [
+        "Fix 1: Remove duplicate \"GoToObject(robots[0], 'Microwave')\" line",
+        "Fix 2: Add \"PutObject(robots[0], 'Lettuce', 'CounterTop')\" after slicing and before picking up Plate",
+        "Fix 3: Add \"PutObject(robots[0], 'Plate', 'CounterTop')\" after placing Lettuce on Plate before picking it up again",
+        "Fix 4: Add \"PutObject(robots[0], 'Plate', 'Microwave')\" after placing Plate in Microwave before closing it"
+      ]
+    },
+    {
+      "round": 3,
+      "llm_valid": false,
+      "llm_issues": [
+        "[Physical Constraint] Double PutObject for Plate into Microwave (line: 21)",
+        "[Physical Constraint] Missing PickupObject before second PutObject (line: 21)",
+        "[Logical] Unnecessary Plate movement (lines: 14-16)",
+        "[Logical] Duplicate PutObject for Plate into Microwave (line: 21)"
+      ],
+      "deterministic_issues": [],
+      "suggestions": [
+        "Fix 1: Remove the duplicate PutObject(robots[0], 'Plate', 'Microwave')",
+        "Fix 2: Remove lines 14-16 (unnecessary Plate movement to CounterTop and back)",
+        "Fix 3: The sequence should be: Pickup Plate → Put Lettuce on Plate → Put Plate in Microwave",
+        "Fix 4: The corrected sequence should look like this:"
+      ]
+    }
+  ],
+  "output_dir": "/media/ubuntu/Student/gengzeyu/LaMMA-P/plan_to_code_validated_v3_nopro_v2/Put_a_plate_of_slice_lettuce_into_the_microwave_plans_09-09-2026-18-24-43"
+}

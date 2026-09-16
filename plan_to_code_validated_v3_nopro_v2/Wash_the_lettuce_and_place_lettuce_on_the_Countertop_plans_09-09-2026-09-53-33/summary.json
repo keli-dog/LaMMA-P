@@ -1,0 +1,47 @@
+{
+  "task": "Wash_the_lettuce_and_place_lettuce_on_the_Countertop_plans_09-09-2026-09-53-33",
+  "task_description": "Wash the lettuce and place lettuce on the Countertop",
+  "translate_model": "deepseek-ai/DeepSeek-V3",
+  "validate_model": "deepseek-ai/DeepSeek-V3",
+  "translate_time": 11.490787506103516,
+  "final_valid": true,
+  "final_issue_count": 0,
+  "final_source": "fixed",
+  "validation_rounds": 3,
+  "issues_history": [
+    {
+      "round": 1,
+      "llm_valid": false,
+      "llm_issues": [
+        "[Physical Constraint] Cannot PutObject directly into Sink (should use SinkBasin for cleaning) (line: 5)",
+        "[Function Usage] CleanObject should be used instead of manually turning faucet on/off (line: 6-8)"
+      ],
+      "deterministic_issues": [],
+      "suggestions": [
+        "Fix 1: Change 'Sink' to 'SinkBasin' in PutObject and use CleanObject",
+        "Fix 2: Replace SwitchOn/SwitchOff sequence with CleanObject(robots[0], 'Lettuce')"
+      ]
+    },
+    {
+      "round": 2,
+      "llm_valid": false,
+      "llm_issues": [
+        "[Physical Constraint] Using SinkBasin instead of Sink for cleaning (line: 4)",
+        "[Threading] Unnecessary sleep after task completion (line: 13)"
+      ],
+      "deterministic_issues": [],
+      "suggestions": [
+        "Fix 1: Change 'SinkBasin' to 'Sink' in both GoToObject and PutObject calls",
+        "Fix 2: Remove the time.sleep(5) line as it's unnecessary after task completion"
+      ]
+    },
+    {
+      "round": 3,
+      "llm_valid": true,
+      "llm_issues": [],
+      "deterministic_issues": [],
+      "suggestions": []
+    }
+  ],
+  "output_dir": "/media/ubuntu/Student/gengzeyu/LaMMA-P/plan_to_code_validated_v3_nopro_v2/Wash_the_lettuce_and_place_lettuce_on_the_Countertop_plans_09-09-2026-09-53-33"
+}

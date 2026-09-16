@@ -1,4 +1,4 @@
-=== START 2026-09-15 13:38:27 ===
+=== START 2026-09-15 15:17:07 ===
 CMD: /media/ubuntu/Student/anaconda3/envs/lammap/bin/python scripts/execute_plan.py --command Wash_the_knife_and_put_it_in_the_bowl,_and_slice_lettuce_plans_09-09-2026-19-08-31
 floor_no: 21
 ============================================================
@@ -44,23 +44,23 @@ Reached:  CounterTop
   [GT] Bowl state=None contains=['Fork'] -> MISS
 1 11 1
 SR:0, TC:0, GCR:0.0, Exec:0.7777777777777778, RU:1.0
-[image2 @ 0x5690001fe980] Could not open file : /media/ubuntu/Student/gengzeyu/LaMMA-P/logs/Wash_the_knife_and_put_it_in_the_bowl,_and_slice_lettuce_plans_09-09-2026-19-08-31/agent_1//img_00000.png
-[image2 @ 0x5690001fe980] Could not find codec parameters for stream 0 (Video: png, none(pc)): unspecified size
+[image2 @ 0x622f6163a980] Could not open file : /media/ubuntu/Student/gengzeyu/LaMMA-P/logs/Wash_the_knife_and_put_it_in_the_bowl,_and_slice_lettuce_plans_09-09-2026-19-08-31/agent_1//img_00000.png
+[image2 @ 0x622f6163a980] Could not find codec parameters for stream 0 (Video: png, none(pc)): unspecified size
 Consider increasing the value for the 'analyzeduration' and 'probesize' options
 Output file #0 does not contain any stream
-[image2 @ 0x5c1bd1edd980] Could not open file : /media/ubuntu/Student/gengzeyu/LaMMA-P/logs/Wash_the_knife_and_put_it_in_the_bowl,_and_slice_lettuce_plans_09-09-2026-19-08-31/agent_2//img_00000.png
-[image2 @ 0x5c1bd1edd980] Could not find codec parameters for stream 0 (Video: png, none(pc)): unspecified size
+[image2 @ 0x55576d258980] Could not open file : /media/ubuntu/Student/gengzeyu/LaMMA-P/logs/Wash_the_knife_and_put_it_in_the_bowl,_and_slice_lettuce_plans_09-09-2026-19-08-31/agent_2//img_00000.png
+[image2 @ 0x55576d258980] Could not find codec parameters for stream 0 (Video: png, none(pc)): unspecified size
 Consider increasing the value for the 'analyzeduration' and 'probesize' options
 Output file #0 does not contain any stream
-[image2 @ 0x569894f7e980] Could not open file : /media/ubuntu/Student/gengzeyu/LaMMA-P/logs/Wash_the_knife_and_put_it_in_the_bowl,_and_slice_lettuce_plans_09-09-2026-19-08-31/agent_3//img_00000.png
-[image2 @ 0x569894f7e980] Could not find codec parameters for stream 0 (Video: png, none(pc)): unspecified size
+[image2 @ 0x63ab77ecf980] Could not open file : /media/ubuntu/Student/gengzeyu/LaMMA-P/logs/Wash_the_knife_and_put_it_in_the_bowl,_and_slice_lettuce_plans_09-09-2026-19-08-31/agent_3//img_00000.png
+[image2 @ 0x63ab77ecf980] Could not find codec parameters for stream 0 (Video: png, none(pc)): unspecified size
 Consider increasing the value for the 'analyzeduration' and 'probesize' options
 Output file #0 does not contain any stream
-[image2 @ 0x5c8ed66c5980] Could not open file : /media/ubuntu/Student/gengzeyu/LaMMA-P/logs/Wash_the_knife_and_put_it_in_the_bowl,_and_slice_lettuce_plans_09-09-2026-19-08-31/top_view//img_00000.png
-[image2 @ 0x5c8ed66c5980] Could not find codec parameters for stream 0 (Video: png, none(pc)): unspecified size
+[image2 @ 0x5b5b80124980] Could not open file : /media/ubuntu/Student/gengzeyu/LaMMA-P/logs/Wash_the_knife_and_put_it_in_the_bowl,_and_slice_lettuce_plans_09-09-2026-19-08-31/top_view//img_00000.png
+[image2 @ 0x5b5b80124980] Could not find codec parameters for stream 0 (Video: png, none(pc)): unspecified size
 Consider increasing the value for the 'analyzeduration' and 'probesize' options
 Output file #0 does not contain any stream
 QObject::killTimer: Timers cannot be stopped from another thread
 QObject::~QObject: Timers cannot be stopped from another thread
 
-=== END 2026-09-15 13:39:40 (exit=0) ===
+=== END 2026-09-15 15:18:19 (exit=0) ===
