@@ -1,0 +1,18 @@
+(define (problem break_television_problem)
+  (:domain robot5)
+  (:objects
+    robot5 - robot
+    television - object
+    desk - object
+  )
+  (:init
+    (at robot5 desk)
+    (at-location television desk)
+    (not (inaction robot5))
+  )
+  (:goal
+    (and
+      (break robot5 television)
+    )
+  )
+)

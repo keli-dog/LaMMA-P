@@ -1,0 +1,26 @@
+Here's the problem file for the newspaper disposal task:
+
+```pddl
+(define (problem dispose_newspaper_problem)
+  (:domain robot3)
+  (:objects
+    robot3 - robot
+    Newspaper - object
+    GarbageCan - object
+    Desk - object
+  )
+  (:init
+    (at robot3 Desk)
+    (at-location Newspaper Desk)
+    (at-location GarbageCan Floor)
+    (not (inaction robot3))
+  )
+  (:goal
+    (and
+      (at-location Newspaper GarbageCan)
+    )
+  )
+)
+```
+
+Problem file generation is done.
