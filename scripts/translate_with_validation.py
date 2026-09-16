@@ -137,6 +137,12 @@ def build_translate_prompt(task_description: str, combined_plan: str,
 # 14. STRUCTURE RULE: Every task MUST have: (a) function(s) with def name(robots):, (b) taskN_thread = threading.Thread(target=name, args=(robots,)), (c) taskN_thread.start() for each, (d) taskN_thread.join() for each, (e) action_queue.append({{'action':'Done'}}) once PER THREAD, (f) task_over = True, (g) time.sleep(5).
 # 15. NO IMPORTS: Do NOT add 'import threading' or 'import time' - they are already imported in the execution wrapper.
 # 16. NO NEW VARIABLES: Do NOT create action_queue = [] or task_over = False - they are already defined externally. Just append to action_queue and set task_over = True.
+# 17. COMPOSITE ACTION RULE: Multi-step actions must use complete atom-action sequences. NEVER use CleanObject (half-broken: defined but not consumed by action_queue).
+#   - wash(x): GoTo(x) -> Pickup(x) -> GoTo(Sink) -> Put(x, Sink) -> SwitchOn(Faucet) -> time.sleep -> SwitchOff(Faucet) -> Pickup(x) -> GoTo(target) -> Put(x, target)
+#   - slice(x): GoTo(Knife) -> Pickup(Knife) -> GoTo(x) -> SliceObject(x) -> Put(Knife, CounterTop) (also see rule 7)
+#   - heat(x): GoTo(x) -> Pickup(x) -> GoTo(Microwave) -> OpenObject(Microwave) -> Put(x, Microwave) -> CloseObject(Microwave) -> SwitchOn(Microwave) -> time.sleep -> SwitchOff(Microwave)
+#   - cook(x): GoTo(Pan) -> Pickup(Pan) -> GoTo(StoveBurner) -> Put(Pan, StoveBurner) -> SwitchOn(StoveKnob) -> GoTo(x) -> Pickup(x) -> Put(x, Pan) -> time.sleep -> SwitchOff(StoveKnob)
+
 
 # Example 1: Slice vegetable and put in fridge (single robot)
 Task: Slice the potato then put it in the fridge
