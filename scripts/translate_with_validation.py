@@ -108,11 +108,10 @@ def build_translate_prompt(task_description: str, combined_plan: str,
 # - GoToObject(robot, object_name)
 # - PickupObject(robot, object_name)
 # - PutObject(robot, object_name, target_location)
-# - SwitchOn(robot, object_name)
-# - SwitchOff(robot, object_name)
+# - ToggleObjectOn(robot, object_name)
+# - ToggleObjectOff(robot, object_name)
 # - SliceObject(robot, object_name)
 # - BreakObject(robot, object_name)
-# - CleanObject(robot, object_name)
 # - ThrowObject(robot, object_name)
 # - OpenObject(robot, object_name)
 # - CloseObject(robot, object_name)
@@ -131,7 +130,7 @@ def build_translate_prompt(task_description: str, combined_plan: str,
 # 7. SLICE RULE: SliceObject requires holding a Knife first. Correct flow: PickupObject(Knife) -> GoToObject(target) -> SliceObject(target). Do NOT PickupObject the target before slicing. After slicing, if you need to pick up the sliced object, use the ORIGINAL object name (e.g. PickupObject('Tomato'), NOT 'TomatoSliced'). AI2-THOR automatically finds the sliced version. You MUST first PutObject(Knife) down before picking up the sliced object (single-hand rule).
 # 8. PutObject requires the agent to be HOLDING that object. Only put down what you picked up.
 # 9. FIXED objects (CounterTop, Floor, Wall, Sink, StoveBurner, Faucet, LightSwitch, Window) CANNOT be picked up. Use 'Sink' for washing, NOT 'SinkBasin'.
-# 10. Always GoToObject before PickupObject/PutObject/SliceObject/SwitchOn/OpenObject.
+# 10. Always GoToObject before PickupObject/PutObject/SliceObject/ToggleObjectOn/OpenObject.
 # 11. PutObject target must be a receptacle (CounterTop, Sink, Fridge, Drawer, Plate, Bowl, Box, GarbageCan, Microwave, CoffeeMachine, Pan, etc.).
 # 12. OPEN-BEFORE-PUT RULE: If target is an openable receptacle (Fridge, Microwave, Drawer, Cabinet), you MUST OpenObject first, then PutObject, then CloseObject.
 # 13. ROBOT PARAMETER RULE: Always use robots[0], robots[1], etc. NEVER pass the raw 'robots' list to action functions.
@@ -169,9 +168,9 @@ def wash_apple(robots):
     PickupObject(robots[0], 'Apple')
     GoToObject(robots[0], 'Sink')
     PutObject(robots[0], 'Apple', 'Sink')
-    SwitchOn(robots[0], 'Faucet')
+    ToggleObjectOn(robots[0], 'Faucet')
     time.sleep(5)
-    SwitchOff(robots[0], 'Faucet')
+    ToggleObjectOff(robots[0], 'Faucet')
     PickupObject(robots[0], 'Apple')
     GoToObject(robots[0], 'CounterTop')
     PutObject(robots[0], 'Apple', 'CounterTop')
@@ -181,16 +180,16 @@ def wash_tomato(robots):
     PickupObject(robots[1], 'Tomato')
     GoToObject(robots[1], 'Sink')
     PutObject(robots[1], 'Tomato', 'Sink')
-    SwitchOn(robots[1], 'Faucet')
+    ToggleObjectOn(robots[1], 'Faucet')
     time.sleep(5)
-    SwitchOff(robots[1], 'Faucet')
+    ToggleObjectOff(robots[1], 'Faucet')
     PickupObject(robots[1], 'Tomato')
     GoToObject(robots[1], 'CounterTop')
     PutObject(robots[1], 'Tomato', 'CounterTop')
 
 def off_light(robots):
     GoToObject(robots[2], 'LightSwitch')
-    SwitchOff(robots[2], 'LightSwitch')
+    ToggleObjectOff(robots[2], 'LightSwitch')
 
 task1_thread = threading.Thread(target=wash_apple, args=(robots,))
 task2_thread = threading.Thread(target=wash_tomato, args=(robots,))
@@ -244,11 +243,10 @@ Available AI2-THOR functions (these are already imported, DO NOT redefine):
 - GoToObject(robot, object_name)
 - PickupObject(robot, object_name)
 - PutObject(robot, object_name, target_location)
-- SwitchOn(robot, object_name)
-- SwitchOff(robot, object_name)
+- ToggleObjectOn(robot, object_name)
+- ToggleObjectOff(robot, object_name)
 - SliceObject(robot, object_name)
 - BreakObject(robot, object_name)
-- CleanObject(robot, object_name)
 - ThrowObject(robot, object_name)
 - OpenObject(robot, object_name)
 - CloseObject(robot, object_name)
@@ -387,7 +385,7 @@ Suggestions:
 5. NO NEW VARIABLES: Do NOT create action_queue = [] or task_over = False. They already exist externally.
 6. KEEP action_queue.append({{'action':'Done'}}): Do NOT remove these lines. One per thread.
 7. KEEP task_over = True and time.sleep(5): Do NOT remove these.
-8. Available functions ONLY: GoToObject, PickupObject, PutObject, SwitchOn, SwitchOff, SliceObject, BreakObject, CleanObject, ThrowObject, OpenObject, CloseObject, time.sleep.
+8. Available functions ONLY: GoToObject, PickupObject, PutObject, ToggleObjectOn, ToggleObjectOff, SliceObject, BreakObject, ThrowObject, OpenObject, CloseObject, time.sleep.
 9. SliceObject requires holding Knife first. After slicing, put Knife down before picking up sliced object.
 10. Single-hand rule: only hold ONE object at a time.
 
@@ -415,10 +413,10 @@ def deterministic_check(code: str, objects_list: str) -> List[str]:
         issues.append("[Deterministic] PickupObject 传了 robots 列表，应为 robots[0]/robots[1]")
     if re.search(r'PutObject\(\s*robots\s*,', code):
         issues.append("[Deterministic] PutObject 传了 robots 列表，应为 robots[0]/robots[1]")
-    if re.search(r'SwitchOn\(\s*robots\s*,', code):
-        issues.append("[Deterministic] SwitchOn 传了 robots 列表，应为 robots[0]/robots[1]")
-    if re.search(r'SwitchOff\(\s*robots\s*,', code):
-        issues.append("[Deterministic] SwitchOff 传了 robots 列表，应为 robots[0]/robots[1]")
+    if re.search(r'ToggleObjectOn\(\s*robots\s*,', code):
+        issues.append("[Deterministic] ToggleObjectOn 传了 robots 列表，应为 robots[0]/robots[1]")
+    if re.search(r'ToggleObjectOff\(\s*robots\s*,', code):
+        issues.append("[Deterministic] ToggleObjectOff 传了 robots 列表，应为 robots[0]/robots[1]")
     if re.search(r'SliceObject\(\s*robots\s*,', code):
         issues.append("[Deterministic] SliceObject 传了 robots 列表，应为 robots[0]/robots[1]")
     if re.search(r'OpenObject\(\s*robots\s*,', code):
@@ -427,8 +425,8 @@ def deterministic_check(code: str, objects_list: str) -> List[str]:
         issues.append("[Deterministic] CloseObject 传了 robots 列表，应为 robots[0]/robots[1]")
 
     # 检查2: 重新定义了 AI2-THOR 函数
-    for func in ['GoToObject', 'PickupObject', 'PutObject', 'SwitchOn', 'SwitchOff',
-                 'SliceObject', 'BreakObject', 'CleanObject', 'ThrowObject',
+    for func in ['GoToObject', 'PickupObject', 'PutObject', 'ToggleObjectOn', 'ToggleObjectOff',
+                 'SliceObject', 'BreakObject', 'ThrowObject',
                  'OpenObject', 'CloseObject']:
         if re.search(rf'def\s+{func}\s*\(', code):
             issues.append(f"[Deterministic] 重新定义了 {func}，该函数已导入")
@@ -437,8 +435,8 @@ def deterministic_check(code: str, objects_list: str) -> List[str]:
     if objects_list:
         scene_objects = set(o.strip() for o in objects_list.split(','))
         # 只提取动作函数调用括号内的字符串参数
-        action_funcs = ('GoToObject|PickupObject|PutObject|SwitchOn|SwitchOff|'
-                       'SliceObject|BreakObject|CleanObject|ThrowObject|OpenObject|CloseObject')
+        action_funcs = ('GoToObject|PickupObject|PutObject|ToggleObjectOn|ToggleObjectOff|'
+                       'SliceObject|BreakObject|ThrowObject|OpenObject|CloseObject')
         action_calls = re.findall(
             rf'(?:{action_funcs})\(([^)]+)\)',
             code
@@ -473,8 +471,8 @@ def deterministic_fix(code: str) -> Tuple[str, int]:
     """确定性修复：把动作函数里的 robots 列表参数改成 robots[0]
     返回 (修复后的代码, 修复处数)
     """
-    action_funcs = ('GoToObject|PickupObject|PutObject|SwitchOn|SwitchOff|'
-                   'SliceObject|BreakObject|CleanObject|ThrowObject|OpenObject|CloseObject')
+    action_funcs = ('GoToObject|PickupObject|PutObject|ToggleObjectOn|ToggleObjectOff|'
+                   'SliceObject|BreakObject|ThrowObject|OpenObject|CloseObject')
     pattern = rf'({action_funcs})\(robots\s*,'
     fixed_code, count = re.subn(pattern, r'\1(robots[0],', code)
     return fixed_code, count
