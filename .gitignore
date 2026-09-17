@@ -14,3 +14,5 @@ logs/*/top_view/
 logs/trial/
 *.mp4
 *.avi
+api_key_gpt4o.txt
+api_key_siliconflow.txt
