@@ -45,7 +45,7 @@ def init_client(api_key_file: str = "api_key.txt"):
     api_key = key_path.read_text().strip()
     client = openai.OpenAI(
         api_key=api_key,
-        base_url="https://api.siliconflow.cn/v1"
+        base_url="https://api.openai-proxy.org/v1"
     )
     return client
 

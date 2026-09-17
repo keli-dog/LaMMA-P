@@ -1,3 +1,4 @@
+import sys
 import os
 from pathlib import Path
 import subprocess
@@ -40,7 +41,7 @@ def compile_aithor_exec_file(expt_name):
         executable_plan += ("robots = [{'name': 'robot1', 'skills': ['GoToObject', 'PickupObject', 'PutObject'], 'mass': 100}]\n")
     
     # Set default floor number (since it's not in current log format)
-    executable_plan += ("floor_no = 21\n\n")
+    executable_plan += ("floor_no = 303\n\n")
     
     # Find ground truth line (contains "ground_truth =")
     gt_line = None
@@ -94,4 +95,4 @@ expt_name = args.command
 print (expt_name)
 ai_exec_file = compile_aithor_exec_file(expt_name)
 
-subprocess.run(["python", ai_exec_file])
+subprocess.run([sys.executable, ai_exec_file])

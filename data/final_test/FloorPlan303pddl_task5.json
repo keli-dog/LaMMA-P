@@ -1,0 +1,1 @@
+{"task": "Break the Cellphone, close the blinds, and put the newspaper in the garbage can", "robot list": [23, 15, 26], "object_states" : [{"name": "CellPhone", "contains": [], "state": "BROKEN"}, {"name": "Blinds", "contains": [], "state": "CLOSED"}, {"name": "GarbageCan", "contains": ["Newspaper"], "state": null}], "trans": 0, "min_trans": 10}
