@@ -1,8 +1,0 @@
-GoToObject(robots[0], 'SoapBar')
-PickupObject(robots[0], 'SoapBar')
-GoToObject(robots[0], 'Sink')
-PutObject(robots[0], 'SoapBar', 'Sink')
-GoToObject(robots[0], 'DishSponge')
-PickupObject(robots[0], 'DishSponge')
-GoToObject(robots[0], 'Sink')
-PutObject(robots[0], 'DishSponge', 'Sink')

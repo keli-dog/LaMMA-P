@@ -623,7 +623,7 @@ class LLMHandler:
                 if not api_key:
                     raise ValueError("API key file is empty")
                 openai.api_key = api_key
-                self.client = openai.OpenAI(api_key=api_key, base_url="https://api.openai-proxy.org/v1")
+                self.client = openai.OpenAI(api_key=api_key, base_url="https://api.siliconflow.cn/v1")
                 print("Successfully loaded API key from", api_key_file + '.txt')
             except FileNotFoundError:
                 # Try without .txt extension
@@ -632,7 +632,7 @@ class LLMHandler:
                     if not api_key:
                         raise ValueError("API key file is empty")
                     openai.api_key = api_key
-                    self.client = openai.OpenAI(api_key=api_key, base_url="https://api.openai-proxy.org/v1")
+                    self.client = openai.OpenAI(api_key=api_key, base_url="https://api.siliconflow.cn/v1")
                     print("Successfully loaded API key from", api_key_file)
                 except FileNotFoundError:
                     raise LLMError(f"API key file not found: {api_key_file} or {api_key_file}.txt")
