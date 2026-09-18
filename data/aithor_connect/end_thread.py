@@ -40,39 +40,49 @@ for obj_gt in ground_truth:
     state = obj_gt['state']
     contains = obj_gt['contains']
     gcr_tasks += 1
-    gt_done = False
 
-    # --- 优先检查 state 类型 ---
+    # 分别检查 state 和 contains，两者都满足才算完成
+    state_ok = True
+    contains_ok = True
+
+    # --- 检查 state 类型 ---
     if state is not None and state != '':
+        state_ok = False
         for obj in objs:
             if obj_name in obj["name"]:
                 if state == 'SLICED' and obj.get("isSliced", False):
-                    gt_done = True
+                    state_ok = True
                 elif state == 'OFF' and not obj.get("isToggled", True):
-                    gt_done = True
+                    state_ok = True
                 elif state == 'ON' and obj.get("isToggled", False):
-                    gt_done = True
+                    state_ok = True
                 elif state == 'HOT' and obj.get("temperature", "") == 'Hot':
-                    gt_done = True
+                    state_ok = True
                 elif state == 'COOKED' and obj.get("isCooked", False):
-                    gt_done = True
+                    state_ok = True
                 elif state == 'OPENED' and obj.get("isOpen", False):
-                    gt_done = True
+                    state_ok = True
                 elif state == 'CLOSED' and not obj.get("isOpen", True):
-                    gt_done = True
+                    state_ok = True
                 elif state == 'PICKED' and obj.get("isPickedUp", False):
-                    gt_done = True
+                    state_ok = True
                 elif state == 'BROKEN' and obj.get("isBroken", False):
-                    gt_done = True
+                    state_ok = True
 
-    # --- 再检查 contains 类型（与 state 互斥，避免重复计数）---
-    elif len(contains) != 0:
+    # --- 检查 contains 类型 ---
+    if len(contains) != 0:
+        contains_ok = False
         for obj in objs:
             if obj_name in obj["name"]:
+                all_found = True
                 for rec in contains:
-                    if find_obj_in_container(obj, rec, objs):
-                        gt_done = True
+                    if not find_obj_in_container(obj, rec, objs):
+                        all_found = False
+                        break
+                if all_found:
+                    contains_ok = True
 
+    gt_done = state_ok and contains_ok
     if gt_done:
         gcr_complete += 1
     print(f"  [GT] {obj_name} state={state} contains={contains} -> {'OK' if gt_done else 'MISS'}")
